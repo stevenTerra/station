@@ -1,0 +1,47 @@
+@import "mixins";
+
+$gutter: 10px;
+
+/* tutorial */
+.tutorial {
+  border-bottom: 1px solid var(--menu-border);
+}
+
+/* community */
+.community {
+  margin: $gutter 0;
+}
+
+.wrapper {
+  margin: (-$gutter);
+}
+
+/* item */
+.link,
+.icon {
+  opacity: 0.75;
+  transition: opacity var(--transition);
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.icon {
+  display: block;
+  fill: var(--menu-text);
+}
+
+.link {
+  @include flex(flex-start);
+  gap: 4px;
+  color: var(--menu-text);
+  font-size: var(--font-size-small);
+  line-height: 1;
+  padding: $gutter 0;
+  width: 100%;
+}
+
+.icon {
+  padding: $gutter;
+}

@@ -1,0 +1,18 @@
+@import "mixins";
+
+.asset {
+  @include flex(space-between, flex-start);
+  border-top: 1px solid var(--card-border);
+  padding: 20px 0;
+  position: relative; // to loading indicator
+}
+
+.symbol,
+.amount {
+  font-size: 16px;
+}
+
+.value {
+  color: var(--text-muted);
+  font-size: var(--font-size-small);
+}

@@ -1,0 +1,15 @@
+@import "mixins";
+
+.moniker {
+  font-size: 24px;
+}
+
+.footer {
+  border-top: 1px solid var(--card-border);
+  margin-top: 12px;
+  padding-top: 20px;
+
+  h2 {
+    font-size: var(--font-size-small);
+  }
+}

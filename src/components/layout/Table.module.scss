@@ -1,0 +1,67 @@
+@import "mixins";
+
+.container {
+  overflow: auto;
+}
+
+.table {
+  th,
+  td {
+    background: var(--card-bg);
+  }
+
+  th {
+    padding: 12px;
+    padding-top: 0;
+    position: sticky;
+    top: 0;
+  }
+
+  td {
+    padding-left: 12px;
+    padding-right: 12px;
+    border-top: 1px solid var(--card-border);
+  }
+}
+
+.default {
+  td {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+}
+
+.small {
+  td {
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+}
+
+/* align */
+.center {
+  text-align: center;
+}
+
+.right {
+  text-align: right;
+}
+
+/* sorter */
+.sorter {
+  @include inline-flex;
+  gap: 2px;
+}
+
+.carets {
+  display: grid;
+  font-size: var(--font-size-small);
+}
+
+.caret {
+  opacity: 0.3;
+
+  &.active {
+    opacity: 1;
+  }
+}

@@ -1,0 +1,13 @@
+@import "forms";
+
+.textarea {
+  @include border;
+  padding: 12px;
+}
+
+.editor {
+  @include border;
+  @include size;
+  font-family: var(--font-family-monospace);
+  overflow: auto;
+}
