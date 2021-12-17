@@ -16,7 +16,7 @@ import { calcRewardsValues } from "data/queries/distribution"
 import { WithTokenItem } from "data/token"
 import { ValidatorLink } from "components/general"
 import { Form, FormArrow, FormItem, Checkbox } from "components/form"
-import { Card, Flex } from "components/layout"
+import { Card, Flex, Grid } from "components/layout"
 import { Read, TokenCard, TokenCardGrid } from "components/token"
 import Tx, { getInitialGasDenom } from "../Tx"
 import styles from "./WithdrawRewardsForm.module.scss"
@@ -110,85 +110,89 @@ const WithdrawRewardsForm = ({ rewards, validators, exchangeRates }: Props) => {
     <Tx {...tx}>
       {({ fee, submit }) => (
         <Form onSubmit={handleSubmit(submit.fn)}>
-          <dl>
-            <dt>{t("Validators")}</dt>
-            <dd>
-              {selectable ? (
-                <button type="button" onClick={toggle}>
-                  {selectedValidatorsText}
-                  {isOpen ? (
-                    <ExpandLessIcon style={{ fontSize: 16 }} />
-                  ) : (
-                    <ExpandMoreIcon style={{ fontSize: 16 }} />
-                  )}
-                </button>
-              ) : (
-                selectedValidatorsText
-              )}
-            </dd>
-          </dl>
+          <Grid gap={12}>
+            <dl>
+              <dt>{t("Validators")}</dt>
+              <dd>
+                {selectable ? (
+                  <button type="button" onClick={toggle}>
+                    {selectedValidatorsText}
+                    {isOpen ? (
+                      <ExpandLessIcon style={{ fontSize: 16 }} />
+                    ) : (
+                      <ExpandMoreIcon style={{ fontSize: 16 }} />
+                    )}
+                  </button>
+                ) : (
+                  selectedValidatorsText
+                )}
+              </dd>
+            </dl>
 
-          {selectable && isOpen && (
-            <Card size="small" className={styles.card}>
-              <Flex className={styles.actions}>
-                <button
-                  type="button"
-                  className={styles.button}
-                  onClick={() => setState(init(true))}
-                >
-                  {t("Select all")}
-                </button>
-
-                <button
-                  type="button"
-                  className={styles.button}
-                  onClick={() => setState(init(false))}
-                >
-                  {t("Deselect all")}
-                </button>
-              </Flex>
-
-              <section className={styles.validators}>
-                {byValidator.map(({ address, sum }) => {
-                  const checked = state[address]
-
-                  return (
-                    <Checkbox
-                      className={styles.checkbox}
-                      checked={checked}
-                      onChange={() =>
-                        setState({ ...state, [address]: !checked })
-                      }
-                      key={address}
+            {selectable && isOpen && (
+              <Card size="small" className={styles.card}>
+                <Flex className={styles.actions} start>
+                  {Object.values(state).some((state) => !state) ? (
+                    <button
+                      type="button"
+                      className={styles.button}
+                      onClick={() => setState(init(true))}
                     >
-                      <div className={styles.item}>
-                        <ValidatorLink address={address} />
-                        <Read amount={sum} token={currency} approx />
-                      </div>
-                    </Checkbox>
-                  )
-                })}
-              </section>
-            </Card>
-          )}
-
-          <FormArrow />
-
-          <FormItem>
-            <TokenCardGrid maxHeight>
-              {Object.entries(selectedTotal).map(([denom, amount]) => (
-                <WithTokenItem token={denom} key={denom}>
-                  {(item) => (
-                    <TokenCard
-                      {...item}
-                      value={calcValue({ amount, denom })}
-                      amount={amount}
-                    />
+                      {t("Select all")}
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      className={styles.button}
+                      onClick={() => setState(init(false))}
+                    >
+                      {t("Deselect all")}
+                    </button>
                   )}
-                </WithTokenItem>
-              ))}
-            </TokenCardGrid>
-          </FormItem>
+                </Flex>
+
+                <section className={styles.validators}>
+                  {byValidator.map(({ address, sum }) => {
+                    const checked = state[address]
+
+                    return (
+                      <Checkbox
+                        className={styles.checkbox}
+                        checked={checked}
+                        onChange={() =>
+                          setState({ ...state, [address]: !checked })
+                        }
+                        key={address}
+                      >
+                        <div className={styles.item}>
+                          <ValidatorLink address={address} />
+                          <Read amount={sum} token={currency} approx />
+                        </div>
+                      </Checkbox>
+                    )
+                  })}
+                </section>
+              </Card>
+            )}
+
+            <FormArrow />
+
+            <FormItem>
+              <TokenCardGrid maxHeight>
+                {Object.entries(selectedTotal).map(([denom, amount]) => (
+                  <WithTokenItem token={denom} key={denom}>
+                    {(item) => (
+                      <TokenCard
+                        {...item}
+                        value={calcValue({ amount, denom })}
+                        amount={amount}
+                      />
+                    )}
+                  </WithTokenItem>
+                ))}
+              </TokenCardGrid>
+            </FormItem>
+          </Grid>
 
           {fee.render()}
           {submit.button}

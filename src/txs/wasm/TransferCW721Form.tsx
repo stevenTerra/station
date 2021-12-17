@@ -34,12 +34,13 @@ const TransferCW721Form = ({ contract, id }: Props) => {
 
   /* form */
   const form = useForm<TxValues>({ mode: "onChange" })
-  const { register, setValue, handleSubmit, formState } = form
+  const { register, trigger, setValue, handleSubmit, formState } = form
   const { errors } = formState
 
-  const onClickAddressBookItem = ({ recipient, memo }: AddressBook) => {
+  const onClickAddressBookItem = async ({ recipient, memo }: AddressBook) => {
     setValue("recipient", recipient)
     setValue("memo", memo)
+    await trigger("recipient")
   }
 
   /* tx */

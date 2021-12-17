@@ -37,6 +37,7 @@ const SelectDenom = ({ title, list }: Props) => {
                   amount={amount}
                   value={value}
                   valueConfig={{ prefix: true }}
+                  name="" // remove name
                   prefix
                 />
               )}

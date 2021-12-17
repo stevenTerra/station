@@ -37,36 +37,34 @@ const Rewards = () => {
     ) : (
       <Card {...state} title={t("Staking rewards")}>
         <Grid gap={28}>
-          <article>
-            <Read
-              className={styles.total}
-              amount={rewardsValues?.total.sum}
-              token={currency}
-              auto
-              approx
-            />
-          </article>
+          <Read
+            className={styles.total}
+            amount={rewardsValues?.total.sum}
+            token={currency}
+            auto
+            approx
+          />
 
           {has(delegationTotal) && (
-            <article>
+            <Grid gap={4}>
               <h1>{t("Delegations")}</h1>
               <Read
                 className={styles.number}
                 amount={delegationTotal}
                 denom="uluna"
               />
-            </article>
+            </Grid>
           )}
 
           {has(unbondingsTotal) && (
-            <article>
+            <Grid gap={4}>
               <h1>{t("Undelegations")}</h1>
               <Read
                 className={styles.number}
                 amount={unbondingsTotal}
                 denom="uluna"
               />
-            </article>
+            </Grid>
           )}
 
           <LinkButton

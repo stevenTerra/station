@@ -83,11 +83,13 @@ const TerraNativeAssets = () => {
             </Checkbox>
           )}
 
-          {(hideSmallBalances ? listNotSmall : list).map(
-            ({ denom, ...item }) => (
-              <Asset {...readNativeDenom(denom)} {...item} key={denom} />
-            )
-          )}
+          <section>
+            {(hideSmallBalances ? listNotSmall : list).map(
+              ({ denom, ...item }) => (
+                <Asset {...readNativeDenom(denom)} {...item} key={denom} />
+              )
+            )}
+          </section>
         </Grid>
       </>
     )

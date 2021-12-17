@@ -98,19 +98,30 @@ function Tx<TxValues>(props: Props<TxValues>) {
 
   /* simulation: estimate gas */
   const simulationTx = createTx(estimationTxValues)
-  const key = { address, network, initialGasDenom, gasPrices, tx: simulationTx }
+  const key = {
+    address,
+    network,
+    initialGasDenom,
+    gasPrices,
+    gasAdjustment,
+    tx: simulationTx,
+  }
+
   const { data: estimatedGas, ...estimatedGasResult } = useQuery(
     [queryKey.tx.create, key],
     async () => {
       if (!address || isWalletEmpty || !connectedWallet?.availablePost) return 0
       if (!simulationTx || !simulationTx.msgs.length) return 0
 
-      const lcd = new LCDClient({
+      const config = {
         ...network,
         URL: network.lcd,
         gasPrices: { [initialGasDenom]: gasPrices[initialGasDenom] },
-        gasAdjustment,
-      })
+      }
+
+      const lcd = new LCDClient(
+        Object.assign(config, gasAdjustment && { gasAdjustment })
+      )
 
       const unsignedTx = await lcd.tx.create([{ address }], {
         ...simulationTx,

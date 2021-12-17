@@ -37,14 +37,15 @@ const SendForm = ({ token, decimals, balance }: Props) => {
 
   /* form */
   const form = useForm<TxValues>({ mode: "onChange" })
-  const { register, watch, setValue, handleSubmit, formState } = form
+  const { register, trigger, watch, setValue, handleSubmit, formState } = form
   const { errors } = formState
   const { recipient, input, memo } = watch()
   const amount = toAmount(input, { decimals })
 
-  const onClickAddressBookItem = ({ recipient, memo }: AddressBook) => {
+  const onClickAddressBookItem = async ({ recipient, memo }: AddressBook) => {
     setValue("recipient", recipient)
     setValue("memo", memo)
+    await trigger("recipient")
   }
 
   useEffect(() => {

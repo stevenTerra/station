@@ -133,6 +133,7 @@ const TxIndicator = ({ txhash }: { txhash: string }) => {
   ) : (
     <Modal
       icon={icon}
+      closeIcon={false}
       title={title}
       footer={() => (
         <Button onClick={initLatestTx} color="primary" block>

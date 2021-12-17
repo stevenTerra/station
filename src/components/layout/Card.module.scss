@@ -40,7 +40,7 @@
 .grid {
   // Only when both header and main exist
   display: grid;
-  gap: 10px;
+  gap: 8px;
   grid-template-rows: auto 1fr;
   grid-template-areas: "header" "main";
 
