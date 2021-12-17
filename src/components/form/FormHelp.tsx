@@ -6,12 +6,12 @@ import styles from "./FormHelp.module.scss"
 
 const Component: FC<{ className: string }> = ({ children, className }) => {
   return (
-    <p className={classNames(styles.component, className)}>
+    <div className={classNames(styles.component, className)}>
       <Flex>
         <InfoIcon fontSize="inherit" style={{ fontSize: 18 }} />
       </Flex>
       <span>{children}</span>
-    </p>
+    </div>
   )
 }
 

@@ -75,6 +75,7 @@ const AnchorEarnForm = ({ tab, deposit, rate }: Props) => {
     initialGasDenom,
     estimationTxValues,
     createTx,
+    gasAdjustment: 2,
     onChangeMax,
     queryKeys: [queryKey.Anchor.TotalDeposit],
   }

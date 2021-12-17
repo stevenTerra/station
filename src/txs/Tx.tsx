@@ -1,4 +1,5 @@
-import { Fragment, ReactNode, useEffect, useState } from "react"
+import { Fragment, ReactNode } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { QueryKey, useQuery } from "react-query"
 import { useRecoilValue, useSetRecoilState } from "recoil"
@@ -48,6 +49,7 @@ interface Props<TxValues> {
   initialGasDenom: NativeDenom
   estimationTxValues: TxValues
   createTx: (values: TxValues) => CreateTxOptions | undefined
+  gasAdjustment?: number
   taxes?: Coins
   availableGasDenoms?: NativeDenom[]
 
@@ -69,7 +71,7 @@ interface RenderProps<TxValues> {
 
 function Tx<TxValues>(props: Props<TxValues>) {
   const { token, decimals, amount, balance } = props
-  const { initialGasDenom, estimationTxValues, createTx } = props
+  const { initialGasDenom, estimationTxValues, createTx, gasAdjustment } = props
   const { children, onChangeMax } = props
   const { queryKeys } = props
 
@@ -107,6 +109,7 @@ function Tx<TxValues>(props: Props<TxValues>) {
         ...network,
         URL: network.lcd,
         gasPrices: { [initialGasDenom]: gasPrices[initialGasDenom] },
+        gasAdjustment,
       })
 
       const unsignedTx = await lcd.tx.create([{ address }], {
@@ -127,14 +130,17 @@ function Tx<TxValues>(props: Props<TxValues>) {
     }
   )
 
-  const getGasAmount = (denom: NativeDenom) => {
-    const gasPrice = gasPrices[denom]
-    if (isNil(estimatedGas) || !gasPrice) return "0"
-    return new BigNumber(estimatedGas)
-      .times(gasPrice)
-      .integerValue(BigNumber.ROUND_CEIL)
-      .toString()
-  }
+  const getGasAmount = useCallback(
+    (denom: NativeDenom) => {
+      const gasPrice = gasPrices[denom]
+      if (isNil(estimatedGas) || !gasPrice) return "0"
+      return new BigNumber(estimatedGas)
+        .times(gasPrice)
+        .integerValue(BigNumber.ROUND_CEIL)
+        .toString()
+    },
+    [estimatedGas, gasPrices]
+  )
 
   const gasAmount = getGasAmount(gasDenom)
   const gasFee = { amount: gasAmount, denom: gasDenom }
@@ -232,14 +238,17 @@ function Tx<TxValues>(props: Props<TxValues>) {
     ? new BigNumber(balanceAfterTx).lt(0)
     : false
 
-  const availableGasDenoms =
-    props.availableGasDenoms ??
-    sortCoins(bankBalance, currency)
-      .map(({ denom }) => denom)
-      .filter((denom) => !isDenomIBC(denom))
-      .filter((denom) =>
-        new BigNumber(getAmount(bankBalance, denom)).gte(getGasAmount(denom))
-      )
+  const availableGasDenoms = useMemo(
+    () =>
+      props.availableGasDenoms ??
+      sortCoins(bankBalance, currency)
+        .map(({ denom }) => denom)
+        .filter((denom) => !isDenomIBC(denom))
+        .filter((denom) =>
+          new BigNumber(getAmount(bankBalance, denom)).gte(getGasAmount(denom))
+        ),
+    [bankBalance, currency, getGasAmount, props.availableGasDenoms]
+  )
 
   useEffect(() => {
     setGasDenom(availableGasDenoms[0])
