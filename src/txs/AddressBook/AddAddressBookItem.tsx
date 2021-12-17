@@ -46,7 +46,7 @@ const AddAddressBookItem = () => {
       </FormItem>
 
       <FormItem
-        label={`${t("Memo")} (${t("Optional")})`}
+        label={`${t("Memo")} (${t("optional")})`}
         error={errors.memo?.message}
       >
         <Input

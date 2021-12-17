@@ -81,7 +81,7 @@ const InstantiateContractForm = () => {
       {({ fee, submit }) => (
         <Form onSubmit={handleSubmit(submit.fn)}>
           <FormItem
-            label={`${t("Admin")} (${t("Optional")})`}
+            label={`${t("Admin")} (${t("optional")})`}
             error={errors.admin?.message}
           >
             <Input

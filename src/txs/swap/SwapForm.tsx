@@ -133,7 +133,7 @@ const SwapForm = () => {
 
   /* Select asset */
   const onSelectAsset = (key: "offerAsset" | "askAsset") => {
-    return (value: Token) => {
+    return async (value: Token) => {
       const assets = {
         offerAsset: { offerAsset: value, askAsset },
         askAsset: { offerAsset, askAsset: value },
@@ -146,6 +146,11 @@ const SwapForm = () => {
 
       if (assets.offerAsset === assets.askAsset) {
         setValue(key === "offerAsset" ? "askAsset" : "offerAsset", undefined)
+      }
+
+      if (key === "offerAsset") {
+        form.resetField("input")
+        form.setFocus("input")
       }
 
       setValue("mode", availableSwapMode)

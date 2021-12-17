@@ -91,7 +91,7 @@ const TransferCW721Form = ({ contract, id }: Props) => {
                 </FormItem>
 
                 <FormItem
-                  label={`${t("Memo")} (${t("Optional")})`}
+                  label={`${t("Memo")} (${t("optional")})`}
                   error={errors.memo?.message}
                 >
                   <Input

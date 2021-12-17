@@ -1,5 +1,5 @@
 import { ReactNode } from "react"
-import ExternalLink from "../general/ExternalLink"
+import { ExternalLink } from "../general"
 import styles from "./List.module.scss"
 
 interface LinkItem {

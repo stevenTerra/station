@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from "react"
+import { useCallback, useEffect, useMemo } from "react"
 import { useTranslation } from "react-i18next"
 import { useForm } from "react-hook-form"
 import { AccAddress } from "@terra-money/terra.js"
@@ -39,13 +39,17 @@ const SendForm = ({ token, decimals, balance }: Props) => {
   const form = useForm<TxValues>({ mode: "onChange" })
   const { register, watch, setValue, handleSubmit, formState } = form
   const { errors } = formState
-  const { input, memo } = watch()
+  const { recipient, input, memo } = watch()
   const amount = toAmount(input, { decimals })
 
   const onClickAddressBookItem = ({ recipient, memo }: AddressBook) => {
     setValue("recipient", recipient)
     setValue("memo", memo)
   }
+
+  useEffect(() => {
+    if (recipient && AccAddress.validate(recipient)) form.setFocus("input")
+  }, [form, recipient])
 
   /* tx */
   const createTx = useCallback(
@@ -139,7 +143,7 @@ const SendForm = ({ token, decimals, balance }: Props) => {
                 </FormItem>
 
                 <FormItem
-                  label={`${t("Memo")} (${t("Optional")})`}
+                  label={`${t("Memo")} (${t("optional")})`}
                   error={errors.memo?.message}
                 >
                   <Input

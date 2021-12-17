@@ -304,7 +304,7 @@ const SubmitProposalForm = ({ communityPool, minDeposit }: Props) => {
           </FormItem>
 
           <FormItem
-            label={`${t("Initial deposit")} (${t("Optional")})`}
+            label={`${t("Initial deposit")} (${t("optional")})`}
             extra={max.render()}
             error={errors.input?.message}
           >

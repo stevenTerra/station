@@ -1,7 +1,7 @@
 import { ButtonHTMLAttributes } from "react"
 import { useTranslation } from "react-i18next"
 import { Button } from "../general"
-import LoadingCircular from "../feedback/LoadingCircular"
+import { LoadingCircular } from "../feedback"
 import styles from "./Form.module.scss"
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {

@@ -1,7 +1,6 @@
 import { FC, ReactNode } from "react"
 import classNames from "classnames/bind"
-import ErrorBoundary from "../feedback/ErrorBoundary"
-import { WithFetching } from "../feedback/Fetching"
+import { ErrorBoundary, WithFetching } from "../feedback"
 import Container from "./Container"
 import Card from "./Card"
 import styles from "./Page.module.scss"

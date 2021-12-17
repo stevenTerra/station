@@ -1,8 +1,8 @@
 import { FC, ReactNode } from "react"
 import { Link, To } from "react-router-dom"
 import classNames from "classnames/bind"
-import ErrorBoundary from "../feedback/ErrorBoundary"
-import { WithFetching } from "../feedback/Fetching"
+import { Flex } from "../layout"
+import { ErrorBoundary, WithFetching } from "../feedback"
 import styles from "./Card.module.scss"
 
 const cx = classNames.bind(styles)
@@ -52,7 +52,7 @@ const Card: FC<Props> = ({ title, extra, children, onClick, to, ...props }) => {
             {(title || extra) && (
               <header className={styles.header}>
                 <h1 className={styles.title}>{title}</h1>
-                <section className={styles.extra}>{extra}</section>
+                <Flex className={styles.extra}>{extra}</Flex>
               </header>
             )}
 

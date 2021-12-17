@@ -124,7 +124,7 @@ const SelectToken = ({ value: selected, onChange, ...props }: Props) => {
               <input
                 value={keyword}
                 onChange={(e) => setKeyword(e.target.value)}
-                placeholder="Luna"
+                placeholder=""
                 autoFocus
               />
             </Flex>
