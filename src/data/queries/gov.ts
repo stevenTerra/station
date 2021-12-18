@@ -108,7 +108,7 @@ export const useDeposits = (id: number) => {
       const [deposits] = await lcd.gov.deposits(id)
       return deposits
     },
-    { ...RefetchOptions.INFINITY }
+    { ...RefetchOptions.DEFAULT }
   )
 }
 

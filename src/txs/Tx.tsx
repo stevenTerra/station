@@ -29,6 +29,7 @@ import { isBroadcastingState, latestTxState } from "data/queries/tx"
 import { useBankBalance, useIsWalletEmpty } from "data/queries/bank"
 import { getShouldTax, useTaxCap, useTaxRate } from "data/queries/treasury"
 
+import { Pre } from "components/general"
 import { Flex } from "components/layout"
 import { FormError, Submit, Select } from "components/form"
 import { Modal } from "components/feedback"
@@ -386,16 +387,24 @@ function Tx<TxValues>(props: Props<TxValues>) {
     </>
   )
 
-  const modal =
-    error instanceof UserDenied
-      ? { title: error.message }
-      : error instanceof CreateTxFailed
-      ? { title: t("Failed to create tx"), children: error.message }
-      : error instanceof TxFailed
-      ? { title: t("Tx failed"), children: error.message }
-      : error instanceof Error
-      ? { title: error.message }
-      : undefined
+  const modal = !error
+    ? undefined
+    : {
+        title:
+          error instanceof UserDenied
+            ? t("User denied")
+            : error instanceof CreateTxFailed
+            ? t("Failed to create tx")
+            : error instanceof TxFailed
+            ? t("Tx failed")
+            : t("Error"),
+        children:
+          error instanceof UserDenied ? null : (
+            <Pre height={120} normal>
+              {error.message}
+            </Pre>
+          ),
+      }
 
   return (
     <>

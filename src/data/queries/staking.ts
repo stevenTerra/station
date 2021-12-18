@@ -68,7 +68,7 @@ export const useDelegations = () => {
 
       return delegations.filter(({ balance }) => has(balance.amount.toString()))
     },
-    { ...RefetchOptions.INFINITY }
+    { ...RefetchOptions.DEFAULT }
   )
 }
 
@@ -84,7 +84,7 @@ export const useUnbondings = () => {
       const [unbondings] = await lcd.staking.unbondingDelegations(address)
       return unbondings
     },
-    { ...RefetchOptions.INFINITY }
+    { ...RefetchOptions.DEFAULT }
   )
 }
 
