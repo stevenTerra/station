@@ -18,6 +18,7 @@ import { CreateTxFailed, TxFailed } from "@terra-money/wallet-provider"
 import { useWallet, useConnectedWallet } from "@terra-money/wallet-provider"
 
 import { Contents } from "types/components"
+import { DEFAULT_GAS_ADJUSTMENT } from "config/constants"
 import { has } from "utils/num"
 import { getAmount, sortCoins } from "utils/coin"
 import { getErrorMessage } from "utils/error"
@@ -71,7 +72,8 @@ interface RenderProps<TxValues> {
 
 function Tx<TxValues>(props: Props<TxValues>) {
   const { token, decimals, amount, balance } = props
-  const { initialGasDenom, estimationTxValues, createTx, gasAdjustment } = props
+  const { initialGasDenom, estimationTxValues, createTx } = props
+  const { gasAdjustment = DEFAULT_GAS_ADJUSTMENT } = props
   const { children, onChangeMax } = props
   const { queryKeys } = props
 
@@ -119,16 +121,14 @@ function Tx<TxValues>(props: Props<TxValues>) {
         gasPrices: { [initialGasDenom]: gasPrices[initialGasDenom] },
       }
 
-      const lcd = new LCDClient(
-        Object.assign(config, gasAdjustment && { gasAdjustment })
-      )
+      const lcd = new LCDClient(config)
 
       const unsignedTx = await lcd.tx.create([{ address }], {
         ...simulationTx,
         feeDenoms: [initialGasDenom],
       })
 
-      return Number(unsignedTx.auth_info.fee.gas_limit)
+      return unsignedTx.auth_info.fee.gas_limit * gasAdjustment
     },
     {
       ...RefetchOptions.INFINITY,

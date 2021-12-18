@@ -1,3 +1,9 @@
+/* query */
+export const LAZY_LIMIT = 999
+
+/* tx */
+export const DEFAULT_GAS_ADJUSTMENT = 1.75
+
 /* connection */
 export const BRIDGE = "https://walletconnect.terra.dev"
 
@@ -15,9 +21,6 @@ export const TERRA_VALIDATORS =
   "https://github.com/terra-money/validator-profiles/tree/master/validators/"
 
 export const STAKE_ID = "https://stake.id/#/validator/"
-
-/* query */
-export const LAZY_LIMIT = 999
 
 /* placeholder */
 // https://github.com/terra-money/localterra
