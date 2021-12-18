@@ -1,9 +1,13 @@
 @import "mixins";
 
-.card {
-  background: var(--card-bg);
+@mixin border {
   border: var(--border-width) solid var(--card-border);
   border-radius: var(--border-radius);
+}
+
+.card {
+  @include border;
+  background: var(--card-bg);
   overflow: hidden; // truncate title, linear progress
   position: relative; // for progress bar
 
@@ -11,6 +15,10 @@
     border-left: 0;
     border-right: 0;
     border-radius: 0;
+
+    & & {
+      @include border;
+    }
   }
 }
 
@@ -55,14 +63,7 @@
 
 /* components */
 .header {
-  @include desktop {
-    @include flex(space-between);
-  }
-
-  @include mobile {
-    display: grid;
-    gap: 8px;
-  }
+  @include flex(space-between);
 }
 
 .title {

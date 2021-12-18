@@ -346,7 +346,7 @@ const SwapForm = () => {
                   {simulated ? (
                     <Read amount={simulated} decimals={askDecimals} approx />
                   ) : (
-                    <p className="muted">{t("Simulating...")}</p>
+                    <p className="muted">{null}</p>
                   )}
                 </AssetReadOnly>
               }

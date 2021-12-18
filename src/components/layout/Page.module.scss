@@ -22,15 +22,14 @@
 }
 
 .header {
+  @include flex(space-between);
+
   @include desktop {
     --font-size-page-title: 36px;
-    @include flex(space-between);
   }
 
   @include mobile {
     --font-size-page-title: 24px;
-    display: grid;
-    gap: 8px;
     padding: 0 var(--main-padding-horizontal);
   }
 }
@@ -39,8 +38,17 @@
   font-size: var(--font-size-page-title);
 }
 
-.sub .title {
-  font-size: 24px;
+.sub {
+  .header {
+    @include mobile {
+      display: grid;
+      gap: 8px;
+    }
+  }
+
+  .title {
+    font-size: 24px;
+  }
 }
 
 @include desktop {
