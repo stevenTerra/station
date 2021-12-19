@@ -15,6 +15,21 @@ const Tokens = () => {
   const { list: ibc } = useCustomTokensIBC()
   const { list: cw20 } = useCustomTokensCW20()
 
+  const render = () => {
+    if (!ibc.length && !cw20.length) return null
+
+    return (
+      <>
+        {!ibc.length
+          ? null
+          : ibc.map(({ denom }) => <IBCAsset denom={denom} key={denom} />)}
+        {!cw20.length
+          ? null
+          : cw20.map((item) => <CW20Asset {...item} key={item.token} />)}
+      </>
+    )
+  }
+
   return (
     <Card
       title={t("Tokens")}
@@ -31,12 +46,7 @@ const Tokens = () => {
         </ModalButton>
       }
     >
-      {!ibc.length
-        ? null
-        : ibc.map(({ denom }) => <IBCAsset denom={denom} key={denom} />)}
-      {!cw20.length
-        ? null
-        : cw20.map((item) => <CW20Asset {...item} key={item.token} />)}
+      {render()}
     </Card>
   )
 }

@@ -88,11 +88,11 @@ const Coins = () => {
     )
   }
 
-  const extra = length > 1 && (
+  const extra = (
     <InternalLink
       icon={<BoltIcon style={{ fontSize: 18 }} />}
       to="/swap/multiple"
-      disabled={isWalletEmpty}
+      disabled={length < 2}
     >
       {t("Swap multiple coins")}
     </InternalLink>
