@@ -7,7 +7,7 @@ interface Props<T> extends QueryState {
   results: T[]
   renderTokenItem: (item: T) => CWTokenItemProps
 
-  /* manage custom tokens */
+  /* manage tokens */
   list: T[]
   getIsAdded: (item: T) => boolean
   add: (item: T) => void

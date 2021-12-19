@@ -53,7 +53,7 @@ const SwapMultipleForm = () => {
   /* options: askAsset */
   const options = [
     {
-      title: t("Native tokens"),
+      title: t("Coins"),
       children: sortDenoms(activeDenoms, currency).map((denom) => {
         return { ...readNativeDenom(denom), value: denom }
       }),

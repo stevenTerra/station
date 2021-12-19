@@ -14,7 +14,7 @@ const CW20Assets = () => {
 
   return (
     <Card
-      title={t("Custom tokens")}
+      title={t("Tokens")}
       extra={
         <ModalButton
           title={t("Add/Remove token")}

@@ -10,7 +10,7 @@ interface Preference {
   hideSmallBalances?: boolean
 }
 
-/* Custom tokens */
+/* Tokens */
 type NetworkName = string
 type CustomTokens = Record<NetworkName, CustomTokensByNetwork>
 

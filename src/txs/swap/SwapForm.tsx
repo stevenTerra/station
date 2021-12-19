@@ -84,9 +84,9 @@ const SwapForm = () => {
       })
 
     return [
-      { title: t("Native tokens"), children: getOptionList(native) },
+      { title: t("Coins"), children: getOptionList(native) },
       { title: t("IBC tokens"), children: getOptionList(ibc) },
-      { title: t("Custom tokens"), children: getOptionList(cw20) },
+      { title: t("Tokens"), children: getOptionList(cw20) },
     ]
   }
 

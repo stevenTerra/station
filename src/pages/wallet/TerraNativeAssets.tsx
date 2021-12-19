@@ -68,7 +68,7 @@ const TerraNativeAssets = () => {
           {isWalletEmpty && (
             <FormError>
               {t(
-                "This wallet does not hold any native tokens, so the transaction could not be processed."
+                "This wallet does not hold any coins, so the transaction could not be processed."
               )}
             </FormError>
           )}
@@ -106,7 +106,7 @@ const TerraNativeAssets = () => {
   )
 
   return (
-    <Card {...state} title={t("Native tokens")} extra={extra}>
+    <Card {...state} title={t("Coins")} extra={extra}>
       <Grid gap={32}>{render()}</Grid>
     </Card>
   )

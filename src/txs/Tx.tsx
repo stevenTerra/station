@@ -380,7 +380,7 @@ function Tx<TxValues>(props: Props<TxValues>) {
       {isWalletEmpty && (
         <FormError>
           {t(
-            "This wallet does not hold any native tokens, so the transaction could not be processed."
+            "This wallet does not hold any coins, so the transaction could not be processed."
           )}
         </FormError>
       )}
