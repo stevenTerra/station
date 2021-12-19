@@ -432,7 +432,7 @@ function Tx<TxValues>(props: Props<TxValues>) {
             : t("Error"),
         children:
           error instanceof UserDenied ? null : (
-            <Pre height={120} normal>
+            <Pre height={120} normal break>
               {error.message}
             </Pre>
           ),
