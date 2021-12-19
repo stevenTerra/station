@@ -8,7 +8,7 @@ export const getUser = () => {
 }
 
 export const storeUser = (user: User) => {
-  localStorage.setItem("settings", JSON.stringify(user))
+  localStorage.setItem("settings", JSON.stringify({ user }))
 }
 
 export const clearUser = () => {
