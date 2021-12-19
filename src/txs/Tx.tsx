@@ -88,7 +88,7 @@ function Tx<TxValues>(props: Props<TxValues>) {
   const currency = useCurrency()
   const { network, post } = useWallet()
   const connectedWallet = useConnectedWallet()
-  const { wallets, validatePassword, ...auth } = useAuth()
+  const { wallet, validatePassword, ...auth } = useAuth()
   const address = useAddress()
   const isWalletEmpty = useIsWalletEmpty()
   const setLatestTx = useSetRecoilState(latestTxState)
@@ -117,7 +117,7 @@ function Tx<TxValues>(props: Props<TxValues>) {
     [queryKey.tx.create, key],
     async () => {
       if (!address || isWalletEmpty) return 0
-      if (!(wallets || connectedWallet?.availablePost)) return 0
+      if (!(wallet || connectedWallet?.availablePost)) return 0
       if (!simulationTx || !simulationTx.msgs.length) return 0
 
       const config = {
@@ -235,7 +235,7 @@ function Tx<TxValues>(props: Props<TxValues>) {
       const feeCoins = taxCoins ? gasCoins.add(taxCoins) : gasCoins
       const fee = new Fee(estimatedGas, feeCoins)
 
-      if (wallets) {
+      if (wallet) {
         const { result } = await auth.post({ ...tx, fee }, password)
         setLatestTx({ txhash: result.txhash, queryKeys })
       } else {
@@ -395,7 +395,7 @@ function Tx<TxValues>(props: Props<TxValues>) {
         />
       ) : (
         <Grid gap={4}>
-          {wallets && (
+          {wallet && (
             <FormItem label={t("Password")} error={incorrect}>
               <Input
                 type="password"
