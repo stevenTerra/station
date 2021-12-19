@@ -3,12 +3,12 @@ import { Link } from "react-router-dom"
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos"
 import { Col, Page } from "components/layout"
 import useAuth from "../../hooks/useAuth"
-import ConnectedAccount from "./ConnectedAccount"
-import styles from "./ManageAccounts.module.scss"
+import ConnectedWallet from "./ConnectedWallet"
+import styles from "./ManageWallets.module.scss"
 
-const ManageAccounts = () => {
+const ManageWallets = () => {
   const { t } = useTranslation()
-  const { user, available } = useAuth()
+  const { wallet, available } = useAuth()
 
   const list = [
     { to: "./export", children: t("Export wallet") },
@@ -27,12 +27,12 @@ const ManageAccounts = () => {
   }
 
   return (
-    <Page title={t("Manage account")}>
+    <Page title={t("Manage wallet")}>
       <Col>
-        {user && (
-          <ConnectedAccount index>
+        {wallet && (
+          <ConnectedWallet index>
             <div className={styles.list}>{list.map(renderItem)}</div>
-          </ConnectedAccount>
+          </ConnectedWallet>
         )}
 
         {!!available.length && (
@@ -42,4 +42,4 @@ const ManageAccounts = () => {
     </Page>
   )
 }
-export default ManageAccounts
+export default ManageWallets

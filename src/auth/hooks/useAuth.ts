@@ -5,53 +5,53 @@ import { CreateTxOptions, RawKey } from "@terra-money/terra.js"
 import { useLCDClient } from "data/Terra/lcdClient"
 import { PasswordError } from "../scripts/keystore"
 import { getDecryptedKey, testPassword } from "../scripts/keystore"
-import { getUser, storeUser, clearUser } from "../scripts/keystore"
-import { getStoredAccount, getStoredAccounts } from "../scripts/keystore"
+import { getWallet, storeWallet, clearWallet } from "../scripts/keystore"
+import { getStoredWallet, getStoredWallets } from "../scripts/keystore"
 import encrypt from "../scripts/encrypt"
 import useAvailable from "./useAvailable"
 
-const userState = atom({
-  key: "user",
-  default: getUser(),
+const walletState = atom({
+  key: "wallet",
+  default: getWallet(),
 })
 
 const useAuth = () => {
   const lcd = useLCDClient()
   const available = useAvailable()
 
-  const [user, setUser] = useRecoilState(userState)
-  const accounts = getStoredAccounts()
+  const [wallet, setWallet] = useRecoilState(walletState)
+  const wallets = getStoredWallets()
 
   /* connect | disconnect */
   const connect = useCallback(
     (name: string) => {
-      const { address } = getStoredAccount(name)
-      const user = { name, address }
-      storeUser(user)
-      setUser(user)
+      const { address } = getStoredWallet(name)
+      const wallet = { name, address }
+      storeWallet(wallet)
+      setWallet(wallet)
     },
-    [setUser]
+    [setWallet]
   )
 
   const disconnect = useCallback(() => {
-    clearUser()
-    setUser(undefined)
-  }, [setUser])
+    clearWallet()
+    setWallet(undefined)
+  }, [setWallet])
 
   /* helpers */
-  const getConnectedUser = () => {
-    if (!user) throw new Error("Wallet is not connected")
-    return user
+  const getConnectedWallet = () => {
+    if (!wallet) throw new Error("Wallet is not connected")
+    return wallet
   }
 
   const getKey = (password: string) => {
-    const { name } = getConnectedUser()
+    const { name } = getConnectedWallet()
     return getDecryptedKey({ name, password })
   }
 
   /* manage: export */
-  const encodeEncryptedAccount = (password: string) => {
-    const { name, address } = getConnectedUser()
+  const encodeEncryptedWallet = (password: string) => {
+    const { name, address } = getConnectedWallet()
     const key = getKey(password)
     const data = { name, address, encrypted_key: encrypt(key, password) }
     return encode(JSON.stringify(data))
@@ -60,7 +60,7 @@ const useAuth = () => {
   /* form */
   const validatePassword = (password: string) => {
     try {
-      const { name } = getConnectedUser()
+      const { name } = getConnectedWallet()
       return testPassword({ name, password })
     } catch (error) {
       return "Incorrect password"
@@ -78,12 +78,12 @@ const useAuth = () => {
   }
 
   return {
-    user,
-    accounts,
+    wallet,
+    wallets,
     connect,
     disconnect,
     available,
-    encodeEncryptedAccount,
+    encodeEncryptedWallet,
     validatePassword,
     post,
   }

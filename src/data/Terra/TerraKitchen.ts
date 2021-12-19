@@ -14,7 +14,7 @@ export enum AggregateStakingReturn {
   ANNUALIZED = "annualized",
 }
 
-export enum AggregateAccounts {
+export enum AggregateWallets {
   TOTAL = "total",
   ACTIVE = "active",
 }
@@ -42,9 +42,6 @@ export const useTaxRewards = (type: Aggregate) => {
   return useTerraKitchenAssets(`tax-rewards/${type}.json`)
 }
 
-export const useAccounts = (
-  accountsType: AggregateAccounts,
-  type: Aggregate
-) => {
-  return useTerraKitchenAssets(`accounts/${accountsType}/${type}.json`)
+export const useWallets = (walletsType: AggregateWallets, type: Aggregate) => {
+  return useTerraKitchenAssets(`wallets/${walletsType}/${type}.json`)
 }

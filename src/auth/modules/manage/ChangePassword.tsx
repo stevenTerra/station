@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom"
 import { useForm } from "react-hook-form"
 import { Card, Page } from "components/layout"
 import { Form, FormArrow, FormItem, Input, Submit } from "components/form"
-import ConnectedAccount from "./ConnectedAccount"
+import ConnectedWallet from "./ConnectedWallet"
 import { changePassword } from "../../scripts/keystore"
 import validate from "../../scripts/validate"
 import useAuth from "../../hooks/useAuth"
@@ -19,7 +19,7 @@ interface Values {
 const ChangePassword = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const { user, validatePassword } = useAuth()
+  const { wallet, validatePassword } = useAuth()
 
   /* form */
   const form = useForm<Values>({ mode: "onChange" })
@@ -29,15 +29,15 @@ const ChangePassword = () => {
 
   const [done, setDone] = useState(false)
   const submit = ({ current, password }: Values) => {
-    if (!user) throw new Error("Wallet is not connected")
-    const { name } = user
+    if (!wallet) throw new Error("Wallet is not connected")
+    const { name } = wallet
     changePassword({ name, oldPassword: current, newPassword: password })
     setDone(true)
   }
 
   return (
     <Page title={t("Change password")}>
-      <ConnectedAccount>
+      <ConnectedWallet>
         <Card>
           {done && (
             <ConfirmModal
@@ -85,7 +85,7 @@ const ChangePassword = () => {
             <Submit />
           </Form>
         </Card>
-      </ConnectedAccount>
+      </ConnectedWallet>
     </Page>
   )
 }

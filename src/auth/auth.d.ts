@@ -1,14 +1,14 @@
 type Bip = 118 | 330
 
-interface User {
+interface Wallet {
   name: string
   address: string
 }
 
-interface StoredAccount extends User {
+interface StoredWallet extends Wallet {
   encrypted: string
 }
 
-interface StoredAccountLegacy extends User {
+interface StoredWalletLegacy extends Wallet {
   wallet: string
 }

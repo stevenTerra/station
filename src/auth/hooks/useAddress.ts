@@ -4,8 +4,8 @@ import useAuth from "./useAuth"
 /* auth | walle-provider */
 const useAddress = () => {
   const connected = useConnectedWallet()
-  const { user } = useAuth()
-  return user?.address ?? connected?.terraAddress
+  const { wallet } = useAuth()
+  return wallet?.address ?? connected?.terraAddress
 }
 
 export default useAddress

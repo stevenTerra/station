@@ -4,9 +4,9 @@ import { useNavigate } from "react-router-dom"
 import { useForm } from "react-hook-form"
 import { Card, Page } from "components/layout"
 import { Form, FormItem, FormWarning, Input, Submit } from "components/form"
-import { deleteAccount } from "../../scripts/keystore"
+import { deleteWallet } from "../../scripts/keystore"
 import useAuth from "../../hooks/useAuth"
-import ConnectedAccount from "./ConnectedAccount"
+import ConnectedWallet from "./ConnectedWallet"
 import ConfirmModal from "./ConfirmModal"
 
 interface Values {
@@ -16,7 +16,7 @@ interface Values {
 const DeleteWallet = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const { user, disconnect, validatePassword } = useAuth()
+  const { wallet, disconnect, validatePassword } = useAuth()
 
   /* form */
   const form = useForm<Values>()
@@ -25,16 +25,16 @@ const DeleteWallet = () => {
 
   const [done, setDone] = useState(false)
   const submit = ({ password }: Values) => {
-    if (!user) throw new Error("Wallet is not connected")
-    const { name } = user
+    if (!wallet) throw new Error("Wallet is not connected")
+    const { name } = wallet
     disconnect()
-    deleteAccount({ name, password })
+    deleteWallet({ name, password })
     setDone(true)
   }
 
   return (
     <Page title={t("Delete wallet")}>
-      <ConnectedAccount>
+      <ConnectedWallet>
         <Card>
           {done && (
             <ConfirmModal
@@ -58,7 +58,7 @@ const DeleteWallet = () => {
             <Submit />
           </Form>
         </Card>
-      </ConnectedAccount>
+      </ConnectedWallet>
     </Page>
   )
 }

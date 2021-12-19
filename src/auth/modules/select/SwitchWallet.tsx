@@ -3,26 +3,26 @@ import { truncate } from "@terra.kitchen/utils"
 import classNames from "classnames/bind"
 import { Grid } from "components/layout"
 import useAuth from "../../hooks/useAuth"
-import styles from "./SwitchAccount.module.scss"
+import styles from "./SwitchWallet.module.scss"
 
 const cx = classNames.bind(styles)
 
-const SwitchAccount = () => {
+const SwitchWallet = () => {
   const { t } = useTranslation()
-  const { user, accounts, connect } = useAuth()
+  const { wallet, wallets, connect } = useAuth()
 
-  return !accounts.length ? null : (
+  return !wallets.length ? null : (
     <Grid gap={4}>
-      <h1>{t("Accounts")}</h1>
+      <h1>{t("Wallets")}</h1>
 
       <ul className={styles.list}>
-        {accounts.map(({ name, address }) => {
-          const active = name === user?.name
+        {wallets.map(({ name, address }) => {
+          const active = name === wallet?.name
 
           return (
             <li key={name}>
               <button
-                className={cx(styles.account, { active })}
+                className={cx(styles.wallet, { active })}
                 onClick={() => connect(name)}
               >
                 {name}
@@ -36,4 +36,4 @@ const SwitchAccount = () => {
   )
 }
 
-export default SwitchAccount
+export default SwitchWallet

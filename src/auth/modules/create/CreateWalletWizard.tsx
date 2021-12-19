@@ -2,9 +2,9 @@ import { ReactNode, useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 import { MnemonicKey } from "@terra-money/terra.js"
 import createContext from "utils/createContext"
-import { addAccount } from "../../scripts/keystore"
+import { addWallet } from "../../scripts/keystore"
 import CreateWalletForm from "./CreateWalletForm"
-import CreatedUser from "./CreatedUser"
+import CreatedWallet from "./CreatedWallet"
 
 export interface Values {
   name: string
@@ -22,9 +22,9 @@ interface CreateWallet {
   values: Values
   setValues: (values: Values) => void
 
-  /* create user */
-  createdUser?: User
-  createUser: (coinType: Bip) => void
+  /* create wallet */
+  createdWallet?: Wallet
+  createWallet: (coinType: Bip) => void
 }
 
 export const [useCreateWallet, CreateWalletProvider] =
@@ -48,14 +48,14 @@ const CreateWalletWizard = ({ defaultMnemonic = "", beforeCreate }: Props) => {
   const initial = { ...DefaultValues, mnemonic: defaultMnemonic }
   const [values, setValues] = useState(initial)
 
-  /* create user */
-  const [createdUser, setCreatedUser] = useState<User>()
-  const createUser = (coinType: Bip) => {
+  /* create wallet */
+  const [createdWallet, setCreatedWallet] = useState<Wallet>()
+  const createWallet = (coinType: Bip) => {
     const { name, password, mnemonic } = values
     const mk = new MnemonicKey({ mnemonic, coinType })
     const address = mk.accAddress
-    addAccount({ name, password, address, key: mk.privateKey })
-    setCreatedUser({ name, address })
+    addWallet({ name, password, address, key: mk.privateKey })
+    setCreatedWallet({ name, address })
     setStep(3)
   }
 
@@ -63,7 +63,7 @@ const CreateWalletWizard = ({ defaultMnemonic = "", beforeCreate }: Props) => {
   useEffect(() => {
     return () => {
       setValues(DefaultValues)
-      setCreatedUser(undefined)
+      setCreatedWallet(undefined)
     }
   }, [setValues])
 
@@ -78,7 +78,7 @@ const CreateWalletWizard = ({ defaultMnemonic = "", beforeCreate }: Props) => {
         return beforeCreate
 
       case 3:
-        return <CreatedUser />
+        return <CreatedWallet />
     }
   }
 
@@ -88,8 +88,8 @@ const CreateWalletWizard = ({ defaultMnemonic = "", beforeCreate }: Props) => {
     generated,
     values,
     setValues,
-    createdUser,
-    createUser,
+    createdWallet,
+    createWallet,
   }
 
   return <CreateWalletProvider value={value}>{render()}</CreateWalletProvider>

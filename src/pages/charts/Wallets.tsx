@@ -3,8 +3,8 @@ import { useTranslation } from "react-i18next"
 import { last } from "ramda"
 import capitalize from "@mui/utils/capitalize"
 import { formatNumber } from "@terra.kitchen/utils"
-import { Aggregate, AggregateAccounts } from "data/Terra/TerraKitchen"
-import { useAccounts } from "data/Terra/TerraKitchen"
+import { Aggregate, AggregateWallets } from "data/Terra/TerraKitchen"
+import { useWallets } from "data/Terra/TerraKitchen"
 import { combineState } from "data/query"
 import { Select } from "components/form"
 import { Card } from "components/layout"
@@ -13,16 +13,16 @@ import ChartContainer from "./components/ChartContainer"
 import Range from "./components/Range"
 import Filter from "./components/Filter"
 
-const Accounts = () => {
+const Wallets = () => {
   const { t } = useTranslation()
-  const [accountsType, setAccountsType] = useState<AggregateAccounts>(
-    AggregateAccounts.TOTAL
+  const [walletsType, setWalletsType] = useState<AggregateWallets>(
+    AggregateWallets.TOTAL
   )
 
   /* data */
   const [type, setType] = useState<Aggregate>(Aggregate.CUMULATIVE)
-  const { data, ...result } = useAccounts(accountsType, type)
-  const totalResult = useAccounts(AggregateAccounts.TOTAL, type) // for value
+  const { data, ...result } = useWallets(walletsType, type)
+  const totalResult = useWallets(AggregateWallets.TOTAL, type) // for value
   const { data: total } = totalResult
   const state = combineState(result, totalResult)
 
@@ -31,11 +31,11 @@ const Accounts = () => {
     return (
       <Filter>
         <Select
-          value={accountsType}
-          onChange={(e) => setAccountsType(e.target.value as AggregateAccounts)}
+          value={walletsType}
+          onChange={(e) => setWalletsType(e.target.value as AggregateWallets)}
           small
         >
-          {Object.values(AggregateAccounts).map((type) => (
+          {Object.values(AggregateWallets).map((type) => (
             <option value={type} key={type}>
               {capitalize(type)}
             </option>
@@ -66,7 +66,7 @@ const Accounts = () => {
             result={data}
             range={range}
             total={total && last(total)?.value}
-            unit={t("accounts")}
+            unit={t("wallets")}
             formatValue={(value) => formatNumber(value, { prefix: true })}
             formatY={(value) => formatNumber(value, { prefix: true, fixed: 1 })}
           />
@@ -81,10 +81,10 @@ const Accounts = () => {
       title={
         <TooltipIcon
           content={t(
-            "Number of total registered accounts in the selected period"
+            "Number of total registered wallets in the selected period"
           )}
         >
-          {t("Accounts")}
+          {t("Wallets")}
         </TooltipIcon>
       }
       extra={renderFilter()}
@@ -95,4 +95,4 @@ const Accounts = () => {
   )
 }
 
-export default Accounts
+export default Wallets

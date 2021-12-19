@@ -115,7 +115,7 @@ export const useNav = () => {
     { path: "/earn", element: <AnchorEarnTx /> },
 
     /* auth */
-    { path: "/account/*", element: <Auth /> },
+    { path: "/wallet/*", element: <Auth /> },
 
     /* dev */
     { path: "/labs", element: <Labs /> },

@@ -1,7 +1,7 @@
 import TxVolume from "../charts/TxVolume"
 import StakingReturn from "../charts/StakingReturn"
 import TaxRewards from "../charts/TaxRewards"
-import Accounts from "../charts/Accounts"
+import Wallets from "../charts/Wallets"
 import styles from "./Charts.module.scss"
 
 const Charts = () => {
@@ -10,7 +10,7 @@ const Charts = () => {
       <TxVolume />
       <StakingReturn />
       <TaxRewards />
-      <Accounts />
+      <Wallets />
     </div>
   )
 }

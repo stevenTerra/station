@@ -21,7 +21,7 @@ const SelectAddress = () => {
   const { t } = useTranslation()
   const currency = useCurrency()
   const lcd = useLCDClient()
-  const { values, createUser } = useCreateWallet()
+  const { values, createWallet } = useCreateWallet()
   const { mnemonic } = values
 
   /* query */
@@ -51,7 +51,7 @@ const SelectAddress = () => {
         const { balance, delegations, unbondings } = account118
         const is118Empty =
           !balance.toData().length && !delegations.length && !unbondings.length
-        if (is118Empty) createUser(330)
+        if (is118Empty) createWallet(330)
       },
     }
   )
@@ -63,7 +63,7 @@ const SelectAddress = () => {
 
   const submit = ({ bip }: { bip?: Bip }) => {
     if (!bip) return
-    createUser(bip)
+    createWallet(bip)
   }
 
   /* render */

@@ -1,36 +1,36 @@
 import encrypt from "./encrypt"
 import decrypt from "./decrypt"
 
-/* user */
-export const getUser = () => {
+/* wallet */
+export const getWallet = () => {
   const settings = JSON.parse(localStorage.getItem("settings") ?? "{}")
-  return settings.user as User | undefined
+  return settings.user as Wallet | undefined
 }
 
-export const storeUser = (user: User) => {
+export const storeWallet = (user: Wallet) => {
   localStorage.setItem("settings", JSON.stringify({ user }))
 }
 
-export const clearUser = () => {
+export const clearWallet = () => {
   localStorage.removeItem("settings")
 }
 
-/* accounts */
-export const getStoredAccounts = () => {
+/* stored wallets */
+export const getStoredWallets = () => {
   const keys = localStorage.getItem("keys") ?? "[]"
-  return JSON.parse(keys) as (StoredAccount | StoredAccountLegacy)[]
+  return JSON.parse(keys) as (StoredWallet | StoredWalletLegacy)[]
 }
 
-const storeAccounts = (accounts: (StoredAccount | StoredAccountLegacy)[]) => {
-  localStorage.setItem("keys", JSON.stringify(accounts))
+const storeWallets = (wallets: (StoredWallet | StoredWalletLegacy)[]) => {
+  localStorage.setItem("keys", JSON.stringify(wallets))
 }
 
-/* account */
-export const getStoredAccount = (name: string) => {
-  const accounts = getStoredAccounts()
-  const account = accounts.find((account) => account.name === name)
-  if (!account) throw new Error("Account does not exist")
-  return account
+/* stored wallet */
+export const getStoredWallet = (name: string) => {
+  const wallets = getStoredWallets()
+  const wallet = wallets.find((wallet) => wallet.name === name)
+  if (!wallet) throw new Error("Wallet does not exist")
+  return wallet
 }
 
 interface Params {
@@ -39,12 +39,12 @@ interface Params {
 }
 
 export const getDecryptedKey = ({ name, password }: Params) => {
-  const account = getStoredAccount(name)
+  const wallet = getStoredWallet(name)
 
-  if ("encrypted" in account) return decrypt(account.encrypted, password)
+  if ("encrypted" in wallet) return decrypt(wallet.encrypted, password)
 
   // legacy
-  const { privateKey: key } = JSON.parse(decrypt(account.wallet, password))
+  const { privateKey: key } = JSON.parse(decrypt(wallet.wallet, password))
   return key as string
 }
 
@@ -54,18 +54,18 @@ export const testPassword = (params: Params) => {
   return true
 }
 
-interface AddAccountParams extends Params, User {
+interface AddWalletParams extends Params, Wallet {
   key: Buffer
 }
 
-export const addAccount = (params: AddAccountParams) => {
+export const addWallet = (params: AddWalletParams) => {
   const { name, password, address, key } = params
-  const accounts = getStoredAccounts()
-  if (accounts.find((account) => account.name === name))
-    throw new Error("Account already exists")
+  const wallets = getStoredWallets()
+  if (wallets.find((wallet) => wallet.name === name))
+    throw new Error("Wallet already exists")
   const encrypted = encrypt(key.toString("hex"), password)
-  const next = accounts.filter((account) => account.address !== address)
-  storeAccounts([...next, { name, address, encrypted }])
+  const next = wallets.filter((wallet) => wallet.address !== address)
+  storeWallets([...next, { name, address, encrypted }])
 }
 
 interface ChangePasswordParams {
@@ -79,22 +79,22 @@ export const changePassword = (params: ChangePasswordParams) => {
   testPassword({ name, password: oldPassword })
   const key = getDecryptedKey({ name, password: oldPassword })
   const encrypted = encrypt(key, newPassword)
-  const accounts = getStoredAccounts()
-  const next = accounts.map((account) => {
-    if (account.name === name) {
-      const { address } = account
+  const wallets = getStoredWallets()
+  const next = wallets.map((wallet) => {
+    if (wallet.name === name) {
+      const { address } = wallet
       return { name, address, encrypted }
     }
 
-    return account
+    return wallet
   })
 
-  storeAccounts(next)
+  storeWallets(next)
 }
 
-export const deleteAccount = (params: Params) => {
+export const deleteWallet = (params: Params) => {
   testPassword(params)
-  const accounts = getStoredAccounts()
-  const next = accounts.filter((account) => account.name !== params.name)
-  storeAccounts(next)
+  const wallets = getStoredWallets()
+  const next = wallets.filter((wallet) => wallet.name !== params.name)
+  storeWallets(next)
 }

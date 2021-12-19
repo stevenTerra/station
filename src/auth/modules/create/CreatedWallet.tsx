@@ -5,11 +5,11 @@ import { Button } from "components/general"
 import useAuth from "../../hooks/useAuth"
 import { useCreateWallet } from "./CreateWalletWizard"
 
-const CreatedUser = () => {
+const CreatedWallet = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const { connect } = useAuth()
-  const { createdUser } = useCreateWallet()
+  const { createdWallet: createdUser } = useCreateWallet()
 
   if (!createdUser) return null
   const { name, address } = createdUser
@@ -43,4 +43,4 @@ const CreatedUser = () => {
   )
 }
 
-export default CreatedUser
+export default CreatedWallet

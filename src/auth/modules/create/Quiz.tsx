@@ -21,7 +21,7 @@ export interface QuizItem {
 
 const Quiz = () => {
   const { t } = useTranslation()
-  const { setStep, values, createUser } = useCreateWallet()
+  const { setStep, values, createWallet } = useCreateWallet()
   const { mnemonic } = values
 
   /* quiz */
@@ -31,7 +31,7 @@ const Quiz = () => {
   /* submit */
   const { handleSubmit } = useForm()
   const [incorrect, setIncorrect] = useState(false)
-  const submit = () => (win(answers) ? createUser(330) : setIncorrect(true))
+  const submit = () => (win(answers) ? createWallet(330) : setIncorrect(true))
   const reset = () => setStep(1)
 
   return (

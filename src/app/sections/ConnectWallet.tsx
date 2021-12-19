@@ -7,7 +7,7 @@ import { Grid } from "components/layout"
 import { List } from "components/display"
 import { ModalButton } from "components/feedback"
 import { useAuth } from "auth"
-import SwitchAccount from "auth/modules/select/SwitchAccount"
+import SwitchWallet from "auth/modules/select/SwitchWallet"
 import Connected from "./Connected"
 
 interface Props {
@@ -37,7 +37,7 @@ const ConnectWallet = ({ renderButton }: Props) => {
       renderButton={renderButton ?? defaultRenderButton}
     >
       <Grid gap={20}>
-        <SwitchAccount />
+        <SwitchWallet />
         <List
           list={[
             ...available,

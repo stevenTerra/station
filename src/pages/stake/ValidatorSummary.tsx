@@ -39,7 +39,7 @@ const ValidatorSummary = ({ validator }: { validator: Validator }) => {
       content: <FinderLink validator>{operator_address}</FinderLink>,
     },
     {
-      title: t("Account address"),
+      title: t("Wallet address"),
       content: (
         <FinderLink>{AccAddress.fromValAddress(operator_address)}</FinderLink>
       ),

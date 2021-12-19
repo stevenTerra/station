@@ -7,14 +7,14 @@ import { Button, Copy, FinderLink } from "components/general"
 import { Grid } from "components/layout"
 import { Tooltip, Popover } from "components/display"
 import { useAddress, useAuth } from "auth"
-import SwitchAccount from "auth/modules/select/SwitchAccount"
+import SwitchWallet from "auth/modules/select/SwitchWallet"
 import styles from "./Connected.module.scss"
 
 const Connected = () => {
   const { t } = useTranslation()
   const { disconnect } = useWallet()
   const address = useAddress()
-  const { user } = useAuth()
+  const { wallet } = useAuth()
 
   if (!address) return null
 
@@ -35,12 +35,12 @@ const Connected = () => {
               </footer>
             </section>
 
-            <SwitchAccount />
+            <SwitchWallet />
           </Grid>
 
-          {user ? (
-            <Link to="/account" className={styles.footer}>
-              {t("Manage account")}
+          {wallet ? (
+            <Link to="/wallet" className={styles.footer}>
+              {t("Manage wallet")}
             </Link>
           ) : (
             <button
@@ -61,7 +61,7 @@ const Connected = () => {
         size="small"
         outline
       >
-        {user?.name ?? truncate(address)}
+        {wallet?.name ?? truncate(address)}
       </Button>
     </Popover>
   )

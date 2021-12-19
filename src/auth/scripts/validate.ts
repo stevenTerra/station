@@ -1,4 +1,4 @@
-import { getStoredAccount } from "./keystore"
+import { getStoredWallet } from "./keystore"
 import wordlist from "./wordlist.json"
 
 const validate = {
@@ -8,7 +8,7 @@ const validate = {
       "Enter 3-20 alphanumeric characters",
     exists: (name: string) => {
       try {
-        const { address } = getStoredAccount(name)
+        const { address } = getStoredWallet(name)
         return `Already exists with: ${address}`
       } catch {
         return true

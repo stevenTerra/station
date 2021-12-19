@@ -9,7 +9,7 @@ import { Form, FormItem, FormWarning } from "components/form"
 import { Input, RadioButton, Submit } from "components/form"
 import { Modal } from "components/feedback"
 import useAuth from "../../hooks/useAuth"
-import ConnectedAccount from "./ConnectedAccount"
+import ConnectedWallet from "./ConnectedWallet"
 
 enum Mode {
   QR = "QR code",
@@ -23,7 +23,7 @@ interface Values {
 
 const ExportWallet = () => {
   const { t } = useTranslation()
-  const { validatePassword, encodeEncryptedAccount } = useAuth()
+  const { validatePassword, encodeEncryptedWallet } = useAuth()
 
   /* form */
   const form = useForm<Values>({
@@ -38,7 +38,7 @@ const ExportWallet = () => {
   /* submit */
   const [encoded, setEncoded] = useState<string>()
   const submit = ({ password }: Values) => {
-    const encoded = encodeEncryptedAccount(password)
+    const encoded = encodeEncryptedWallet(password)
     setEncoded(encoded)
   }
 
@@ -79,7 +79,7 @@ const ExportWallet = () => {
         </Modal>
       )}
 
-      <ConnectedAccount>
+      <ConnectedWallet>
         <Card>
           <Form onSubmit={handleSubmit(submit)}>
             <section>
@@ -110,7 +110,7 @@ const ExportWallet = () => {
             <Submit />
           </Form>
         </Card>
-      </ConnectedAccount>
+      </ConnectedWallet>
     </Page>
   )
 }

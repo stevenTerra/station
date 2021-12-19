@@ -5,7 +5,7 @@ import NewWallet from "./create/NewWallet"
 import RecoverWallet from "./create/RecoverWallet"
 
 /* manage */
-import ManageAccounts from "./manage/ManageAccounts"
+import ManageWallets from "./manage/ManageWallets"
 import ExportWallet from "./manage/ExportWallet"
 import ChangePassword from "./manage/ChangePassword"
 import DeleteWallet from "./manage/DeleteWallet"
@@ -14,7 +14,7 @@ import Disconnect from "./manage/Disconnect"
 const Auth = () => {
   return (
     <Routes>
-      <Route index element={<ManageAccounts />} />
+      <Route index element={<ManageWallets />} />
 
       {/* create */}
       <Route path="new" element={<NewWallet />} />
