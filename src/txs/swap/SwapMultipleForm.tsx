@@ -31,7 +31,7 @@ import { useMultipleSwap } from "./MultipleSwapContext"
 import styles from "./SwapMultipleForm.module.scss"
 
 interface TxValues {
-  askAsset: NativeDenom
+  askAsset: CoinDenom
 }
 
 // available > simulatable > simulated > selectable > offers
@@ -115,7 +115,7 @@ const SwapMultipleForm = () => {
     [selectable]
   )
 
-  const [state, setState] = useState<Record<NativeDenom, boolean>>(init)
+  const [state, setState] = useState<Record<CoinDenom, boolean>>(init)
 
   useEffect(() => {
     setState(init)

@@ -55,7 +55,7 @@ export const useMemoizedPrices = (currency: Denom) => {
   return { data: prices, ...state }
 }
 
-export type CalcValue = (params: NativeCoin) => number | undefined
+export type CalcValue = (params: CoinData) => number | undefined
 export const useMemoizedCalcValue = (denom?: Denom) => {
   const currency = useCurrency()
   const { data: memoizedPrices } = useMemoizedPrices(denom ?? currency)

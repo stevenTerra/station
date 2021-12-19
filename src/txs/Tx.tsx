@@ -50,12 +50,12 @@ interface Props<TxValues> {
   balance?: Amount
 
   /* tx simulation */
-  initialGasDenom: NativeDenom
+  initialGasDenom: CoinDenom
   estimationTxValues: TxValues
   createTx: (values: TxValues) => CreateTxOptions | undefined
   gasAdjustment?: number
   taxes?: Coins
-  availableGasDenoms?: NativeDenom[]
+  availableGasDenoms?: CoinDenom[]
 
   /* render */
   disabled?: string | false
@@ -147,7 +147,7 @@ function Tx<TxValues>(props: Props<TxValues>) {
   )
 
   const getGasAmount = useCallback(
-    (denom: NativeDenom) => {
+    (denom: CoinDenom) => {
       const gasPrice = gasPrices[denom]
       if (isNil(estimatedGas) || !gasPrice) return "0"
       return new BigNumber(estimatedGas)

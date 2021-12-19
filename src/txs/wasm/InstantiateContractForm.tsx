@@ -22,7 +22,7 @@ interface TxValues {
   admin?: AccAddress
   id?: number
   msg?: string
-  coins: { input?: number; denom: NativeDenom }[]
+  coins: { input?: number; denom: CoinDenom }[]
 }
 
 const InstantiateContractForm = () => {

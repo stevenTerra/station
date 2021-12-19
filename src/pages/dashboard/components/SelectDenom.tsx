@@ -5,7 +5,7 @@ import { ModalButton } from "components/feedback"
 import { TokenCard, TokenCardGrid } from "components/token"
 import styles from "./SelectDenom.module.scss"
 
-interface Item extends NativeCoin {
+interface Item extends CoinData {
   value?: Value
 }
 

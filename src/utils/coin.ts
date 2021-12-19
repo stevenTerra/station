@@ -10,7 +10,7 @@ export const getAmount = (coins: Coins, denom: Denom, fallback = "0") => {
 export const sortCoins = (
   coins: Coins,
   currency?: string,
-  sorter?: (a: NativeCoin, b: NativeCoin) => number
+  sorter?: (a: CoinData, b: CoinData) => number
 ) => {
   return sortByDenom(coins.toData(), currency, sorter)
 }

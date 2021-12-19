@@ -50,7 +50,7 @@ const WithdrawCommissionForm = () => {
   const renderCommission = () => {
     if (!validatorCommission) return null
 
-    const sorter = (a: NativeCoin, b: NativeCoin) =>
+    const sorter = (a: CoinData, b: CoinData) =>
       Number(calcValue(b)) - Number(calcValue(a))
 
     const list = sortCoins(validatorCommission, currency, sorter)

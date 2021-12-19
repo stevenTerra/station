@@ -13,7 +13,7 @@ export const toInput = (amount: BigNumber.Value, decimals = 6) =>
 /* field array (coins) */
 export interface CoinInput {
   input?: number
-  denom: NativeDenom
+  denom: CoinDenom
 }
 
 export const getCoins = (coins: CoinInput[]) => {

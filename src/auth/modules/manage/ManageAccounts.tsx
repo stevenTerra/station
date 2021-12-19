@@ -35,7 +35,9 @@ const ManageAccounts = () => {
           </ConnectedAccount>
         )}
 
-        <div className={styles.list}>{available.map(renderItem)}</div>
+        {!!available.length && (
+          <div className={styles.list}>{available.map(renderItem)}</div>
+        )}
       </Col>
     </Page>
   )

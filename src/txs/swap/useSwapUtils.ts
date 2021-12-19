@@ -180,7 +180,7 @@ const useSwapUtils = () => {
   )
 
   const simulateOnchain = async (params: SwapParams) => {
-    const getRate = (denom: NativeDenom) =>
+    const getRate = (denom: CoinDenom) =>
       isDenomLuna(denom) ? "1" : getAmount(exchangeRates, denom)
 
     const { amount, offerAsset, askAsset } = params

@@ -38,7 +38,7 @@ interface TextProposalValues extends DefaultValues {
 
 interface CommunityPoolSpendProposalValues extends DefaultValues {
   type: ProposalType.SPEND
-  spend: { input?: number; denom: NativeDenom; recipient: AccAddress }
+  spend: { input?: number; denom: CoinDenom; recipient: AccAddress }
 }
 
 interface ParameterChangeProposalValues extends DefaultValues {

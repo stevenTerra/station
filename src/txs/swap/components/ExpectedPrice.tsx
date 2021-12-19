@@ -156,7 +156,7 @@ const useSwapSpread = () => {
   return minSpread?.toString()
 }
 
-const useTobinTax = (askAsset?: NativeDenom) => {
+const useTobinTax = (askAsset?: CoinDenom) => {
   const { data: oracleParams } = useOracleParams()
   const tobinTax = oracleParams?.whitelist.find(
     ({ name }) => name === askAsset

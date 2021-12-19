@@ -20,7 +20,7 @@ import { useTaxParams } from "./TaxParams"
 
 interface TxValues {
   msg: string
-  coins: { input?: number; denom: NativeDenom }[]
+  coins: { input?: number; denom: CoinDenom }[]
 }
 
 const ExecuteContractForm = () => {

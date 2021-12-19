@@ -12,7 +12,7 @@ const ProposalSummary = ({ proposal }: { proposal: Proposal }) => {
       title: capitalize(key),
       content:
         key === "amount" ? (
-          content.map((coin: NativeCoin) => <Read {...coin} key={coin.denom} />)
+          content.map((coin: CoinData) => <Read {...coin} key={coin.denom} />)
         ) : key === "recipient" ? (
           <FinderLink short>{content}</FinderLink>
         ) : key === "changes" ? (

@@ -15,7 +15,7 @@ export const useSupply = () => {
     async () => {
       // TODO: Pagination
       // Required when the number of results exceed 100
-      const { data } = await axios.get<{ supply: NativeCoin[] }>(
+      const { data } = await axios.get<{ supply: CoinData[] }>(
         "cosmos/bank/v1beta1/supply", // FIXME: Import from terra.js
         { baseURL: lcd }
       )

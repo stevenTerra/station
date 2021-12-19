@@ -1,13 +1,15 @@
+type TerraAddress = string
+
 type Amount = string
 type Value = string | number
 type Price = number
 
-/* token */
-type NativeDenom = string // uluna | uusd
+/* coin | token */
+type CoinDenom = string // uluna | uusd
 type IBCDenom = string // ibc/...
-type TerraAddress = string
-type Denom = NativeDenom | IBCDenom
-type Token = Denom | TerraAddress
+type TokenAddress = TerraAddress
+type Denom = CoinDenom | IBCDenom
+type Token = Denom | TokenAddress
 
 /* asset info */
 interface Asset {
@@ -39,7 +41,7 @@ interface TokenItemWithBalance extends TokenItem {
 }
 
 /* native */
-interface NativeCoin {
+interface CoinData {
   amount: Amount
   denom: Denom
 }
