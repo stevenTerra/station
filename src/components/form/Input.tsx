@@ -24,6 +24,7 @@ const Input = forwardRef(
         <input
           {...attrs}
           className={cx(styles.input, { before: token, after: selectBefore })}
+          autoComplete="off"
           ref={ref}
         />
 
