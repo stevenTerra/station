@@ -4,7 +4,7 @@ export enum SettingKey {
   Theme = "Theme",
   Currency = "Currency",
   Language = "Language",
-  Preference = "Preference",
+  MinimumValue = "MinimumValue",
   CustomTokens = "CustomTokens",
   AddressBook = "AddressBook",
 }
@@ -20,7 +20,7 @@ export const DefaultSettings = {
   [SettingKey.Theme]: DefaultTheme,
   [SettingKey.Currency]: "uusd",
   [SettingKey.Language]: "en",
-  [SettingKey.Preference]: {} as Preference,
+  [SettingKey.MinimumValue]: 0,
   [SettingKey.CustomTokens]: DefaultCustomTokens as CustomTokens,
   [SettingKey.AddressBook]: [] as AddressBook[],
 }

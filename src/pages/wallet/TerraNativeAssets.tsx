@@ -4,22 +4,23 @@ import BoltIcon from "@mui/icons-material/Bolt"
 import { has } from "utils/num"
 import { getAmount, sortByDenom } from "utils/coin"
 import { useCurrency } from "data/settings/Currency"
-import { usePreference } from "data/settings/Preference"
+import { useMinimumValue } from "data/settings/MinimumValue"
 import { readNativeDenom } from "data/token"
 import { useBankBalance } from "data/queries/bank"
 import { useIsWalletEmpty, useTerraNativeLength } from "data/queries/bank"
 import { useActiveDenoms } from "data/queries/oracle"
 import { useMemoizedCalcValue } from "data/queries/oracle"
 import { InternalLink } from "components/general"
-import { Card, Grid } from "components/layout"
-import { FormError, Checkbox } from "components/form"
+import { Card, Flex, Grid } from "components/layout"
+import { FormError } from "components/form"
 import { Read } from "components/token"
 import Asset from "./Asset"
+import SelectMinimumValue from "./SelectMinimumValue"
 import styles from "./TerraNativeAssets.module.scss"
 
 const TerraNativeAssets = () => {
   const { t } = useTranslation()
-  const { hideSmallBalances, toggleHideSmallBalances } = usePreference()
+  const [minimumValue] = useMinimumValue()
   const currency = useCurrency()
   const bankBalance = useBankBalance()
   const length = useTerraNativeLength()
@@ -49,7 +50,7 @@ const TerraNativeAssets = () => {
       ({ $: a }, { $: b }) => b - a
     )
 
-    const listNotSmall = list.filter(({ $ }) => $ >= 1e6)
+    const listNotSmall = list.filter(({ $ }) => $ >= minimumValue * 1e6)
 
     const values = list.map(({ value }) => value).filter(Boolean)
     const valueTotal = values.length ? BigNumber.sum(...values).toNumber() : 0
@@ -73,22 +74,14 @@ const TerraNativeAssets = () => {
             </FormError>
           )}
 
-          {!isWalletEmpty && (
-            <Checkbox
-              checked={hideSmallBalances}
-              onChange={toggleHideSmallBalances}
-              disabled={!listNotSmall.length}
-            >
-              {t("Hide small balances")}
-            </Checkbox>
-          )}
+          <Flex className={styles.select}>
+            {!isWalletEmpty && <SelectMinimumValue />}
+          </Flex>
 
           <section>
-            {(hideSmallBalances ? listNotSmall : list).map(
-              ({ denom, ...item }) => (
-                <Asset {...readNativeDenom(denom)} {...item} key={denom} />
-              )
-            )}
+            {listNotSmall.map(({ denom, ...item }) => (
+              <Asset {...readNativeDenom(denom)} {...item} key={denom} />
+            ))}
           </section>
         </Grid>
       </>

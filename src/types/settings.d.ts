@@ -5,11 +5,6 @@ interface AddressBook {
   memo?: string
 }
 
-/* Preference */
-interface Preference {
-  hideSmallBalances?: boolean
-}
-
 /* Tokens */
 type NetworkName = string
 type CustomTokens = Record<NetworkName, CustomTokensByNetwork>
