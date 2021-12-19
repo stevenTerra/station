@@ -12,8 +12,8 @@ export enum SettingKey {
 export const DefaultTheme = themes[0]
 
 const DefaultCustomTokens = {
-  mainnet: { cw20: [], cw721: [] },
-  testnet: { cw20: [], cw721: [] },
+  mainnet: { ibc: [], cw20: [], cw721: [] },
+  testnet: { ibc: [], cw20: [], cw721: [] },
 }
 
 export const DefaultSettings = {

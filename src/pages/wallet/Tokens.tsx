@@ -1,16 +1,19 @@
 import { useTranslation } from "react-i18next"
 import { useAddress } from "data/wallet"
+import { useCustomTokensIBC } from "data/settings/CustomTokens"
 import { useCustomTokensCW20 } from "data/settings/CustomTokens"
 import { InternalButton } from "components/general"
 import { Card } from "components/layout"
 import { ModalButton } from "components/feedback"
 import ManageCustomTokensCW20 from "../wasm/ManageCustomTokensCW20"
+import IBCAsset from "./IBCAsset"
 import CW20Asset from "./CW20Asset"
 
-const CW20Assets = () => {
+const Tokens = () => {
   const { t } = useTranslation()
   const address = useAddress()
-  const { list } = useCustomTokensCW20()
+  const { list: ibc } = useCustomTokensIBC()
+  const { list: cw20 } = useCustomTokensCW20()
 
   return (
     <Card
@@ -28,11 +31,14 @@ const CW20Assets = () => {
         </ModalButton>
       }
     >
-      {!list.length
+      {!ibc.length
         ? null
-        : list.map((item) => <CW20Asset {...item} key={item.token} />)}
+        : ibc.map(({ denom }) => <IBCAsset denom={denom} key={denom} />)}
+      {!cw20.length
+        ? null
+        : cw20.map((item) => <CW20Asset {...item} key={item.token} />)}
     </Card>
   )
 }
 
-export default CW20Assets
+export default Tokens

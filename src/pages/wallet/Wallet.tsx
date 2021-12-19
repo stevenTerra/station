@@ -1,7 +1,6 @@
 import { Auto, Page } from "components/layout"
-import TerraNativeAssets from "./TerraNativeAssets"
-import IBCAssets from "./IBCAssets"
-import CW20Assets from "./CW20Assets"
+import Coins from "./Coins"
+import Tokens from "./Tokens"
 import Rewards from "./Rewards"
 import AnchorEarn from "./AnchorEarn"
 
@@ -11,9 +10,8 @@ const Wallet = () => {
       <Auto
         columns={[
           <>
-            <TerraNativeAssets />
-            <IBCAssets />
-            <CW20Assets />
+            <Coins />
+            <Tokens />
           </>,
           <>
             <Rewards />

@@ -10,14 +10,14 @@ const customTokensState = atom({
 })
 
 interface Params<T> {
-  type: "cw20" | "cw721"
+  type: "ibc" | "cw20" | "cw721"
   key: keyof T
 }
 
 const useCustomTokens = <T extends CustomToken>({ type, key }: Params<T>) => {
   const [customTokens, setCustomTokens] = useRecoilState(customTokensState)
   const networkName = useNetworkName()
-  const list = customTokens[networkName][type] as T[]
+  const list = (customTokens[networkName][type] ?? []) as T[]
 
   const getIsAdded = (param: T) =>
     !!list.find((item) => item[key] === param[key])
@@ -40,6 +40,10 @@ const useCustomTokens = <T extends CustomToken>({ type, key }: Params<T>) => {
     updateList(list.filter((item) => item[key] !== oldItem[key]))
 
   return { list, getIsAdded, update: updateList, add, remove }
+}
+
+export const useCustomTokensIBC = () => {
+  return useCustomTokens<CustomTokenIBC>({ type: "ibc", key: "denom" })
 }
 
 export const useCustomTokensCW20 = () => {

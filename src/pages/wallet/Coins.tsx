@@ -16,9 +16,9 @@ import { FormError } from "components/form"
 import { Read } from "components/token"
 import Asset from "./Asset"
 import SelectMinimumValue from "./SelectMinimumValue"
-import styles from "./TerraNativeAssets.module.scss"
+import styles from "./Coins.module.scss"
 
-const TerraNativeAssets = () => {
+const Coins = () => {
   const { t } = useTranslation()
   const [minimumValue] = useMinimumValue()
   const currency = useCurrency()
@@ -105,4 +105,4 @@ const TerraNativeAssets = () => {
   )
 }
 
-export default TerraNativeAssets
+export default Coins
