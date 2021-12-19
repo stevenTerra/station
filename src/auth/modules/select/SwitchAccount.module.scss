@@ -1,0 +1,25 @@
+@import "mixins";
+
+.list {
+  display: grid;
+  gap: 4px;
+}
+
+.account {
+  @include flex(space-between);
+  width: 100%;
+
+  border: var(--border-width) solid var(--button-default-bg);
+  border-radius: 4px;
+  padding: 8px 16px;
+  transition: all var(--transition);
+
+  &:hover {
+    border-color: var(--button-primary-bg);
+  }
+}
+
+.active {
+  background: var(--button-default-bg);
+  border-color: var(--button-primary-bg);
+}

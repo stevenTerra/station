@@ -1,8 +1,16 @@
 import { ReactNode } from "react"
+import { Link, To } from "react-router-dom"
+import { useModal } from "components/feedback"
 import { ExternalLink } from "../general"
 import styles from "./List.module.scss"
 
-interface LinkItem {
+interface InternalLinkItem {
+  icon: ReactNode
+  children: string
+  to: To
+}
+
+interface ExternalLinkItem {
   icon: ReactNode
   children: string
   href: string
@@ -14,13 +22,25 @@ interface ButtonItem {
   onClick: () => void
 }
 
-type ListProps = (LinkItem | ButtonItem)[]
+type ListProps = (InternalLinkItem | ExternalLinkItem | ButtonItem)[]
 
 const List = ({ list }: { list: ListProps }) => {
+  const close = useModal()
+
   return (
-    <>
+    <section>
       {list.map(({ children, ...item }) => {
-        return "href" in item ? (
+        return "to" in item ? (
+          <Link
+            to={item.to}
+            onClick={close}
+            className={styles.item}
+            key={children}
+          >
+            {children}
+            {item.icon}
+          </Link>
+        ) : "href" in item ? (
           <ExternalLink href={item.href} className={styles.item} key={children}>
             {children}
             {item.icon}
@@ -37,7 +57,7 @@ const List = ({ list }: { list: ListProps }) => {
           </button>
         )
       })}
-    </>
+    </section>
   )
 }
 

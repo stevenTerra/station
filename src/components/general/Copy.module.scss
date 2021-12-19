@@ -1,7 +1,7 @@
 @import "mixins";
 
 .button {
-  @include flex;
+  @include inline-flex;
 
   border-radius: 10px;
   border: solid 1px var(--text);

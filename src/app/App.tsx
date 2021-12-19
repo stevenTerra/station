@@ -23,6 +23,9 @@ import LatestTx from "./sections/LatestTx"
 import ValidatorButton from "./sections/ValidatorButton"
 import DevTools from "./sections/DevTools"
 
+/* init */
+import InitBankBalance from "./InitBankBalance"
+
 const App = () => {
   const { element: routes } = useNav()
 
@@ -49,7 +52,9 @@ const App = () => {
       </Header>
 
       <Content>
-        <ErrorBoundary fallback={fallback}>{routes}</ErrorBoundary>
+        <ErrorBoundary fallback={fallback}>
+          <InitBankBalance>{routes}</InitBankBalance>
+        </ErrorBoundary>
       </Content>
     </Layout>
   )

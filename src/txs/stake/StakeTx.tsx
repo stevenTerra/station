@@ -16,7 +16,7 @@ const StakeTx = () => {
   if (!destination) throw new Error("Validator is not defined")
 
   const location = useLocation()
-  const initialTab = location.state
+  const initialTab = location.state as string
 
   const bankBalance = useBankBalance()
   const { data: validators, ...validatorsResult } = useValidators()

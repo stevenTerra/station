@@ -1,9 +1,5 @@
-import { useConnectedWallet, useWallet } from "@terra-money/wallet-provider"
-
-export const useAddress = () => {
-  const connectedWallet = useConnectedWallet()
-  return connectedWallet?.terraAddress
-}
+import { useWallet } from "@terra-money/wallet-provider"
+export { useAddress } from "auth"
 
 export const useNetwork = () => {
   const { network } = useWallet()

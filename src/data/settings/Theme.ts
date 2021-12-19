@@ -27,6 +27,11 @@ export const useTheme = () => {
   return find(name)
 }
 
+export const useThemeFavicon = () => {
+  const { favicon } = useTheme()
+  return favicon
+}
+
 export const useThemeAnimation = () => {
   const { animation } = useTheme()
   return animation

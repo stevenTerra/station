@@ -57,7 +57,7 @@ const SwapForm = () => {
   const { options, findTokenItem, findDecimals } = useSingleSwap()
 
   const initialOfferAsset =
-    state?.offerAsset ??
+    (state as { offerAsset: Token })?.offerAsset ??
     (getAmount(bankBalance, "uusd") ? "uusd" : sortCoins(bankBalance)[0].denom)
   const initialGasDenom = getInitialGasDenom(bankBalance, initialOfferAsset)
 

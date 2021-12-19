@@ -30,11 +30,13 @@ import { useBankBalance, useIsWalletEmpty } from "data/queries/bank"
 import { getShouldTax, useTaxCap, useTaxRate } from "data/queries/treasury"
 
 import { Pre } from "components/general"
-import { Flex } from "components/layout"
-import { FormError, Submit, Select } from "components/form"
+import { Flex, Grid } from "components/layout"
+import { FormError, Submit, Select, Input, FormItem } from "components/form"
 import { Modal } from "components/feedback"
 import { Read } from "components/token"
 import ConnectWallet from "app/sections/ConnectWallet"
+import { useAuth } from "auth"
+import { PasswordError } from "auth/scripts/keystore"
 
 import { toInput } from "./utils"
 import { useTx } from "./TxContext"
@@ -86,6 +88,7 @@ function Tx<TxValues>(props: Props<TxValues>) {
   const currency = useCurrency()
   const { network, post } = useWallet()
   const connectedWallet = useConnectedWallet()
+  const { user, validatePassword, ...auth } = useAuth()
   const address = useAddress()
   const isWalletEmpty = useIsWalletEmpty()
   const setLatestTx = useSetRecoilState(latestTxState)
@@ -113,7 +116,8 @@ function Tx<TxValues>(props: Props<TxValues>) {
   const { data: estimatedGas, ...estimatedGasResult } = useQuery(
     [queryKey.tx.create, key],
     async () => {
-      if (!address || isWalletEmpty || !connectedWallet?.availablePost) return 0
+      if (!address || isWalletEmpty) return 0
+      if (!(user || connectedWallet?.availablePost)) return 0
       if (!simulationTx || !simulationTx.msgs.length) return 0
 
       const config = {
@@ -209,6 +213,10 @@ function Tx<TxValues>(props: Props<TxValues>) {
 
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState<Error>()
+
+  const [password, setPassword] = useState("")
+  const [incorrect, setIncorrect] = useState<string>()
+
   const submit = async (values: TxValues) => {
     setSubmitting(true)
 
@@ -227,10 +235,16 @@ function Tx<TxValues>(props: Props<TxValues>) {
       const feeCoins = taxCoins ? gasCoins.add(taxCoins) : gasCoins
       const fee = new Fee(estimatedGas, feeCoins)
 
-      const response = await post({ ...tx, fee })
-      setLatestTx({ txhash: response.result.txhash, queryKeys })
+      if (user) {
+        const { result } = await auth.post({ ...tx, fee }, password)
+        setLatestTx({ txhash: result.txhash, queryKeys })
+      } else {
+        const { result } = await post({ ...tx, fee })
+        setLatestTx({ txhash: result.txhash, queryKeys })
+      }
     } catch (error) {
-      setError(error as Error)
+      if (error instanceof PasswordError) setIncorrect(error.message)
+      else setError(error as Error)
     }
 
     setSubmitting(false)
@@ -321,7 +335,7 @@ function Tx<TxValues>(props: Props<TxValues>) {
         )}
 
         <dt className={styles.gas}>
-          Gas
+          {t("Gas")}
           {availableGasDenoms.length > 1 && (
             <Select
               value={gasDenom}
@@ -380,9 +394,27 @@ function Tx<TxValues>(props: Props<TxValues>) {
           )}
         />
       ) : (
-        <Submit disabled={!estimatedGas || !!disabled} submitting={submitting}>
-          {disabled}
-        </Submit>
+        <Grid gap={4}>
+          {user && (
+            <FormItem label={t("Password")} error={incorrect}>
+              <Input
+                type="password"
+                value={password}
+                onChange={(e) => {
+                  setIncorrect(undefined)
+                  setPassword(e.target.value)
+                }}
+              />
+            </FormItem>
+          )}
+
+          <Submit
+            disabled={!estimatedGas || !!disabled}
+            submitting={submitting}
+          >
+            {disabled}
+          </Submit>
+        </Grid>
       )}
     </>
   )

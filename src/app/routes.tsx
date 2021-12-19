@@ -37,6 +37,9 @@ import InstantiateContractTx from "txs/wasm/InstantiateContractTx"
 import ExecuteContractTx from "txs/wasm/ExecuteContractTx"
 import AnchorEarnTx from "txs/earn/AnchorEarnTx"
 
+/* auth */
+import Auth from "auth/modules/Auth"
+
 /* labs */
 import Labs from "pages/labs/Labs"
 
@@ -110,6 +113,9 @@ export const useNav = () => {
     { path: "/contract/store", element: <StoreCodeTx /> },
     { path: "/contract/execute/:contract", element: <ExecuteContractTx /> },
     { path: "/earn", element: <AnchorEarnTx /> },
+
+    /* auth */
+    { path: "/account/*", element: <Auth /> },
 
     /* dev */
     { path: "/labs", element: <Labs /> },

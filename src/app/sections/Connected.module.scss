@@ -1,13 +1,12 @@
 @import "mixins";
 
-.inner {
+.component {
   @include flex-column(space-between, stretch);
   background: var(--card-bg);
   width: 260px;
 }
 
-.address {
-  @include flex-column(flex-start, flex-start);
+.inner {
   padding: 24px;
 }
 
@@ -18,14 +17,18 @@
   margin-bottom: 4px;
 }
 
-.disconnect {
+.footer {
+  @include flex;
+
   background: var(--bg);
   border-top: solid 1px var(--card-border);
   color: var(--text-muted);
+  font-weight: var(--bold);
   padding: 12px;
   transition: color var(--transition);
 
   &:hover {
     color: var(--text);
+    text-decoration: none;
   }
 }

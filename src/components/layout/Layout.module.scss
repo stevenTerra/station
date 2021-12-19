@@ -62,6 +62,8 @@
     width: 100%;
     height: var(--header-height);
   }
+
+  -webkit-app-region: drag;
 }
 
 .main {

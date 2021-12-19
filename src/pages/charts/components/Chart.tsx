@@ -3,10 +3,8 @@ import { ResponsiveContainer } from "recharts"
 import { AreaChart, Area, BarChart, Bar } from "recharts"
 import { XAxis, YAxis, CartesianGrid, Tooltip } from "recharts"
 import { format } from "date-fns"
+import variable from "styles/variable"
 import ChartTooltip from "./ChartTooltip"
-
-const getVariable = (key: string) =>
-  getComputedStyle(document.body).getPropertyValue(key)
 
 export const CHART_HEIGHT = 240
 const ANIMATION_DURATION = 100
@@ -31,10 +29,10 @@ interface Props extends ChartProps {
 const Chart = ({ type = "area", formatY, data }: Props) => {
   const COLORS = {
     // Call this fn inside the component to get the latest theme
-    STROKE: getVariable("--chart"),
-    DEFAULT: getVariable("--button-default-bg"),
-    MUTED: getVariable("--text-muted"),
-    BORDER: getVariable("--card-border"),
+    STROKE: variable("--chart"),
+    DEFAULT: variable("--button-default-bg"),
+    MUTED: variable("--text-muted"),
+    BORDER: variable("--card-border"),
   }
 
   /* by chart type */

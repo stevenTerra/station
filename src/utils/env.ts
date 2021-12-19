@@ -1,7 +1,8 @@
 export const debug = {
   query:
-    process.env.NODE_ENV === "development" && process.env.REACT_APP_DEBUG_QUERY,
+    process.env.NODE_ENV === "development" &&
+    process.env.REACT_APP_DEBUG_QUERY === "true",
   translation:
     process.env.NODE_ENV === "development" &&
-    process.env.REACT_APP_DEBUG_TRANSLATION,
+    process.env.REACT_APP_DEBUG_TRANSLATION === "true",
 }

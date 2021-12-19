@@ -57,6 +57,8 @@ const Modal: FC<Props> = ({ title, children, footer, ...props }) => {
   )
 }
 
+export default Modal
+
 /* helper */
 export const [useModal, ModalProvider] = createContext<() => void>("useModal")
 
@@ -78,5 +80,3 @@ export const ModalButton: FC<ModalButtonProps> = (props) => {
     </ModalProvider>
   )
 }
-
-export default Modal

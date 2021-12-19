@@ -26,11 +26,11 @@ export const FormArrow = ({ onClick }: { onClick?: () => void }) => {
 
 /* group */
 export const FormGroup: FC<{
-  button: { onClick: () => void; children: ReactNode }
+  button?: { onClick: () => void; children: ReactNode }
 }> = ({ children, button }) => (
   <div className={styles.group}>
     {children}
-    <button type="button" className={styles.button} {...button} />
+    {button && <button type="button" className={styles.button} {...button} />}
   </div>
 )
 

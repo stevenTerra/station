@@ -13,7 +13,6 @@ import { debug } from "utils/env"
 import "index.scss"
 import ScrollToTop from "app/ScrollToTop"
 import InitWallet from "app/InitWallet"
-import InitBankBalance from "app/InitBankBalance"
 import InitTheme from "app/InitTheme"
 import App from "app/App"
 
@@ -28,9 +27,7 @@ getChainOptions().then((chainOptions) =>
           <WalletProvider {...chainOptions} connectorOpts={connectorOpts}>
             <InitWallet>
               <InitTheme />
-              <InitBankBalance>
-                <App />
-              </InitBankBalance>
+              <App />
             </InitWallet>
           </WalletProvider>
           {debug.query && <ReactQueryDevtools position="bottom-right" />}
