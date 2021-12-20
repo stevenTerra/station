@@ -1,25 +1,23 @@
-import { useAddress } from "data/wallet"
-import { FinderLink } from "components/general"
-import { Col, Page, Card } from "components/layout"
-import { Wrong, Empty } from "components/feedback"
+import { useHistory } from "data/Terra/fcd"
+import { Col, Page } from "components/layout"
+import Tx from "./Tx"
 
 const History = () => {
-  const address = useAddress()
+  const { data } = useHistory()
 
-  return (
-    <Page title="History">
+  const render = () => {
+    if (!data) return null
+    const { txs } = data
+    return (
       <Col>
-        <Card>
-          <Wrong>Not implemented yet</Wrong>
-          {address && <FinderLink value={address}>{address}</FinderLink>}
-        </Card>
-
-        <Card>
-          <Empty />
-        </Card>
+        {txs.map((tx) => (
+          <Tx {...tx} key={tx.txhash} />
+        ))}
       </Col>
-    </Page>
-  )
+    )
+  }
+
+  return <Page title="History">{render()}</Page>
 }
 
 export default History

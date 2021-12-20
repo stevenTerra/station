@@ -34,7 +34,7 @@ export const queryKey = mirror({
   /* assets */
   TerraAssets: "",
   TerraAPI: "",
-  fcd: { gasPrices: "" },
+  History: "",
 
   /* lcd */
   bank: { balance: "", supply: "" },
