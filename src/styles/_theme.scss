@@ -136,23 +136,23 @@
     var(--button-default-bg-s),
     var(--button-default-bg-l)
   );
-  --button-default-text: hsl(342 88% 41%);
+  --button-default-text: hsl(342 83% 58%);
 
   --menu-bg: hsl(355 73% 53%);
   --menu-border: hsl(0 0% 100% / 0.1);
   --menu-text: hsl(0 0% 91%);
 
-  --link: hsl(340 100% 50%);
+  --link: hsl(321 100% 72%);
   --text: hsl(342 92% 57%);
-  --text-muted: hsl(354 62% 59%);
+  --text-muted: hsl(356 100% 76%);
   --chart: hsl(345 99% 46%);
 
   --bg: hsl(321 100% 96%);
-  --bg-muted: hsl(321 100% 95%);
+  --bg-muted: hsl(321 100% 97%);
   --card-bg: hsl(300 100% 98%);
-  --card-border: hsl(343 29% 88%);
+  --card-border: hsl(342 100% 94%);
   --input-bg: var(--card-bg);
-  --input-border: hsl(344 62% 82%);
+  --input-border: hsl(344 100% 92%);
 }
 
 .moon {
