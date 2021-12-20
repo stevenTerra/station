@@ -80,7 +80,10 @@ const TransferCW721Form = ({ contract, id }: Props) => {
           <Tx {...tx}>
             {({ fee, submit }) => (
               <Form onSubmit={handleSubmit(submit.fn)}>
-                <FormItem label={t("To")} error={errors.recipient?.message}>
+                <FormItem
+                  label={t("Recipient")}
+                  error={errors.recipient?.message}
+                >
                   <Input
                     {...register("recipient", {
                       required: true,
@@ -102,14 +105,13 @@ const TransferCW721Form = ({ contract, id }: Props) => {
                         brackets: validate.memo(),
                       },
                     })}
-                    placeholder={t("Memo required by the exchanges")}
                   />
                 </FormItem>
 
                 {fee.render()}
 
                 <FormHelp>
-                  {t("Double check if the above transaction requires a memo")}
+                  {t("Check if this transaction requires a memo")}
                 </FormHelp>
 
                 {submit.button}

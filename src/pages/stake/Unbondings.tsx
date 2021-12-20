@@ -24,7 +24,7 @@ const Unbondings = () => {
   const state = combineState(validatorsResult, unbondingsResult)
 
   /* render */
-  const title = t("Unbondings")
+  const title = t("Undelegations")
 
   const render = () => {
     if (!unbondings) return null

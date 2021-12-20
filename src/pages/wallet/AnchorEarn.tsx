@@ -24,7 +24,7 @@ const AnchorEarn = () => {
       </dl>
 
       <LinkButton to="/earn" block>
-        {t("Earn & Withdraw")}
+        {t("Earn")}
       </LinkButton>
     </Card>
   ) : (

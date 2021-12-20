@@ -16,20 +16,20 @@ const ValidatorSummary = ({ validator }: { validator: Validator }) => {
 
   const numbers = [
     {
-      title: t("Commission"),
+      title: t("Current"),
       content: readPercent(rate.toString()),
     },
     {
-      title: t("Last commission change"),
-      content: <ToNow>{update_time}</ToNow>,
-    },
-    {
-      title: t("Max commission rate"),
+      title: t("Max"),
       content: readPercent(max_rate.toString()),
     },
     {
-      title: t("Max daily commission change"),
+      title: t("Max daily change"),
       content: readPercent(max_change_rate.toString()),
+    },
+    {
+      title: t("Last changed"),
+      content: <ToNow>{update_time}</ToNow>,
     },
   ]
 

@@ -1,6 +1,6 @@
 const ERROR = {
   FORBIDDEN:
-    "Your IP has been flagged for potential security violations. Please change your network configuration.",
+    "This IP has been flagged for potential security violations. Change your network configuration.",
   GENERAL: {
     UNCAUGHT: "Something went wrong",
     EMPTY: "No results found",

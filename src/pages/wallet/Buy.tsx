@@ -70,7 +70,7 @@ const Buy = ({ token }: { token: "uluna" | "uusd" }) => {
       groups={[
         { title: t("Exchanges"), list: exchanges[token] },
         {
-          title: t("With fiat"),
+          title: t("Fiat"),
           list: [
             {
               children: "Transak",

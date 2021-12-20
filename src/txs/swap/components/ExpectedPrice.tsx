@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next"
 import { isDenomLuna, isDenomTerra } from "@terra.kitchen/utils"
-import { readDenom, readPercent } from "@terra.kitchen/utils"
+import { readPercent } from "@terra.kitchen/utils"
 import { toPrice } from "utils/num"
 import { useMarketParams } from "data/queries/market"
 import { useOracleParams } from "data/queries/oracle"
@@ -52,7 +52,7 @@ const ExpectedPrice = ({ mode, input, ...props }: Props) => {
       <>
         {[offerAsset, askAsset].some(isDenomLuna) && (
           <p>
-            {t("Luna swap spread: minimum {{minSpread}}", {
+            {t("Minimum Luna swap spread: {{minSpread}}", {
               minSpread: readPercent(minSpread),
             })}
           </p>
@@ -60,8 +60,7 @@ const ExpectedPrice = ({ mode, input, ...props }: Props) => {
 
         {askAsset && isDenomTerra(askAsset) && tobinTax && (
           <p>
-            {t("{{symbol}} tobin tax: {{tobinTax}}", {
-              symbol: readDenom(askAsset),
+            {t("Terra tobin tax: {{tobinTax}}", {
               tobinTax: readPercent(tobinTax),
             })}
           </p>

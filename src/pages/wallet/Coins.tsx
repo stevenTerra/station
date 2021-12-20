@@ -67,11 +67,7 @@ const Coins = () => {
 
         <Grid gap={12}>
           {isWalletEmpty && (
-            <FormError>
-              {t(
-                "This wallet does not hold any coins, so the transaction could not be processed."
-              )}
-            </FormError>
+            <FormError>{t("Coins required to post transactions")}</FormError>
           )}
 
           <Flex className={styles.select}>

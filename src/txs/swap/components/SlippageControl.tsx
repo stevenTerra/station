@@ -17,8 +17,8 @@ const SlippageControl = forwardRef(
 
     const warn = (n?: number) => {
       if (!n) return
-      if (n > 5) return t("Your transaction may be frontrun")
-      if (n < 0.5) return t("Your transaction may fail")
+      if (n > 5) return t("Transaction may be frontrun")
+      if (n < 0.5) return t("Transaction may fail")
       return
     }
 

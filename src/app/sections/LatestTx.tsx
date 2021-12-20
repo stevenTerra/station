@@ -137,7 +137,7 @@ const TxIndicator = ({ txhash }: { txhash: string }) => {
       title={title}
       footer={() => (
         <Button onClick={initLatestTx} color="primary" block>
-          {t("Ok")}
+          {t("Confirm")}
         </Button>
       )}
       isOpen={!minimized}

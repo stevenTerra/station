@@ -200,13 +200,13 @@ function Tx<TxValues>(props: Props<TxValues>) {
 
   /* submit */
   const disabled = taxResults.isLoading
-    ? t("Loading tax...")
+    ? t("Loading tax data...")
     : taxResults.error
-    ? t("Failed to load tax")
+    ? t("Failed to load tax data")
     : estimatedGasResult.isLoading
     ? t("Estimating fee...")
     : estimatedGasResult.error
-    ? t("Estimation failed")
+    ? t("Fee estimation failed")
     : isBroadcasting
     ? t("Broadcasting a tx...")
     : props.disabled || ""
@@ -378,11 +378,7 @@ function Tx<TxValues>(props: Props<TxValues>) {
   const submitButton = (
     <>
       {isWalletEmpty && (
-        <FormError>
-          {t(
-            "This wallet does not hold any coins, so the transaction could not be processed."
-          )}
-        </FormError>
+        <FormError>{t("Coins required to post transactions")}</FormError>
       )}
 
       {!address ? (

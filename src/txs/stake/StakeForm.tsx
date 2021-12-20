@@ -145,21 +145,21 @@ const StakeForm = ({ tab, destination, validators, delegations }: Props) => {
               [StakeAction.DELEGATE]: (
                 <FormWarning>
                   {t(
-                    "Remember to leave a small amount of tokens undelegated, as subsequent transactions (e.g. redelegation) require fees to be paid."
+                    "Leave enough amount of coins to pay fee for subsequent transactions"
                   )}
                 </FormWarning>
               ),
               [StakeAction.REDELEGATE]: (
                 <FormWarning>
                   {t(
-                    "Redelegation from the recipient validator will be blocked for 21 days after this transaction."
+                    "21 days must pass after this transaction to redelegate to this validator again"
                   )}
                 </FormWarning>
               ),
               [StakeAction.UNBOND]: (
                 <FormWarning>
                   {t(
-                    "Undelegation takes 21 days to complete. You would not get rewards in the meantime."
+                    "No reward is distributed during 21 days undelegation period"
                   )}
                 </FormWarning>
               ),

@@ -19,11 +19,7 @@ const DelegationsPromote = ({ horizontal }: { horizontal?: boolean }) => {
           <h1 className={styles.title}>{t("Staking rewards")}</h1>
 
           <Grid gap={8}>
-            <p>
-              {t(
-                "You haven't staked any assets yet. Stake your Luna and stack up rewards."
-              )}
-            </p>
+            <p>{t("Stake Luna and earn rewards")}</p>
 
             {!horizontal && (
               <InternalLink to="/stake">

@@ -19,7 +19,7 @@ const NFTAssets = () => {
       title={t("NFT")}
       renderButton={(open) => (
         <InternalButton onClick={open} disabled={!address} chevron>
-          {t("Add token")}
+          {t("Add tokens")}
         </InternalButton>
       )}
     >

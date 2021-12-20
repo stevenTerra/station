@@ -108,12 +108,15 @@ const SendForm = ({ token, decimals, balance }: Props) => {
                   <FormHelp>Use {bridge} for interchain transfers</FormHelp>
                   {!memo && (
                     <FormWarning>
-                      {t("Double check if the transaction requires a memo")}
+                      {t("Check if this transaction requires a memo")}
                     </FormWarning>
                   )}
                 </Grid>
 
-                <FormItem label={t("To")} error={errors.recipient?.message}>
+                <FormItem
+                  label={t("Recipient")}
+                  error={errors.recipient?.message}
+                >
                   <Input
                     {...register("recipient", {
                       validate: validate.address(),
@@ -154,7 +157,6 @@ const SendForm = ({ token, decimals, balance }: Props) => {
                         brackets: validate.memo(),
                       },
                     })}
-                    placeholder={t("Memo required by the exchanges")}
                   />
                 </FormItem>
 

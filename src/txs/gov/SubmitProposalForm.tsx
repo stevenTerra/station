@@ -254,19 +254,15 @@ const SubmitProposalForm = ({ communityPool, minDeposit }: Props) => {
       {({ max, fee, submit }) => (
         <Form onSubmit={handleSubmit(submit.fn)}>
           <Grid gap={4}>
-            <FormHelp>
-              {t(
-                "It is recommended to get community feedback on https://agora.terra.money before uploading any proposal"
-              )}
-            </FormHelp>
+            <FormHelp>{t("Upload proposal after forum discussion")}</FormHelp>
             <FormWarning>
               {t(
-                "Luna proposal deposits are not refunded if the quorum is not reached or the poll result is NoWithVeto"
+                "Proposal deposits will not be refunded if the proposal fails to reach the quorum or the result is NO_WITH_VETO"
               )}
             </FormWarning>
             {values.type === ProposalType.TEXT && (
               <FormWarning>
-                {t("Do not use text proposals to suggest Parameter changes")}
+                {t("Parameters cannot be changed by text proposals")}
               </FormWarning>
             )}
           </Grid>

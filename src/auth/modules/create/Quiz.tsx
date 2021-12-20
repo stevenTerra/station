@@ -42,15 +42,14 @@ const Quiz = () => {
           onRequestClose={() => setIncorrect(false)}
           icon={<DangerousOutlinedIcon fontSize="inherit" className="danger" />}
           closeIcon={false}
-          title={t("Wrong!")}
           footer={(close) => (
             <Submit type="button" onClick={close}>
-              {t("Ok")}
+              {t("Confirm")}
             </Submit>
           )}
         >
           <p className="center">
-            {t("Write down mnemonic and choose the correct word")}
+            {t("Write down the mnemonic and choose the correct word")}
           </p>
         </Modal>
       )}
@@ -87,7 +86,9 @@ const Quiz = () => {
       ))}
 
       <Submit disabled={answers.some((answer) => !answer)} />
-      <button onClick={reset}>{t("I haven't written down my seed.")}</button>
+      <button onClick={reset}>
+        {t("I haven't written down the mnemonic")}
+      </button>
     </Form>
   )
 }

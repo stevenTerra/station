@@ -33,7 +33,7 @@ const ConnectWallet = ({ renderButton }: Props) => {
 
   return (
     <ModalButton
-      title={t("Connect to a wallet")}
+      title={t("Connect wallet")}
       renderButton={renderButton ?? defaultRenderButton}
     >
       <Grid gap={20}>
@@ -49,7 +49,7 @@ const ConnectWallet = ({ renderButton }: Props) => {
             ...availableInstallTypes
               .filter((type) => type === ConnectType.EXTENSION)
               .map((type) => ({
-                children: t("Install extension to generate a wallet"),
+                children: t("Install extension"),
                 onClick: () => install(type),
               })),
           ]}

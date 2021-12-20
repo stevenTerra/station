@@ -53,7 +53,7 @@ const DeleteWallet = () => {
             </FormItem>
 
             <FormWarning>
-              {t("This wallet cannot be recovered without seed phrase")}
+              {t("Mnemonic is required to recover this wallet")}
             </FormWarning>
             <Submit />
           </Form>

@@ -111,7 +111,7 @@ const TxVolume = () => {
             "The onchain transaction volume for the selected currency over the selected time period"
           )}
         >
-          {t("Tx volume")}
+          {t("Transaction volume")}
         </TooltipIcon>
       }
       extra={renderFilter()}

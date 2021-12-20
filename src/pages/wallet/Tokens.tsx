@@ -35,10 +35,10 @@ const Tokens = () => {
       title={t("Tokens")}
       extra={
         <ModalButton
-          title={t("Add/Remove token")}
+          title={t("Manage list")}
           renderButton={(open) => (
             <InternalButton disabled={!address} onClick={open} chevron>
-              {t("Add token")}
+              {t("Add tokens")}
             </InternalButton>
           )}
         >

@@ -7,7 +7,6 @@ import { Validator } from "@terra-money/terra.js"
 /* FIXME(terra.js): Import from terra.js */
 import { BondStatus } from "@terra-money/terra.proto/cosmos/staking/v1beta1/staking"
 import { bondStatusFromJSON } from "@terra-money/terra.proto/cosmos/staking/v1beta1/staking"
-import { useNetworkName } from "data/wallet"
 import { combineState } from "data/query"
 import { useValidators } from "data/queries/staking"
 import { useDelegations, useUnbondings } from "data/queries/staking"
@@ -18,7 +17,6 @@ import styles from "./Validators.module.scss"
 
 const Validators = () => {
   const { t } = useTranslation()
-  const networkName = useNetworkName()
 
   const calcVotingPower = useCalcVotingPower()
   const { data: validators, ...validatorsState } = useValidators()
@@ -46,11 +44,7 @@ const Validators = () => {
   const renderCount = () => {
     if (!activeValidatorsWithVotingPower) return null
     const count = activeValidatorsWithVotingPower.length
-
-    return t("{{count}} validators are active", {
-      count,
-      network: networkName,
-    })
+    return t("{{count}} active validators", { count })
   }
 
   const render = () => {
@@ -124,7 +118,7 @@ const Validators = () => {
             align: "center",
           },
           {
-            title: t("Validator commission"),
+            title: t("Commission"),
             dataIndex: ["validator", "commission", "commission_rates"],
             defaultSortOrder: "asc",
             sorter: (

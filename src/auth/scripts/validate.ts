@@ -9,7 +9,7 @@ const validate = {
     exists: (name: string) => {
       try {
         const { address } = getStoredWallet(name)
-        return `Already exists with: ${address}`
+        return `Already exists: ${address}`
       } catch {
         return true
       }
@@ -33,7 +33,7 @@ const validate = {
     wordlist: (mnemonic: string) => {
       const seed = mnemonic.trim().split(" ")
       const invalid = seed.find((word) => !wordlist.includes(word))
-      return !invalid || `${invalid} is an invalid word`
+      return !invalid || `${invalid} is invalid`
     },
   },
 }

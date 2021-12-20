@@ -97,7 +97,7 @@ const ProposalVotes = ({ id, card }: { id: number; card?: boolean }) => {
 
           {card && (
             <p>
-              {t("{{n}} of {{d}} has voted", {
+              {t("Voted: {{n}} / {{d}}", {
                 n: readAmount(total.voted, { prefix: true }),
                 d: readAmount(total.staked, { prefix: true }),
               })}

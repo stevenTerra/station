@@ -35,7 +35,7 @@ const Contract = () => {
         ) : !AccAddress.validate(address) ? (
           <Card>
             <State icon={<ManageSearchIcon fontSize="inherit" />}>
-              {t("Search a contract address")}
+              {t("Search by contract address")}
             </State>
           </Card>
         ) : (

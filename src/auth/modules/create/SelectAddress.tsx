@@ -94,7 +94,7 @@ const SelectAddress = () => {
         <Flex gap={4} start>
           <Tag color="info">{bip}</Tag>
           {!!delegations.length && <Tag color="info">{t("Delegated")}</Tag>}
-          {!!unbondings.length && <Tag color="info">{t("Unbondings")}</Tag>}
+          {!!unbondings.length && <Tag color="info">{t("Undelegations")}</Tag>}
         </Flex>
 
         <h1>{address}</h1>

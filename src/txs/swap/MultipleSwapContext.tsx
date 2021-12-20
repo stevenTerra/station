@@ -55,9 +55,7 @@ const MultipleSwapContext: FC = ({ children }) => {
 
   const render = () => {
     if (length < 2)
-      return (
-        <Wrong>{t("Multiple swap requires at least 2 native coins")}</Wrong>
-      )
+      return <Wrong>{t("Multiple swap requires at least 2 coins")}</Wrong>
 
     if (!(taxRate && taxCaps && available)) return null
 
