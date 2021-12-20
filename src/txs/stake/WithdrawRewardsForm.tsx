@@ -4,8 +4,9 @@ import { useForm } from "react-hook-form"
 import BigNumber from "bignumber.js"
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
 import ExpandLessIcon from "@mui/icons-material/ExpandLess"
+import { isDenomTerraNative } from "@terra.kitchen/utils"
 import { Validator, ValAddress } from "@terra-money/terra.js"
-import { Coins, Rewards } from "@terra-money/terra.js"
+import { Rewards } from "@terra-money/terra.js"
 import { MsgWithdrawDelegatorReward } from "@terra-money/terra.js"
 import { useCurrency } from "data/settings/Currency"
 import { useAddress } from "data/wallet"
@@ -24,10 +25,10 @@ import styles from "./WithdrawRewardsForm.module.scss"
 interface Props {
   rewards: Rewards
   validators: Validator[]
-  exchangeRates: Coins
+  IBCWhitelist: IBCWhitelist
 }
 
-const WithdrawRewardsForm = ({ rewards, validators, exchangeRates }: Props) => {
+const WithdrawRewardsForm = ({ rewards, validators, IBCWhitelist }: Props) => {
   const { t } = useTranslation()
   const currency = useCurrency()
   const address = useAddress()
@@ -179,17 +180,22 @@ const WithdrawRewardsForm = ({ rewards, validators, exchangeRates }: Props) => {
 
             <FormItem>
               <TokenCardGrid maxHeight>
-                {Object.entries(selectedTotal).map(([denom, amount]) => (
-                  <WithTokenItem token={denom} key={denom}>
-                    {(item) => (
-                      <TokenCard
-                        {...item}
-                        value={calcValue({ amount, denom })}
-                        amount={amount}
-                      />
-                    )}
-                  </WithTokenItem>
-                ))}
+                {Object.entries(selectedTotal)
+                  .filter(([denom]) => {
+                    const isListedIBC = IBCWhitelist[denom.replace("ibc/", "")]
+                    return isDenomTerraNative(denom) || isListedIBC
+                  })
+                  .map(([denom, amount]) => (
+                    <WithTokenItem token={denom} key={denom}>
+                      {(item) => (
+                        <TokenCard
+                          {...item}
+                          value={calcValue({ amount, denom })}
+                          amount={amount}
+                        />
+                      )}
+                    </WithTokenItem>
+                  ))}
               </TokenCardGrid>
             </FormItem>
           </Grid>

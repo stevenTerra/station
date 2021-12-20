@@ -1,9 +1,9 @@
 import { useTranslation } from "react-i18next"
 import ERROR from "config/ERROR"
 import { combineState } from "data/query"
-import { useExchangeRates } from "data/queries/oracle"
 import { useRewards } from "data/queries/distribution"
 import { useDelegations, useValidators } from "data/queries/staking"
+import { useIBCWhitelist } from "data/Terra/TerraAssets"
 import { Page, Card } from "components/layout"
 import DelegationsPromote from "app/containers/DelegationsPromote"
 import TxContext from "../TxContext"
@@ -15,17 +15,17 @@ const WithdrawRewardsTx = () => {
   const { data: rewards, ...rewardsResult } = useRewards()
   const { data: delegations, ...delegationsResult } = useDelegations()
   const { data: validators, ...validatorsResult } = useValidators()
-  const { data: exchangeRates, ...exchangeRatesResult } = useExchangeRates()
+  const { data: IBCWhitelist, ...IBCWhitelistResult } = useIBCWhitelist()
 
   const state = combineState(
     rewardsResult,
     delegationsResult,
     validatorsResult,
-    exchangeRatesResult
+    IBCWhitelistResult
   )
 
   const render = () => {
-    if (!(rewards && delegations && validators && exchangeRates)) return null
+    if (!(rewards && delegations && validators && IBCWhitelist)) return null
 
     const hasRewards = !!rewards.total.toArray().length
     const hasDelegations = !!delegations.length
@@ -43,7 +43,7 @@ const WithdrawRewardsTx = () => {
           <WithdrawRewardsForm
             rewards={rewards}
             validators={validators}
-            exchangeRates={exchangeRates}
+            IBCWhitelist={IBCWhitelist}
           />
         </TxContext>
       </Card>
