@@ -4,19 +4,23 @@
     "Address": "Адрес",
     "Wallet": "кошелёк",
     "Wallets": "",
+    "Coins": "Монеты",
+    "Tokens": "",
     "Balance": "",
     "Tx hash": "",
     "Gas": "",
     "Tax": "Налог",
     "Fee": "Платеж",
+    "Memo": "Памятка",
     "decimals": "",
+    "Buy": "",
+    "Exchanges": "",
+    "Fiat": "",
     "APY": ""
   },
   "Form": {
     "Amount": "Количество",
     "Recipient": "Получатель",
-    "Address": "Адрес",
-    "Memo": "Памятка",
     "Name": "Имя",
     "optional": "",
     "Submit": "",
@@ -114,13 +118,8 @@
     "Wallets": ""
   },
   "Wallet": {
-    "Coins": "Монеты",
-    "Tokens": "",
     "Add tokens": "",
-    "Manage list": "",
-    "Buy": "",
-    "Exchanges": "",
-    "Fiat": ""
+    "Manage list": ""
   },
   "Txs": {
     "Send": "Отправлено",

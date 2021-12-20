@@ -4,19 +4,23 @@
     "Address": "地址",
     "Wallet": "钱包",
     "Wallets": "",
+    "Coins": "货币",
+    "Tokens": "",
     "Balance": "",
     "Tx hash": "",
     "Gas": "",
     "Tax": "税金",
     "Fee": "手续费",
+    "Memo": "Memo",
     "decimals": "",
+    "Buy": "",
+    "Exchanges": "",
+    "Fiat": "",
     "APY": ""
   },
   "Form": {
     "Amount": "数量",
     "Recipient": "接受者",
-    "Address": "地址",
-    "Memo": "Memo",
     "Name": "智能合约名称",
     "optional": "",
     "Submit": "",
@@ -114,13 +118,8 @@
     "Wallets": ""
   },
   "Wallet": {
-    "Coins": "货币",
-    "Tokens": "",
     "Add tokens": "",
-    "Manage list": "",
-    "Buy": "",
-    "Exchanges": "",
-    "Fiat": ""
+    "Manage list": ""
   },
   "Txs": {
     "Send": "转出",

@@ -4,19 +4,23 @@
     "Address": "Dirección",
     "Wallet": "Cartera",
     "Wallets": "",
+    "Coins": "Monedas",
+    "Tokens": "",
     "Balance": "",
     "Tx hash": "",
     "Gas": "",
     "Tax": "Tasas",
     "Fee": "Tasas",
+    "Memo": "Memo",
     "decimals": "",
+    "Buy": "",
+    "Exchanges": "",
+    "Fiat": "",
     "APY": ""
   },
   "Form": {
     "Amount": "Cantidad",
     "Recipient": "Destinatario",
-    "Address": "Dirección",
-    "Memo": "Memo",
     "Name": "Nombre",
     "optional": "",
     "Submit": "",
@@ -114,13 +118,8 @@
     "Wallets": ""
   },
   "Wallet": {
-    "Coins": "Monedas",
-    "Tokens": "",
     "Add tokens": "",
-    "Manage list": "",
-    "Buy": "",
-    "Exchanges": "",
-    "Fiat": ""
+    "Manage list": ""
   },
   "Txs": {
     "Send": "Enviar",
