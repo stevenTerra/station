@@ -19,8 +19,8 @@ export enum AggregateWallets {
   ACTIVE = "active",
 }
 
-export const useTerraAPI = (path: string) => {
-  return useQuery<ChartDataItem[], AxiosError>(
+export const useTerraAPI = <T>(path: string) => {
+  return useQuery<T, AxiosError>(
     [queryKey.TerraAPI, path],
     async () => {
       const { data } = await axios.get(path, config)
@@ -31,17 +31,17 @@ export const useTerraAPI = (path: string) => {
 }
 
 export const useTxVolume = (denom: Denom, type: Aggregate) => {
-  return useTerraAPI(`chart/tx-volume/${denom}/${type}`)
+  return useTerraAPI<ChartDataItem[]>(`chart/tx-volume/${denom}/${type}`)
 }
 
 export const useStakingReturn = (type: AggregateStakingReturn) => {
-  return useTerraAPI(`chart/staking-return/${type}`)
+  return useTerraAPI<ChartDataItem[]>(`chart/staking-return/${type}`)
 }
 
 export const useTaxRewards = (type: Aggregate) => {
-  return useTerraAPI(`chart/tax-rewards/${type}`)
+  return useTerraAPI<ChartDataItem[]>(`chart/tax-rewards/${type}`)
 }
 
 export const useWallets = (walletsType: AggregateWallets, type: Aggregate) => {
-  return useTerraAPI(`chart/wallets/${walletsType}/${type}`)
+  return useTerraAPI<ChartDataItem[]>(`chart/wallets/${walletsType}/${type}`)
 }
