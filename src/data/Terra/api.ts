@@ -2,7 +2,7 @@ import { useQuery } from "react-query"
 import axios, { AxiosError } from "axios"
 import { queryKey, RefetchOptions } from "../query"
 
-const config = { baseURL: "https://assets.terra.kitchen" }
+const config = { baseURL: "https://api.terra.dev" }
 
 export enum Aggregate {
   PERIODIC = "periodic",
@@ -19,9 +19,9 @@ export enum AggregateWallets {
   ACTIVE = "active",
 }
 
-export const useTerraKitchenAssets = (path: string) => {
+export const useTerraAPI = (path: string) => {
   return useQuery<ChartDataItem[], AxiosError>(
-    [queryKey.TerraKitchen, path],
+    [queryKey.TerraAPI, path],
     async () => {
       const { data } = await axios.get(path, config)
       return data
@@ -31,17 +31,17 @@ export const useTerraKitchenAssets = (path: string) => {
 }
 
 export const useTxVolume = (denom: Denom, type: Aggregate) => {
-  return useTerraKitchenAssets(`tx-volume/${denom}/${type}.json`)
+  return useTerraAPI(`chart/tx-volume/${denom}/${type}`)
 }
 
 export const useStakingReturn = (type: AggregateStakingReturn) => {
-  return useTerraKitchenAssets(`staking-return/${type}.json`)
+  return useTerraAPI(`chart/staking-return/${type}`)
 }
 
 export const useTaxRewards = (type: Aggregate) => {
-  return useTerraKitchenAssets(`tax-rewards/${type}.json`)
+  return useTerraAPI(`chart/tax-rewards/${type}`)
 }
 
 export const useWallets = (walletsType: AggregateWallets, type: Aggregate) => {
-  return useTerraKitchenAssets(`wallets/${walletsType}/${type}.json`)
+  return useTerraAPI(`chart/wallets/${walletsType}/${type}`)
 }

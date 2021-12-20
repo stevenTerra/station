@@ -33,7 +33,7 @@ const mirror = <T>(obj: T, parentKey?: string): T =>
 export const queryKey = mirror({
   /* assets */
   TerraAssets: "",
-  TerraKitchen: "",
+  TerraAPI: "",
   fcd: { gasPrices: "" },
 
   /* lcd */
