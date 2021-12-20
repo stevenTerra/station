@@ -15,3 +15,8 @@ export const useChainID = () => {
   const { network } = useWallet()
   return network.chainID
 }
+
+export const useFCD = () => {
+  const { network } = useWallet()
+  return network.lcd.replace("lcd", "fcd")
+}
