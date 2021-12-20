@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next"
 import { readDenom } from "@terra.kitchen/utils"
 import LanguageIcon from "@mui/icons-material/Language"
-import { Languages } from "lang"
+import { Languages } from "config/lang"
 import { useActiveDenoms } from "data/queries/oracle"
 import { useCurrencyState } from "data/settings/Currency"
 import { useLanguageState } from "data/settings/Language"
