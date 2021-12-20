@@ -14,6 +14,7 @@ const Tx = ({ txhash, timestamp, tx, ...props }: AccountHistoryItem) => {
     <Card
       title={<FinderLink short>{txhash}</FinderLink>}
       extra={<ToNow>{new Date(timestamp)}</ToNow>}
+      size="small"
       bordered
     >
       <Flex gap={20} start>
