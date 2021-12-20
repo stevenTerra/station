@@ -39,7 +39,7 @@ const Connected = () => {
           </Grid>
 
           {wallet ? (
-            <Link to="/wallet" className={styles.footer}>
+            <Link to="/auth" className={styles.footer}>
               {t("Manage wallet")}
             </Link>
           ) : (

@@ -10,12 +10,12 @@ const useAvailable = () => {
 
   return [
     {
-      to: "/wallet/new",
+      to: "/auth/new",
       children: t("New wallet"),
       icon: <AddCircleOutlineIcon />,
     },
     {
-      to: "/wallet/recover",
+      to: "/auth/recover",
       children: t("Recover wallet"),
       icon: <SettingsBackupRestoreIcon />,
     },
