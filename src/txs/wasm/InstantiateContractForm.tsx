@@ -99,7 +99,7 @@ const InstantiateContractForm = () => {
                 required: "Code ID is required",
                 min: {
                   value: 0,
-                  message: "Code ID must be greater than 0",
+                  message: "Code ID must be a positive integer",
                 },
                 validate: {
                   integer: (value) =>

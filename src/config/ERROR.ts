@@ -9,7 +9,7 @@ const ERROR = {
     EMPTY: "Add an address",
   },
   CHART: {
-    LACK_OF_DATA: "The chart will be drawn with more data.",
+    LACK_OF_DATA: "Chart requires more data",
   },
   TOKENS: {
     QUERY_BALANCE_FAILED: "Failed to query balance",
@@ -21,7 +21,7 @@ const ERROR = {
     EMPTY: "No proposals",
   },
   PROPOSAL: {
-    VOTES_EMPTY: "Not voted yet",
+    VOTES_EMPTY: "No votes yet",
   },
 }
 

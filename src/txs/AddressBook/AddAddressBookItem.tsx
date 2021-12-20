@@ -28,7 +28,7 @@ const AddAddressBookItem = () => {
             required: true,
             validate: {
               exists: (value) =>
-                !validateName(value) ? "Already exists" : undefined,
+                !validateName(value) ? `${value} already exists` : undefined,
             },
           })}
         />

@@ -55,7 +55,7 @@ const memo = () => (value?: string) => {
   if (!value) return
   return (
     ["<", ">"].every((char) => !value.includes(char)) ||
-    "Memo cannot include angle brackets"
+    "Memo cannot include `<` or `>`"
   )
 }
 
