@@ -37,7 +37,7 @@ export const useTerraAssetsByNetwork = <T>(
 }
 
 export const useIBCWhitelist = () => {
-  return useTerraAssetsByNetwork<IBCTokens>("ibc/tokens.json")
+  return useTerraAssetsByNetwork<IBCWhitelist>("ibc/tokens.json")
 }
 
 export const useCW20Whitelist = (disabled = false) => {

@@ -6,38 +6,41 @@ import CheckIcon from "@mui/icons-material/Check"
 import { truncate } from "@terra.kitchen/utils"
 import { FinderLink } from "components/general"
 import { Token } from "components/token"
-import styles from "./CWTokenItem.module.scss"
+import styles from "./TokenItem.module.scss"
 
 const cx = classNames.bind(styles)
 
-export interface CWTokenItemProps {
-  contract: TerraAddress
-  title: string // symbol(cw20) | name(cw721)
+export interface TokenItemProps {
+  token: Token
+  title: string // ibc:symbol | cw20:symbol | cw721:name
   icon?: string
+  contract?: TerraAddress // cw20 | cw721
   decimals?: number
 }
 
-interface Props extends CWTokenItemProps {
+interface Props extends TokenItemProps {
   added: boolean
   onAdd: () => void
   onRemove: () => void
 }
 
-const CWTokenItem = ({ added, onAdd, onRemove, ...props }: Props) => {
-  const { contract, decimals, ...rest } = props
+const TokenItem = ({ added, onAdd, onRemove, ...props }: Props) => {
+  const { token, contract, decimals, ...rest } = props
   const { t } = useTranslation()
+
+  const link = contract && (
+    <FinderLink value={contract}>
+      {truncate(contract)}
+      {!isNil(decimals) && `(${t("decimals")}: ${decimals ?? "6"})`}
+    </FinderLink>
+  )
 
   return (
     <Token
       {...rest}
       className={styles.item}
-      token={contract}
-      description={
-        <FinderLink value={contract}>
-          {truncate(contract)}
-          {!isNil(decimals) && `(${t("decimals")}: ${decimals ?? "6"})`}
-        </FinderLink>
-      }
+      token={token}
+      description={link}
       extra={
         <button
           type="button"
@@ -55,4 +58,4 @@ const CWTokenItem = ({ added, onAdd, onRemove, ...props }: Props) => {
   )
 }
 
-export default CWTokenItem
+export default TokenItem

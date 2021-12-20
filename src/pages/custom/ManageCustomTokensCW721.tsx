@@ -1,22 +1,22 @@
 import { AccAddress } from "@terra-money/terra.js"
-import { useCustomTokensCW20 } from "data/settings/CustomTokens"
-import { useCW20Whitelist } from "data/Terra/TerraAssets"
-import { useTokenInfoCW20 } from "data/queries/wasm"
+import { useCustomTokensCW721 } from "data/settings/CustomTokens"
+import { useCW721Whitelist } from "data/Terra/TerraAssets"
+import { useInitMsg } from "data/queries/wasm"
 import { Fetching } from "components/feedback"
 import WithSearchInput from "./WithSearchInput"
-import CWTokenList from "./CWTokenList"
+import TokenList from "./TokenList"
 
 interface Props {
-  whitelist: CW20Whitelist
+  whitelist: CW721Whitelist
   keyword: string
 }
 
 const Component = ({ whitelist, keyword }: Props) => {
-  const manage = useCustomTokensCW20()
+  const manage = useCustomTokensCW721()
 
-  type Added = Record<TerraAddress, CustomTokenCW20>
+  type Added = Record<TerraAddress, CustomTokenCW721>
   const added = manage.list.reduce<Added>(
-    (acc, item) => ({ ...acc, [item.token]: item }),
+    (acc, item) => ({ ...acc, [item.contract]: item }),
     {}
   )
 
@@ -26,15 +26,16 @@ const Component = ({ whitelist, keyword }: Props) => {
   const listedItem = merged[keyword]
 
   // if not listed
-  const { data: tokenInfo, ...state } = useTokenInfoCW20(
+  const { data: initMsg, ...state } = useInitMsg<CW721ContractInfoResponse>(
     !listedItem ? keyword : ""
   )
 
-  const responseItem = tokenInfo ? { token: keyword, ...tokenInfo } : undefined
+  const responseItem = initMsg ? { contract: keyword, ...initMsg } : undefined
 
   // conclusion
   const result = listedItem ?? responseItem
 
+  // list
   const results = AccAddress.validate(keyword)
     ? result
       ? [result]
@@ -46,19 +47,19 @@ const Component = ({ whitelist, keyword }: Props) => {
       )
 
   return (
-    <CWTokenList
+    <TokenList
       {...state}
       {...manage}
       results={results}
-      renderTokenItem={({ token, symbol, ...rest }) => {
-        return { ...rest, contract: token, title: symbol }
+      renderTokenItem={({ contract, name, ...rest }) => {
+        return { ...rest, token: contract, title: name, contract }
       }}
     />
   )
 }
 
-const ManageCustomTokensCW20 = () => {
-  const { data: whitelist, ...state } = useCW20Whitelist()
+const ManageCustomTokensCW721 = () => {
+  const { data: whitelist, ...state } = useCW721Whitelist()
 
   return (
     <Fetching {...state} height={2}>
@@ -71,4 +72,4 @@ const ManageCustomTokensCW20 = () => {
   )
 }
 
-export default ManageCustomTokensCW20
+export default ManageCustomTokensCW721

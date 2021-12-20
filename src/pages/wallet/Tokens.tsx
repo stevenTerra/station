@@ -5,7 +5,7 @@ import { useCustomTokensCW20 } from "data/settings/CustomTokens"
 import { InternalButton } from "components/general"
 import { Card } from "components/layout"
 import { ModalButton } from "components/feedback"
-import ManageCustomTokensCW20 from "../wasm/ManageCustomTokensCW20"
+import ManageCustomTokens from "../custom/ManageCustomTokens"
 import IBCAsset from "./IBCAsset"
 import CW20Asset from "./CW20Asset"
 
@@ -42,7 +42,7 @@ const Tokens = () => {
             </InternalButton>
           )}
         >
-          <ManageCustomTokensCW20 />
+          <ManageCustomTokens />
         </ModalButton>
       }
     >

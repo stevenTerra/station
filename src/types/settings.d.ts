@@ -16,7 +16,7 @@ interface CustomTokensByNetwork {
 }
 
 type CustomToken = CustomTokenCW20 | CustomTokenCW721 | CustomTokenIBC
-interface CustomTokenIBC extends IBCTokenInfoResponse {
+interface CustomTokenIBC extends IBCTokenItem {
   denom: IBCDenom
 }
 

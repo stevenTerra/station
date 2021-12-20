@@ -1,11 +1,11 @@
 import { Flex } from "components/layout"
 import { Fetching, Empty } from "components/feedback"
-import CWTokenItem, { CWTokenItemProps } from "./CWTokenItem"
-import styles from "./CWTokenList.module.scss"
+import TokenItem, { TokenItemProps } from "./TokenItem"
+import styles from "./TokenList.module.scss"
 
 interface Props<T> extends QueryState {
   results: T[]
-  renderTokenItem: (item: T) => CWTokenItemProps
+  renderTokenItem: (item: T) => TokenItemProps
 
   /* manage tokens */
   list: T[]
@@ -14,7 +14,7 @@ interface Props<T> extends QueryState {
   remove: (item: T) => void
 }
 
-function CWTokenList<T extends TokenItem | CW721ContractItem>(props: Props<T>) {
+function TokenList<T extends { symbol: string }>(props: Props<T>) {
   const { list, getIsAdded, add, remove, ...rest } = props
   const { results, renderTokenItem, ...state } = rest
   const empty = !state.isLoading && !results.length
@@ -30,7 +30,7 @@ function CWTokenList<T extends TokenItem | CW721ContractItem>(props: Props<T>) {
           .sort((a, b) => Number(getIsAdded(b)) - Number(getIsAdded(a)))
           .map((item) => (
             <li key={item.symbol}>
-              <CWTokenItem
+              <TokenItem
                 {...renderTokenItem(item)}
                 added={getIsAdded(item)}
                 onAdd={() => add(item)}
@@ -43,4 +43,4 @@ function CWTokenList<T extends TokenItem | CW721ContractItem>(props: Props<T>) {
   )
 }
 
-export default CWTokenList
+export default TokenList

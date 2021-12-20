@@ -4,7 +4,7 @@ import { useCustomTokensCW721 } from "data/settings/CustomTokens"
 import { InternalButton } from "components/general"
 import { Col, Card } from "components/layout"
 import { ModalButton } from "components/feedback"
-import ManageCustomTokensCW721 from "../wasm/ManageCustomTokensCW721"
+import ManageCustomTokensCW721 from "../custom/ManageCustomTokensCW721"
 import NFTPlaceholder from "./NFTPlaceholder"
 import NFTAssetGroup from "./NFTAssetGroup"
 
