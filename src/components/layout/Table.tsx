@@ -1,8 +1,9 @@
 import { CSSProperties, ReactNode, useState } from "react"
 import { path } from "ramda"
 import classNames from "classnames/bind"
-import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp"
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown"
+import { ReactComponent as DropUpIcon } from "styles/images/icons/DropUp.svg"
+import { ReactComponent as DropDownIcon } from "styles/images/icons/DropDown.svg"
+import Grid from "./Grid"
 import styles from "./Table.module.scss"
 
 const cx = classNames.bind(styles)
@@ -70,7 +71,8 @@ function Table<T>({ columns, dataSource, size = "default", style }: Props<T>) {
                 const active = sorterIndex === index && sortOrder === key
                 return {
                   className: cx(styles.caret, { active }),
-                  fontSize: "inherit" as const,
+                  width: 6,
+                  height: 3,
                 }
               }
 
@@ -83,10 +85,10 @@ function Table<T>({ columns, dataSource, size = "default", style }: Props<T>) {
                     >
                       {title}
 
-                      <div className={styles.carets}>
-                        <ArrowDropUpIcon {...getCaretAttrs("asc")} />
-                        <ArrowDropDownIcon {...getCaretAttrs("desc")} />
-                      </div>
+                      <Grid gap={4}>
+                        <DropUpIcon {...getCaretAttrs("asc")} />
+                        <DropDownIcon {...getCaretAttrs("desc")} />
+                      </Grid>
                     </button>
                   ) : (
                     title

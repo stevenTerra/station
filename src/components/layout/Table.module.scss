@@ -50,15 +50,11 @@
 /* sorter */
 .sorter {
   @include inline-flex;
-  gap: 2px;
-}
-
-.carets {
-  display: grid;
-  font-size: var(--font-size-small);
+  gap: 8px;
 }
 
 .caret {
+  fill: var(--text);
   opacity: 0.3;
 
   &.active {
