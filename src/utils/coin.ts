@@ -20,19 +20,23 @@ export const sortByDenom = <T extends { denom: Denom }>(
   currency = "",
   sorter?: (a: T, b: T) => number
 ) =>
-  coins
-    .sort(sorter)
-    .sort(({ denom: a }, { denom: b }) => compareIsDenomIBC(a, b))
-    .sort(({ denom: a }, { denom: b }) => compareIs(currency)(a, b))
-    .sort(({ denom: a }, { denom: b }) => compareIs("uusd")(a, b))
-    .sort(({ denom: a }, { denom: b }) => compareIs("uluna")(a, b))
+  coins.sort(
+    (a, b) =>
+      compareIs("uluna")(a.denom, b.denom) ||
+      compareIs("uusd")(a.denom, b.denom) ||
+      compareIs(currency)(a.denom, b.denom) ||
+      compareIsDenomIBC(a.denom, b.denom) ||
+      (sorter?.(a, b) ?? 0)
+  )
 
 export const sortDenoms = (denoms: Denom[], currency = "") =>
-  denoms
-    .sort((a, b) => compareIsDenomIBC(a, b))
-    .sort((a, b) => compareIs(currency)(a, b))
-    .sort((a, b) => compareIs("uusd")(a, b))
-    .sort((a, b) => compareIs("uluna")(a, b))
+  denoms.sort(
+    (a, b) =>
+      compareIs("uluna")(a, b) ||
+      compareIs("uusd")(a, b) ||
+      compareIs(currency)(a, b) ||
+      compareIsDenomIBC(a, b)
+  )
 
 export const compareIsDenomIBC = (a: string, b: string) =>
   Number(isDenomIBC(a)) - Number(isDenomIBC(b))

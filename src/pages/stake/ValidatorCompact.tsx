@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next"
 import LaptopOutlinedIcon from "@mui/icons-material/LaptopOutlined"
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined"
 import { STAKE_ID, TERRA_VALIDATORS } from "config/constants"
-import { useValidator } from "data/queries/staking"
+import { useTerraValidator } from "data/Terra/api"
 import { ReactComponent as TerraValidatorProfiles } from "styles/images/stake/TerraValidatorProfiles.svg"
 import { ReactComponent as StakeID } from "styles/images/stake/StakeID.svg"
 import { ExternalLink, validateLink } from "components/general"
@@ -15,19 +15,21 @@ import styles from "./ValidatorCompact.module.scss"
 const ValidatorCompact = () => {
   const { t } = useTranslation()
   const address = useAddressParams()
-  const { data: validator, ...state } = useValidator(address)
+  const { data: validator, ...state } = useTerraValidator(address)
 
   if (!validator) return null
 
   const { operator_address } = validator
   const { status, jailed, description } = validator
-  const { moniker, details, website, security_contact } = description
+  const { moniker, details, website } = description
+  const { picture, contact } = validator
+  const email = contact?.email
 
   return (
     <Card {...state}>
       <Grid gap={16}>
         <Flex gap={16} className={styles.contact} start>
-          <ProfileIcon validator={validator} size={60} />
+          <ProfileIcon src={picture} size={60} />
 
           <Grid gap={4}>
             <Flex gap={10} start>
@@ -43,12 +45,10 @@ const ValidatorCompact = () => {
               </Flex>
             )}
 
-            {security_contact && (
+            {email && (
               <Flex gap={4} className={styles.link} start>
                 <EmailOutlinedIcon fontSize="inherit" />
-                <ExternalLink href={`mailto:${security_contact}`}>
-                  {security_contact}
-                </ExternalLink>
+                <ExternalLink href={`mailto:${email}`}>{email}</ExternalLink>
               </Flex>
             )}
           </Grid>

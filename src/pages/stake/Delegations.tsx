@@ -43,7 +43,10 @@ const Delegations = () => {
         )}
       >
         <Table
-          style={getMaxHeightStyle(320)}
+          dataSource={delegations}
+          sorter={({ balance: { amount: a } }, { balance: { amount: b } }) =>
+            b.minus(a).toNumber()
+          }
           columns={[
             {
               title: t("Validator"),
@@ -59,10 +62,7 @@ const Delegations = () => {
               align: "right",
             },
           ]}
-          dataSource={delegations.sort(
-            ({ balance: { amount: a } }, { balance: { amount: b } }) =>
-              b.minus(a).toNumber()
-          )}
+          style={getMaxHeightStyle(320)}
         />
       </ModalButton>
     )

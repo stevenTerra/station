@@ -1,16 +1,13 @@
 import { useState } from "react"
-import { Validator } from "@terra-money/terra.js"
 import { ReactComponent as Terra } from "styles/images/Terra.svg"
-import getProfileIcons from "./getProfileIcons"
 import styles from "./ProfileIcon.module.scss"
 
 interface Props {
-  validator: Validator
+  src?: string
   size: number
 }
 
-const ProfileIcon = ({ validator: { operator_address }, size }: Props) => {
-  const src = getProfileIcons(operator_address)
+const ProfileIcon = ({ src, size }: Props) => {
   const [error, setError] = useState(false)
   const attrs = { className: styles.icon, width: size, height: size }
   if (error || !src) return <Terra {...attrs} />

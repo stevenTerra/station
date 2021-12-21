@@ -15,6 +15,7 @@ const ProposalDepositors = ({ id }: { id: number }) => {
     <Card {...state} title={t("Depositors")} bordered>
       {deposits && (
         <Table
+          dataSource={deposits}
           columns={[
             {
               title: t("Depositor"),
@@ -29,7 +30,6 @@ const ProposalDepositors = ({ id }: { id: number }) => {
               ),
             },
           ]}
-          dataSource={deposits}
           size="small"
         />
       )}

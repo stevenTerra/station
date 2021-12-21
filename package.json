@@ -20,7 +20,7 @@
     "@terra-money/log-finder-ruleset": "^3.0.0",
     "@terra-money/terra.js": "^3.0.1",
     "@terra-money/wallet-provider": "^3.6.0",
-    "@terra.kitchen/utils": "^1.0.5",
+    "@terra.kitchen/utils": "^1.0.6",
     "@tippyjs/react": "^4.2.6",
     "axios": "^0.24.0",
     "bignumber.js": "^9.0.2",

@@ -8,60 +8,97 @@ import { Validator } from "@terra-money/terra.js"
 import { BondStatus } from "@terra-money/terra.proto/cosmos/staking/v1beta1/staking"
 import { bondStatusFromJSON } from "@terra-money/terra.proto/cosmos/staking/v1beta1/staking"
 import { combineState } from "data/query"
+import { useOracleParams } from "data/queries/oracle"
 import { useValidators } from "data/queries/staking"
 import { useDelegations, useUnbondings } from "data/queries/staking"
-import { useCalcVotingPower } from "data/queries/tendermint"
+import { getCalcUptime, getCalcVotingPowerRate } from "data/Terra/api"
+import { calcSelfDelegation, useTerraValidators } from "data/Terra/api"
 import { Page, Card, Table, Flex, Grid } from "components/layout"
+import { Tooltip } from "components/display"
 import ProfileIcon from "./components/ProfileIcon"
+import { ValidatorJailed } from "./components/ValidatorTag"
 import styles from "./Validators.module.scss"
 
 const Validators = () => {
   const { t } = useTranslation()
 
-  const calcVotingPower = useCalcVotingPower()
+  const { data: oracleParams, ...oracleParamsState } = useOracleParams()
   const { data: validators, ...validatorsState } = useValidators()
   const { data: delegations, ...delegationsState } = useDelegations()
   const { data: undelegations, ...undelegationsState } = useUnbondings()
+  const { data: TerraValidators, ...TerraValidatorsState } =
+    useTerraValidators()
 
   const state = combineState(
+    oracleParamsState,
     validatorsState,
     delegationsState,
-    undelegationsState
+    undelegationsState,
+    TerraValidatorsState
   )
 
-  const activeValidatorsWithVotingPower = useMemo(() => {
-    if (!validators) return null
+  const activeValidators = useMemo(() => {
+    if (!(oracleParams && validators && TerraValidators)) return null
+
+    const calcRate = getCalcVotingPowerRate(TerraValidators)
+    const calcUptime = getCalcUptime(oracleParams)
 
     return validators
       .filter(({ status }) => !getIsUnbonded(status))
       .map((validator) => {
-        const voting_power = calcVotingPower(validator) ?? 0
-        return { validator, voting_power }
+        const { operator_address } = validator
+
+        const TerraValidator = TerraValidators.find(
+          (validator) => validator.operator_address === operator_address
+        )
+
+        const voting_power_rate = calcRate(operator_address)
+        const selfDelegation = calcSelfDelegation(TerraValidator)
+        const uptime = calcUptime(TerraValidator)
+
+        return {
+          ...TerraValidator,
+          ...validator,
+          voting_power_rate,
+          selfDelegation,
+          uptime,
+        }
       })
-      .sort(({ voting_power: a }, { voting_power: b }) => b - a)
-  }, [calcVotingPower, validators])
+      .sort(
+        (a, b) =>
+          Number(b.uptime) - Number(a.uptime) ||
+          Number(b.selfDelegation) - Number(a.selfDelegation) ||
+          Number(b.voting_power_rate) - Number(a.voting_power_rate)
+      )
+  }, [TerraValidators, oracleParams, validators])
 
   const renderCount = () => {
-    if (!activeValidatorsWithVotingPower) return null
-    const count = activeValidatorsWithVotingPower.length
+    if (!activeValidators) return null
+    const count = activeValidators.length
     return t("{{count}} active validators", { count })
   }
 
   const render = () => {
-    if (!activeValidatorsWithVotingPower) return null
+    if (!activeValidators) return null
+
     return (
       <Table
+        dataSource={activeValidators}
+        sorter={(a, b) =>
+          Number(a.jailed) - Number(b.jailed) ||
+          Number(!!b.voting_power_rate) - Number(!!a.voting_power_rate)
+        }
+        rowKey={({ operator_address }) => operator_address}
         columns={[
           {
             title: t("Moniker"),
-            dataIndex: ["validator", "description", "moniker"],
+            dataIndex: ["description", "moniker"],
             defaultSortOrder: "asc",
-            sorter: (
-              { validator: { description: a } },
-              { validator: { description: b } }
-            ) => a.moniker.localeCompare(b.moniker),
-            render: (moniker, { validator }) => {
-              const { operator_address, description } = validator
+            sorter: ({ description: a }, { description: b }) =>
+              a.moniker.localeCompare(b.moniker),
+            render: (moniker, validator) => {
+              const { operator_address, jailed } = validator
+              const { contact } = validator
 
               const delegated = delegations?.find(
                 ({ validator_address }) =>
@@ -75,7 +112,7 @@ const Validators = () => {
 
               return (
                 <Flex start gap={8}>
-                  <ProfileIcon validator={validator} size={22} />
+                  <ProfileIcon src={validator.picture} size={22} />
 
                   <Grid gap={2}>
                     <Flex gap={4} start>
@@ -86,12 +123,14 @@ const Validators = () => {
                         {moniker}
                       </Link>
 
-                      {description.security_contact && (
+                      {contact?.email && (
                         <VerifiedIcon
                           className="info"
                           style={{ fontSize: 12 }}
                         />
                       )}
+
+                      {jailed && <ValidatorJailed />}
                     </Flex>
 
                     {(delegated || undelegated) && (
@@ -111,27 +150,50 @@ const Validators = () => {
           },
           {
             title: t("Voting power"),
-            dataIndex: ["voting_power"],
+            dataIndex: "voting_power_rate",
             defaultSortOrder: "desc",
-            sorter: ({ voting_power: a }, { voting_power: b }) => a - b,
-            render: (value) => readPercent(value),
+            sorter: (
+              { voting_power_rate: a = 0 },
+              { voting_power_rate: b = 0 }
+            ) => a - b,
+            render: (value) => !!value && readPercent(value),
+            align: "center",
+          },
+          {
+            title: t("Self-delegation"),
+            dataIndex: "selfDelegation",
+            defaultSortOrder: "desc",
+            sorter: ({ selfDelegation: a = 0 }, { selfDelegation: b = 0 }) =>
+              a - b,
+            render: (value) => !!value && readPercent(value),
             align: "center",
           },
           {
             title: t("Commission"),
-            dataIndex: ["validator", "commission", "commission_rates"],
+            dataIndex: ["commission", "commission_rates"],
             defaultSortOrder: "asc",
             sorter: (
-              { validator: { commission: a } },
-              { validator: { commission: b } }
-            ) =>
-              a.commission_rates.rate.minus(b.commission_rates.rate).toNumber(),
+              { commission: { commission_rates: a } },
+              { commission: { commission_rates: b } }
+            ) => a.rate.toNumber() - b.rate.toNumber(),
             render: ({ rate }: Validator.CommissionRates) =>
               readPercent(rate.toString(), { fixed: 1 }),
             align: "right",
           },
+          {
+            title: t("Uptime"),
+            dataIndex: "uptime",
+            defaultSortOrder: "desc",
+            sorter: ({ uptime: a = 0 }, { uptime: b = 0 }) => a - b,
+            render: (value) =>
+              !!value && (
+                <Tooltip content={readPercent(value, { fixed: 4 })}>
+                  <span>{readPercent(value, { fixed: 0 })}</span>
+                </Tooltip>
+              ),
+            align: "center",
+          },
         ]}
-        dataSource={activeValidatorsWithVotingPower}
       />
     )
   }

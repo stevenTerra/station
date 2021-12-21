@@ -184,6 +184,7 @@ const SwapMultipleForm = () => {
 
     return (
       <Table
+        dataSource={dataSource}
         columns={[
           {
             dataIndex: "offerAsset",
@@ -259,7 +260,6 @@ const SwapMultipleForm = () => {
             align: "right",
           },
         ]}
-        dataSource={dataSource}
         size="small"
       />
     )

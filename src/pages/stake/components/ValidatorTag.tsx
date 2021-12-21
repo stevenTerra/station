@@ -22,5 +22,9 @@ export const ValidatorStatus = ({ status }: { status: BondStatus }) => {
 
 export const ValidatorJailed = () => {
   const { t } = useTranslation()
-  return <Tag color="danger">{t("Jailed")}</Tag>
+  return (
+    <Tag color="danger" small>
+      {t("Jailed")}
+    </Tag>
+  )
 }

@@ -1,5 +1,10 @@
+import { useMemo } from "react"
 import { useQuery } from "react-query"
 import axios, { AxiosError } from "axios"
+import BigNumber from "bignumber.js"
+import { OracleParams, ValAddress } from "@terra-money/terra.js"
+import { TerraValidator } from "types/validator"
+import { useOracleParams } from "data/queries/oracle"
 import { queryKey, RefetchOptions } from "../query"
 
 const config = { baseURL: "https://api.terra.dev" }
@@ -52,4 +57,75 @@ export const useTaxRewards = (type: Aggregate) => {
 
 export const useWallets = (walletsType: AggregateWallets, type: Aggregate) => {
   return useTerraAPI<ChartDataItem[]>(`chart/wallets/${walletsType}/${type}`)
+}
+
+/* validators */
+export const useTerraValidators = () => {
+  return useTerraAPI<TerraValidator[]>("validators")
+}
+
+export const useTerraValidator = (address: ValAddress) => {
+  return useTerraAPI<TerraValidator>(`validators/${address}`)
+}
+
+/* helpers */
+export const getCalcVotingPowerRate = (TerraValidators: TerraValidator[]) => {
+  const total = BigNumber.sum(
+    ...TerraValidators.map(({ voting_power = 0 }) => voting_power)
+  ).toNumber()
+
+  return (address: ValAddress) => {
+    const validator = TerraValidators.find(
+      ({ operator_address }) => operator_address === address
+    )
+
+    if (!validator) return
+    const { voting_power } = validator
+    return voting_power ? Number(validator.voting_power) / total : undefined
+  }
+}
+
+export const calcSelfDelegation = (validator?: TerraValidator) => {
+  if (!validator) return
+  const { self, tokens } = validator
+  return self ? Number(self) / Number(tokens) : undefined
+}
+
+export const getCalcUptime = ({ slash_window }: OracleParams) => {
+  return (validator?: TerraValidator) => {
+    if (!validator) return
+    const { miss_counter } = validator
+    return miss_counter ? 1 - Number(miss_counter) / slash_window : undefined
+  }
+}
+
+export const useVotingPowerRate = (address: ValAddress) => {
+  const { data: TerraValidators, ...state } = useTerraValidators()
+  const calcRate = useMemo(() => {
+    if (!TerraValidators) return
+    return getCalcVotingPowerRate(TerraValidators)
+  }, [TerraValidators])
+
+  const data = useMemo(() => {
+    if (!calcRate) return
+    return calcRate(address)
+  }, [address, calcRate])
+
+  return { data, ...state }
+}
+
+export const useUptime = (validator: TerraValidator) => {
+  const { data: oracleParams, ...state } = useOracleParams()
+
+  const calc = useMemo(() => {
+    if (!oracleParams) return
+    return getCalcUptime(oracleParams)
+  }, [oracleParams])
+
+  const data = useMemo(() => {
+    if (!calc) return
+    return calc(validator)
+  }, [calc, validator])
+
+  return { data, ...state }
 }

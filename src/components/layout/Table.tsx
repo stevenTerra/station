@@ -1,4 +1,4 @@
-import { CSSProperties, ReactNode, useState } from "react"
+import { CSSProperties, ReactNode, useMemo, useState } from "react"
 import { path } from "ramda"
 import classNames from "classnames/bind"
 import { ReactComponent as DropUpIcon } from "styles/images/icons/DropUp.svg"
@@ -25,11 +25,16 @@ interface Column<T> {
 interface Props<T> {
   columns: Column<T>[]
   dataSource: T[]
+  sorter?: (a: T, b: T) => number
+  rowKey?: (record: T) => string
+
   size?: "default" | "small"
   style?: CSSProperties
 }
 
-function Table<T>({ columns, dataSource, size = "default", style }: Props<T>) {
+function Table<T>({ columns, dataSource, rowKey, ...props }: Props<T>) {
+  const { size = "default", style } = props
+
   const getClassName = ({ align }: Column<T>) => cx(align)
   const getKey = ({ dataIndex, key }: Column<T>) =>
     key ?? (typeof dataIndex === "string" ? dataIndex : dataIndex?.join() ?? "")
@@ -37,7 +42,7 @@ function Table<T>({ columns, dataSource, size = "default", style }: Props<T>) {
   const [sorterIndex, setSorterIndex] = useState<number>()
   const [sortOrder, setSortOrder] = useState<SortOrder>()
 
-  const getSorter = () => {
+  const sorter = useMemo(() => {
     if (typeof sorterIndex !== "number") return
     const { sorter } = columns[sorterIndex]
     if (!sorter) throw new Error()
@@ -45,7 +50,7 @@ function Table<T>({ columns, dataSource, size = "default", style }: Props<T>) {
     return (a: T, b: T) => {
       return (sortOrder === "desc" ? -1 : 1) * sorter(a, b)
     }
-  }
+  }, [columns, sortOrder, sorterIndex])
 
   const sort = (index: number) => {
     const { defaultSortOrder } = columns[index]
@@ -100,27 +105,29 @@ function Table<T>({ columns, dataSource, size = "default", style }: Props<T>) {
         </thead>
 
         <tbody>
-          {dataSource.sort(getSorter()).map((data, index) => (
-            <tr key={index}>
-              {columns.map((column, index) => {
-                const { dataIndex, render } = column
-                const value: any =
-                  typeof dataIndex === "string"
-                    ? data[dataIndex as keyof T]
-                    : dataIndex
-                    ? path(dataIndex, data)
-                    : undefined
+          {dataSource
+            .sort((a, b) => props.sorter?.(a, b) || sorter?.(a, b) || 0)
+            .map((data, index) => (
+              <tr key={rowKey?.(data) ?? index}>
+                {columns.map((column, index) => {
+                  const { dataIndex, render } = column
+                  const value: any =
+                    typeof dataIndex === "string"
+                      ? data[dataIndex as keyof T]
+                      : dataIndex
+                      ? path(dataIndex, data)
+                      : undefined
 
-                const children = render?.(value, data, index) ?? value
+                  const children = render?.(value, data, index) ?? value
 
-                return (
-                  <td className={getClassName(column)} key={getKey(column)}>
-                    {children}
-                  </td>
-                )
-              })}
-            </tr>
-          ))}
+                  return (
+                    <td className={getClassName(column)} key={getKey(column)}>
+                      {children}
+                    </td>
+                  )
+                })}
+              </tr>
+            ))}
         </tbody>
       </table>
     </div>

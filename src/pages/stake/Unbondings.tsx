@@ -46,7 +46,7 @@ const Unbondings = () => {
         )}
       >
         <Table
-          style={getMaxHeightStyle(320)}
+          dataSource={flattenUnbondings(unbondings)}
           columns={[
             {
               title: t("Validator"),
@@ -70,7 +70,7 @@ const Unbondings = () => {
               align: "right",
             },
           ]}
-          dataSource={flattenUnbondings(unbondings)}
+          style={getMaxHeightStyle(320)}
         />
       </ModalButton>
     )

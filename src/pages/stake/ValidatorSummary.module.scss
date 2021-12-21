@@ -7,6 +7,10 @@
 .numbers {
   gap: 36px;
 
+  border-bottom: 1px solid var(--card-border);
+  margin-bottom: 28px;
+  padding-bottom: 28px;
+
   @include desktop {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -20,12 +24,6 @@
   }
 }
 
-.addresses {
-  border-top: 1px solid var(--card-border);
-  margin-top: 28px;
-  padding-top: 28px;
-
-  .item {
-    gap: 4px;
-  }
+.addresses .item {
+  gap: 4px;
 }

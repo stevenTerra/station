@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next"
-import { useValidator } from "data/queries/staking"
+import { useTerraValidator } from "data/Terra/api"
 import { Col, Page, Auto } from "components/layout"
 import useAddressParams from "./useAddressParams"
 import ValidatorCompact from "./ValidatorCompact"
@@ -9,7 +9,7 @@ import ValidatorActions from "./ValidatorActions"
 const ValidatorDetails = () => {
   const { t } = useTranslation()
   const address = useAddressParams()
-  const { data: validator, ...state } = useValidator(address)
+  const { data: validator, ...state } = useTerraValidator(address)
 
   const render = () => {
     if (!validator) return null
