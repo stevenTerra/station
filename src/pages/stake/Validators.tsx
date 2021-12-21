@@ -157,7 +157,7 @@ const Validators = () => {
               { voting_power_rate: b = 0 }
             ) => a - b,
             render: (value) => !!value && readPercent(value),
-            align: "center",
+            align: "right",
           },
           {
             title: t("Self-delegation"),
@@ -166,7 +166,7 @@ const Validators = () => {
             sorter: ({ selfDelegation: a = 0 }, { selfDelegation: b = 0 }) =>
               a - b,
             render: (value) => !!value && readPercent(value),
-            align: "center",
+            align: "right",
           },
           {
             title: t("Commission"),
@@ -191,7 +191,7 @@ const Validators = () => {
                   <span>{readPercent(value, { fixed: 0 })}</span>
                 </Tooltip>
               ),
-            align: "center",
+            align: "right",
           },
         ]}
       />
