@@ -52,7 +52,13 @@ const Component = ({ whitelist, keyword }: Props) => {
       {...manage}
       results={results}
       renderTokenItem={({ contract, name, ...rest }) => {
-        return { ...rest, token: contract, title: name, contract }
+        return {
+          ...rest,
+          token: contract,
+          title: name,
+          contract,
+          key: contract,
+        }
       }}
     />
   )

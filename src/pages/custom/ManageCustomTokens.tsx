@@ -87,10 +87,10 @@ const Component = ({ whitelist, keyword }: Props) => {
   const renderTokenItem = (item: CustomTokenIBC | CustomTokenCW20) => {
     if ("base_denom" in item) {
       const { symbol, denom, ...rest } = item
-      return { ...rest, token: denom, title: symbol }
+      return { ...rest, token: denom, title: symbol, key: denom }
     } else {
       const { token, symbol, ...rest } = item
-      return { ...rest, token, title: symbol, contract: token }
+      return { ...rest, token, title: symbol, contract: token, key: token }
     }
   }
 

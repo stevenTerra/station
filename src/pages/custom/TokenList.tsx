@@ -28,16 +28,19 @@ function TokenList<T extends { symbol: string }>(props: Props<T>) {
       <ul className={styles.results}>
         {results
           .sort((a, b) => Number(getIsAdded(b)) - Number(getIsAdded(a)))
-          .map((item) => (
-            <li key={item.symbol}>
-              <TokenItem
-                {...renderTokenItem(item)}
-                added={getIsAdded(item)}
-                onAdd={() => add(item)}
-                onRemove={() => remove(item)}
-              />
-            </li>
-          ))}
+          .map((item) => {
+            const tokenItem = renderTokenItem(item)
+            return (
+              <li key={tokenItem.key}>
+                <TokenItem
+                  {...tokenItem}
+                  added={getIsAdded(item)}
+                  onAdd={() => add(item)}
+                  onRemove={() => remove(item)}
+                />
+              </li>
+            )
+          })}
       </ul>
     </Fetching>
   )
