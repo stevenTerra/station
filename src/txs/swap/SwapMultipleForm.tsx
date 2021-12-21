@@ -192,7 +192,7 @@ const SwapMultipleForm = () => {
               const checked = state[offerAsset]
               return (
                 <Checkbox
-                  defaultChecked={checked}
+                  checked={checked}
                   onChange={() =>
                     setState({ ...state, [offerAsset]: !checked })
                   }
