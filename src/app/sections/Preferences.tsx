@@ -4,18 +4,16 @@ import LanguageIcon from "@mui/icons-material/Language"
 import { Languages } from "config/lang"
 import { useActiveDenoms } from "data/queries/oracle"
 import { useCurrencyState } from "data/settings/Currency"
-import { useLanguageState } from "data/settings/Language"
 import { Tabs } from "components/layout"
 import { RadioGroup } from "components/form"
 import { Popover } from "components/display"
 import HeaderIconButton from "../components/HeaderIconButton"
 
 const PreferencesInner = () => {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
 
   const { data: activeDenoms = [] } = useActiveDenoms()
   const [currency, setCurrency] = useCurrencyState()
-  const [language, setLanguage] = useLanguageState()
 
   return (
     <Tabs
@@ -26,8 +24,8 @@ const PreferencesInner = () => {
           children: (
             <RadioGroup
               options={Object.values(Languages)}
-              value={language}
-              onChange={setLanguage}
+              value={i18n.language}
+              onChange={(language) => i18n.changeLanguage(language)}
             />
           ),
         },

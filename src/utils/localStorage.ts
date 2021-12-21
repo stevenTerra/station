@@ -3,7 +3,6 @@ import themes from "styles/themes/themes"
 export enum SettingKey {
   Theme = "Theme",
   Currency = "Currency",
-  Language = "Language",
   MinimumValue = "MinimumValue",
   CustomTokens = "CustomTokens",
   AddressBook = "AddressBook",
@@ -19,7 +18,6 @@ const DefaultCustomTokens = {
 export const DefaultSettings = {
   [SettingKey.Theme]: DefaultTheme,
   [SettingKey.Currency]: "uusd",
-  [SettingKey.Language]: "en",
   [SettingKey.MinimumValue]: 0,
   [SettingKey.CustomTokens]: DefaultCustomTokens as CustomTokens,
   [SettingKey.AddressBook]: [] as AddressBook[],

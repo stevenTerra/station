@@ -33,11 +33,7 @@ export const Languages = {
   zh: { value: "zh", label: "中文", translation: flatten(zh) },
 }
 
-i18n
-  .use(LanguageDetector)
-  .use(initReactI18next)
-  .init({
-    lng: getLocalSetting<string>(SettingKey.Language),
-    resources: Languages,
-    debug: !!debug.translation,
-  })
+i18n.use(LanguageDetector).use(initReactI18next).init({
+  resources: Languages,
+  debug: !!debug.translation,
+})
