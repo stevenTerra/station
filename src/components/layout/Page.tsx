@@ -24,22 +24,24 @@ const Page: FC<Props> = ({ title, extra, children, small, sub, ...props }) => {
         <>
           {progress}
 
-          <Container className={cx(styles.page, { sub, small })}>
-            {title && (
-              <header className={styles.header}>
-                <h1 className={styles.title}>{title}</h1>
-                {extra}
-              </header>
-            )}
-
-            <section className={classNames(styles.main, mainClassName)}>
-              {wrong ? (
-                <Card>{wrong}</Card>
-              ) : (
-                <ErrorBoundary>{children}</ErrorBoundary>
+          <article className={cx(styles.page, { sub, small })}>
+            <Container>
+              {title && (
+                <header className={styles.header}>
+                  <h1 className={styles.title}>{title}</h1>
+                  {extra}
+                </header>
               )}
-            </section>
-          </Container>
+
+              <section className={classNames(styles.main, mainClassName)}>
+                {wrong ? (
+                  <Card>{wrong}</Card>
+                ) : (
+                  <ErrorBoundary>{children}</ErrorBoundary>
+                )}
+              </section>
+            </Container>
+          </article>
         </>
       )}
     </WithFetching>
