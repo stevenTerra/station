@@ -37,7 +37,7 @@ const NFTAssets = () => {
 
   return (
     <Card extra={renderExtra(!empty)}>
-      <Grid gap={8} className={cx({ placeholder: empty })}>
+      <Grid gap={16} className={cx({ placeholder: empty })}>
         {empty ? (
           <NFTPlaceholder />
         ) : (
