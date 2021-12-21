@@ -1,5 +1,4 @@
 import { useTranslation } from "react-i18next"
-import ERROR from "config/ERROR"
 import { combineState } from "data/query"
 import { useRewards } from "data/queries/distribution"
 import { useDelegations, useValidators } from "data/queries/staking"
@@ -32,7 +31,7 @@ const WithdrawRewardsTx = () => {
 
     if (!hasRewards)
       return hasDelegations ? (
-        <Card>{ERROR.STAKE.REWARDS_EMPTY}</Card>
+        <Card>{t("No rewards yet")}</Card>
       ) : (
         <DelegationsPromote />
       )

@@ -3,7 +3,6 @@ import classNames from "classnames/bind"
 import BigNumber from "bignumber.js"
 import { StakingPool, Tally, TallyParams, Vote } from "@terra-money/terra.js"
 import { readAmount, readPercent } from "@terra.kitchen/utils"
-import ERROR from "config/ERROR"
 import { has } from "utils/num"
 import { combineState } from "data/query"
 import { useGetVoteOptionItem } from "data/queries/gov"
@@ -47,7 +46,7 @@ const ProposalVotes = ({ id, card }: { id: number; card?: boolean }) => {
 
     const flagLabel = { quorum: t("Quorum"), threshold: t("Pass threshold") }
 
-    if (!has(total.voted)) return <Empty>{ERROR.PROPOSAL.VOTES_EMPTY}</Empty>
+    if (!has(total.voted)) return <Empty>{t("No votes yet")}</Empty>
 
     return (
       <Grid gap={40}>

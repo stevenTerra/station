@@ -14,15 +14,6 @@ const ERROR = {
   TOKENS: {
     QUERY_BALANCE_FAILED: "Failed to query balance",
   },
-  STAKE: {
-    REWARDS_EMPTY: "No rewards yet",
-  },
-  GOV: {
-    EMPTY: "No proposals",
-  },
-  PROPOSAL: {
-    VOTES_EMPTY: "No votes yet",
-  },
 }
 
 export default ERROR
