@@ -9,7 +9,7 @@ import { calcSelfDelegation } from "data/Terra/api"
 import { useUptime, useVotingPowerRate } from "data/Terra/api"
 import { FinderLink } from "components/general"
 import { Card, Grid } from "components/layout"
-import { ToNow } from "components/display"
+import { ToNow, Tooltip } from "components/display"
 import styles from "./ValidatorSummary.module.scss"
 
 const ValidatorSummary = ({ validator }: { validator: TerraValidator }) => {
@@ -39,7 +39,11 @@ const ValidatorSummary = ({ validator }: { validator: TerraValidator }) => {
       },
       {
         title: `${t("Uptime")} (${t("Last 10k blocks")})`,
-        content: readPercent(uptime),
+        content: (
+          <Tooltip content={readPercent(uptime, { fixed: 4 })}>
+            <span>{readPercent(uptime, { fixed: 0 })}</span>
+          </Tooltip>
+        ),
       },
     ]
   }, [t, uptime, validator, votingPowerRate])
