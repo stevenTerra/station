@@ -91,7 +91,7 @@ const ExpectedPrice = ({ mode, input, ...props }: Props) => {
 
     const offerDecimals = findDecimals(offerAsset)
     const askDecimals = findDecimals(askAsset)
-    const decimals = offerDecimals - askDecimals
+    const decimals = askDecimals - offerDecimals
     const price = toPrice(Number(rate) * Math.pow(10, decimals))
 
     return (

@@ -251,7 +251,7 @@ const useSwapUtils = () => {
     )
 
     const ratio = toPrice(
-      new BigNumber(pair[params.askAsset]).div(pair[params.offerAsset])
+      new BigNumber(pair[params.offerAsset]).div(pair[params.askAsset])
     )
 
     return {
@@ -419,7 +419,7 @@ const findProfitable = (results: SimulateResult[]) => {
 export const calcBySlippage = (params: SlippageParams) => {
   const { input, simulated, slippageInput, offerDecimals, askDecimals } = params
   const amount = toAmount(input, { decimals: offerDecimals })
-  const ratio = new BigNumber(simulated).div(amount)
+  const ratio = new BigNumber(amount).div(simulated)
 
   /* terraswap */
   const belief_price = ratio.dp(18, BigNumber.ROUND_DOWN).toString()
@@ -429,7 +429,7 @@ export const calcBySlippage = (params: SlippageParams) => {
   const minimum_receive = calcMinimumReceive(simulated, max_spread)
 
   /* expected price */
-  const decimals = offerDecimals - askDecimals
+  const decimals = askDecimals - offerDecimals
   const price = toPrice(ratio.times(new BigNumber(10).pow(decimals)))
 
   return { max_spread, belief_price, minimum_receive, price }

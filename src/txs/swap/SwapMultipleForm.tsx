@@ -172,11 +172,11 @@ const SwapMultipleForm = () => {
 
       /* oracle */
       const oracleValue = calcValue({ amount, denom: offerAsset })
-      const oraclePrice = prices?.[offerAsset]
+      const oraclePrice = 1 / prices?.[offerAsset]
       const oracle = { value: oracleValue, price: oraclePrice }
 
       /* expected */
-      const expectedPrice = Number(expectedValue) / Number(amount)
+      const expectedPrice = Number(amount) / Number(expectedValue)
       const expected = { value: expectedValue, price: expectedPrice }
 
       return { ...item, oracle, expected }
