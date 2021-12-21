@@ -56,6 +56,7 @@ export const SearchInput = forwardRef(
           {...attrs}
           className={styles.input}
           inputMode="search"
+          autoComplete="off"
           ref={ref}
         />
 

@@ -30,11 +30,19 @@ export const useInitMsg = <T>(address: TerraAddress) => {
 export const useGetContractQuery = () => {
   const lcd = useLCDClient()
 
-  return <T>(contract: AccAddress, query: object) => ({
+  return <T>(contract?: AccAddress, query?: object) => ({
     queryKey: [queryKey.wasm.contractQuery, contract, query],
-    queryFn: () => lcd.wasm.contractQuery<T>(contract, query),
-    enabled: AccAddress.validate(contract),
+    queryFn: async () => {
+      if (!(contract && query)) return
+      return await lcd.wasm.contractQuery<T>(contract, query)
+    },
+    enabled: !!contract && AccAddress.validate(contract),
   })
+}
+
+export const useContractQuery = <T>(contract?: AccAddress, query?: object) => {
+  const getQuery = useGetContractQuery()
+  return useQuery(getQuery<T>(contract, query))
 }
 
 /* token info */
