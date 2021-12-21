@@ -1,5 +1,5 @@
 import { useRecoilValue } from "recoil"
-import ERROR from "config/ERROR"
+import { useTranslation } from "react-i18next"
 import { currencyState } from "data/settings/Currency"
 import { WithFetching } from "components/feedback"
 import { Read, TokenIcon } from "components/token"
@@ -13,6 +13,7 @@ export interface Props extends TokenItem, QueryState {
 
 const Asset = (props: Props) => {
   const { token, icon, symbol, balance, value, ...state } = props
+  const { t } = useTranslation()
   const currency = useRecoilValue(currencyState)
 
   return (
@@ -29,7 +30,7 @@ const Asset = (props: Props) => {
                   {progress}
                   {wrong ? (
                     <span className="danger">
-                      {ERROR.TOKENS.QUERY_BALANCE_FAILED}
+                      {t("Failed to query balance")}
                     </span>
                   ) : (
                     <Read {...props} amount={balance} token="" />

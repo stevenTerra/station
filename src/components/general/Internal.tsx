@@ -16,25 +16,26 @@ interface InternalButtonProps
   extends Props,
     HTMLAttributes<HTMLButtonElement> {}
 
-export const InternalButton = (attrs: InternalButtonProps) => {
-  return <button {...attrs} {...render(attrs)} type="button" />
+export const InternalButton = (props: InternalButtonProps) => {
+  return <button {...render(props)} type="button" />
 }
 
 interface InternalLinkProps extends Props, LinkProps {}
 
 export const InternalLink = (props: InternalLinkProps) => {
   return props.disabled ? (
-    <span {...props} {...render(props)} />
+    <span {...render(props)} />
   ) : (
-    <Link {...props} {...render(props)} />
+    <Link {...render(props)} />
   )
 }
 
 /* helpers */
-const render = (props: InternalLinkProps | InternalButtonProps) => {
-  const { icon, chevron, children, disabled } = props
+function render<T extends InternalLinkProps | InternalButtonProps>(props: T) {
+  const { icon, chevron, children, disabled, ...attrs } = props
 
   return {
+    ...attrs,
     className: cx(styles.item, { disabled }),
     children: (
       <>

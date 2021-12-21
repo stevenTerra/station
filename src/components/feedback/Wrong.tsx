@@ -1,9 +1,10 @@
 import { FC } from "react"
-import ERROR from "config/ERROR"
+import { useTranslation } from "react-i18next"
 import State from "./State"
 
 const Wrong: FC = ({ children }) => {
-  return <State>{children ?? ERROR.GENERAL.UNCAUGHT}</State>
+  const { t } = useTranslation()
+  return <State>{children ?? t("Something went wrong")}</State>
 }
 
 export default Wrong

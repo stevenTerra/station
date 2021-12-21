@@ -1,6 +1,5 @@
 import { useTranslation } from "react-i18next"
 import classNames from "classnames"
-import ERROR from "config/ERROR"
 import { useThemeAnimation } from "data/settings/Theme"
 import { Flex } from "components/layout"
 import { Wrong } from "components/feedback"
@@ -45,7 +44,7 @@ const ChartContainer = (props: Props) => {
 
   const render = () => {
     if (!result) return <img src={animation} alt="" {...LOADING} />
-    if (result.length < 3) return <Wrong>{ERROR.CHART.LACK_OF_DATA}</Wrong>
+    if (result.length < 3) return <Wrong>{t("Chart requires more data")}</Wrong>
     const data = result.slice(-1 * range).map(convert(formatValue))
     return <Chart {...props} data={data} />
   }

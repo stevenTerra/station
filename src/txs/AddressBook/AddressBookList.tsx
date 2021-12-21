@@ -2,7 +2,6 @@ import { ReactNode } from "react"
 import { useTranslation } from "react-i18next"
 import AddIcon from "@mui/icons-material/Add"
 import PersonAddOutlinedIcon from "@mui/icons-material/PersonAddOutlined"
-import ERROR from "config/ERROR"
 import { useAddressBook } from "data/settings/AddressBook"
 import { InternalButton } from "components/general"
 import { Card } from "components/layout"
@@ -37,7 +36,7 @@ const AddressBookList = ({ onClick }: Props) => {
         <Empty icon={<PersonAddOutlinedIcon fontSize="inherit" />}>
           {renderModalButton((open) => (
             <InternalButton onClick={open}>
-              {ERROR.ADDRESS_BOOK.EMPTY}
+              {t("Add an address")}
             </InternalButton>
           ))}
         </Empty>
