@@ -46,7 +46,7 @@ const ChartContainer = (props: Props) => {
   const render = () => {
     if (!result) return <img src={animation} alt="" {...LOADING} />
     if (result.length < 3) return <Wrong>{ERROR.CHART.LACK_OF_DATA}</Wrong>
-    const data = result.slice(range).map(convert(formatValue))
+    const data = result.slice(-1 * range).map(convert(formatValue))
     return <Chart {...props} data={data} />
   }
 

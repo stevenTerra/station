@@ -4,6 +4,8 @@ import BigNumber from "bignumber.js"
 import { head, last } from "ramda"
 import capitalize from "@mui/utils/capitalize"
 import { readAmount, readDenom } from "@terra.kitchen/utils"
+import { combineState } from "data/query"
+import { useMemoizedPrices } from "data/queries/oracle"
 import { Aggregate, useTaxRewards } from "data/Terra/api"
 import { useCurrency } from "data/settings/Currency"
 import { Select } from "components/form"
@@ -19,7 +21,9 @@ const TaxRewards = () => {
 
   /* data */
   const [type, setType] = useState<Aggregate>(Aggregate.CUMULATIVE)
-  const { data, ...state } = useTaxRewards(type)
+  const { data, ...result } = useTaxRewards(type)
+  const { data: prices, ...priceResult } = useMemoizedPrices("uusd")
+  const state = combineState(result, priceResult)
 
   /* render */
   const renderFilter = () => {
@@ -42,20 +46,24 @@ const TaxRewards = () => {
 
   const calcValue = useCallback(
     (range: number) => {
-      if (!data) return
+      if (!(data && prices)) return
 
-      const sliced = data.slice(range).map(({ value }) => value)
+      const sliced = data.slice(-1 * range).map(({ value }) => value)
       const h = head(sliced)
       const l = last(sliced)
 
       if (!(h && l)) return
 
-      return {
-        [Aggregate.CUMULATIVE]: new BigNumber(l).minus(h).toString(),
-        [Aggregate.PERIODIC]: BigNumber.sum(...sliced.slice(1)).toString(),
+      const value = {
+        [Aggregate.CUMULATIVE]: new BigNumber(l).minus(h).toNumber(),
+        [Aggregate.PERIODIC]: BigNumber.sum(...sliced.slice(1)).toNumber(),
       }[type]
+
+      const price = prices[currency]
+
+      return String(value / price)
     },
-    [data, type]
+    [currency, data, prices, type]
   )
 
   const render = () => {

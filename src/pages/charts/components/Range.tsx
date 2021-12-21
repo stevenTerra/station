@@ -23,7 +23,7 @@ const Range = ({ initial, children, includeLastDay }: Props) => {
 
   return (
     <article className={styles.grid}>
-      {children(-1 * selected)}
+      {children(selected)}
       <ButtonGroup value={selected} onChange={setSelected} options={list} />
     </article>
   )

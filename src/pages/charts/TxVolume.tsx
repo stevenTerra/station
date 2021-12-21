@@ -59,7 +59,7 @@ const TxVolume = () => {
     (range: number) => {
       if (!data) return
 
-      const sliced = data.slice(range).map(({ value }) => value)
+      const sliced = data.slice(-1 * range).map(({ value }) => value)
       const h = head(sliced)
       const l = last(sliced)
       const t = sliced[sliced.length - 2]
