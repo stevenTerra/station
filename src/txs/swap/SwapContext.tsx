@@ -18,16 +18,16 @@ interface Swap {
 export const [useSwap, SwapProvider] = createContext<Swap>("useSwap")
 
 const SwapContext: FC = ({ children }) => {
-  const { data: activeDenoms, ...activeDenomsResult } = useActiveDenoms()
-  const { data: exchangeRates, ...exchangeRatesResult } = useExchangeRates()
-  const { data: pairs, ...cw20PairsResult } = useCW20Pairs()
-  const { data: contracts, ...contractsResult } = useTerraContracts()
+  const { data: activeDenoms, ...activeDenomsState } = useActiveDenoms()
+  const { data: exchangeRates, ...exchangeRatesState } = useExchangeRates()
+  const { data: pairs, ...cw20PairsState } = useCW20Pairs()
+  const { data: contracts, ...contractsState } = useTerraContracts()
 
   const state = combineState(
-    activeDenomsResult,
-    exchangeRatesResult,
-    contractsResult,
-    cw20PairsResult
+    activeDenomsState,
+    exchangeRatesState,
+    contractsState,
+    cw20PairsState
   )
 
   const render = () => {

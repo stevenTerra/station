@@ -20,10 +20,10 @@ const Rewards = () => {
   const currency = useCurrency()
   const calcValue = useMemoizedCalcValue()
 
-  const { data: rewards, ...rewardsResult } = useRewards()
-  const { data: delegations, ...delegationsResult } = useDelegations()
-  const { data: unbondings, ...unbondingsResult } = useUnbondings()
-  const state = combineState(rewardsResult, delegationsResult, unbondingsResult)
+  const { data: rewards, ...rewardsState } = useRewards()
+  const { data: delegations, ...delegationsState } = useDelegations()
+  const { data: unbondings, ...unbondingsState } = useUnbondings()
+  const state = combineState(rewardsState, delegationsState, unbondingsState)
 
   const render = () => {
     if (!(rewards && delegations && unbondings)) return null

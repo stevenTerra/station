@@ -19,9 +19,9 @@ const Unbondings = () => {
   const currency = useCurrency()
   const calcValue = useMemoizedCalcValue(currency)
 
-  const { data: validators, ...validatorsResult } = useValidators()
-  const { data: unbondings, ...unbondingsResult } = useUnbondings()
-  const state = combineState(validatorsResult, unbondingsResult)
+  const { data: validators, ...validatorsState } = useValidators()
+  const { data: unbondings, ...unbondingsState } = useUnbondings()
+  const state = combineState(validatorsState, unbondingsState)
 
   /* render */
   const title = t("Undelegations")

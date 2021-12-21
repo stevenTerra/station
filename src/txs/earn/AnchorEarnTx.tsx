@@ -13,9 +13,9 @@ const AnchorEarnTx = () => {
   const { t } = useTranslation()
 
   const bankBalance = useBankBalance()
-  const { data: deposit, ...totalDepositResult } = useAnchorTotalDeposit()
-  const { data: rate, ...exchangeRateResult } = useAnchorExchangeRate()
-  const state = combineState(totalDepositResult, exchangeRateResult)
+  const { data: deposit, ...totalDepositState } = useAnchorTotalDeposit()
+  const { data: rate, ...exchangeRateState } = useAnchorExchangeRate()
+  const state = combineState(totalDepositState, exchangeRateState)
 
   const getDisabled = (tab: AnchorEarnAction) => {
     if (!deposit) return true

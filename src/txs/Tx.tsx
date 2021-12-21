@@ -98,9 +98,9 @@ function Tx<TxValues>(props: Props<TxValues>) {
 
   /* queries: conditional */
   const shouldTax = getShouldTax(token)
-  const { data: rate = "0", ...taxRateResult } = useTaxRate(!shouldTax)
-  const { data: cap = "0", ...taxCapResult } = useTaxCap(token)
-  const taxResults = combineState(taxRateResult, taxCapResult)
+  const { data: rate = "0", ...taxRateState } = useTaxRate(!shouldTax)
+  const { data: cap = "0", ...taxCapState } = useTaxCap(token)
+  const taxState = combineState(taxRateState, taxCapState)
 
   /* simulation: estimate gas */
   const simulationTx = createTx(estimationTxValues)
@@ -113,7 +113,7 @@ function Tx<TxValues>(props: Props<TxValues>) {
     tx: simulationTx,
   }
 
-  const { data: estimatedGas, ...estimatedGasResult } = useQuery(
+  const { data: estimatedGas, ...estimatedGasState } = useQuery(
     [queryKey.tx.create, key],
     async () => {
       if (!address || isWalletEmpty) return 0
@@ -188,7 +188,7 @@ function Tx<TxValues>(props: Props<TxValues>) {
       : undefined
 
   /* (effect): Log error on console */
-  const failed = getErrorMessage(taxResults.error ?? estimatedGasResult.error)
+  const failed = getErrorMessage(taxState.error ?? estimatedGasState.error)
   useEffect(() => {
     if (process.env.NODE_ENV === "development" && failed) {
       console.groupCollapsed("Fee estimation failed")
@@ -199,13 +199,13 @@ function Tx<TxValues>(props: Props<TxValues>) {
   }, [failed, simulationTx])
 
   /* submit */
-  const disabled = taxResults.isLoading
+  const disabled = taxState.isLoading
     ? t("Loading tax data...")
-    : taxResults.error
+    : taxState.error
     ? t("Failed to load tax data")
-    : estimatedGasResult.isLoading
+    : estimatedGasState.isLoading
     ? t("Estimating fee...")
-    : estimatedGasResult.error
+    : estimatedGasState.error
     ? t("Fee estimation failed")
     : isBroadcasting
     ? t("Broadcasting a tx...")

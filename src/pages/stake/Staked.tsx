@@ -9,10 +9,10 @@ import Unbondings from "./Unbondings"
 import Rewards from "./Rewards"
 
 const Staked = () => {
-  const { data: delegations, ...delegationsResult } = useDelegations()
-  const { data: unbondings, ...unbondingsResult } = useUnbondings()
-  const { data: rewards, ...rewardsResult } = useRewards()
-  const state = combineState(delegationsResult, unbondingsResult, rewardsResult)
+  const { data: delegations, ...delegationsState } = useDelegations()
+  const { data: unbondings, ...unbondingsState } = useUnbondings()
+  const { data: rewards, ...rewardsState } = useRewards()
+  const state = combineState(delegationsState, unbondingsState, rewardsState)
 
   const render = () => {
     if (!(delegations && unbondings && rewards)) return null

@@ -11,16 +11,16 @@ import WithdrawRewardsForm from "./WithdrawRewardsForm"
 const WithdrawRewardsTx = () => {
   const { t } = useTranslation()
 
-  const { data: rewards, ...rewardsResult } = useRewards()
-  const { data: delegations, ...delegationsResult } = useDelegations()
-  const { data: validators, ...validatorsResult } = useValidators()
-  const { data: IBCWhitelist, ...IBCWhitelistResult } = useIBCWhitelist()
+  const { data: rewards, ...rewardsState } = useRewards()
+  const { data: delegations, ...delegationsState } = useDelegations()
+  const { data: validators, ...validatorsState } = useValidators()
+  const { data: IBCWhitelist, ...IBCWhitelistState } = useIBCWhitelist()
 
   const state = combineState(
-    rewardsResult,
-    delegationsResult,
-    validatorsResult,
-    IBCWhitelistResult
+    rewardsState,
+    delegationsState,
+    validatorsState,
+    IBCWhitelistState
   )
 
   const render = () => {

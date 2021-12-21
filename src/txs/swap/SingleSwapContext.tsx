@@ -36,8 +36,8 @@ const SingleSwapContext: FC = ({ children }) => {
   const customTokens = list.map(({ token }) => token)
 
   /* contracts */
-  const { data: ibcWhitelist, ...ibcWhitelistResult } = useIBCWhitelist()
-  const { data: cw20Whitelist, ...cw20WhitelistResult } = useCW20Whitelist()
+  const { data: ibcWhitelist, ...ibcWhitelistState } = useIBCWhitelist()
+  const { data: cw20Whitelist, ...cw20WhitelistState } = useCW20Whitelist()
 
   // Why?
   // To search tokens with symbol (ibc, cw20)
@@ -66,18 +66,18 @@ const SingleSwapContext: FC = ({ children }) => {
     )
   }, [customTokens, terraswapAvailableList])
 
-  const cw20TokensBalancesResults = useTokenBalances(cw20TokensBalanceRequired)
+  const cw20TokensBalancesState = useTokenBalances(cw20TokensBalanceRequired)
   const cw20TokensBalances = useMemo(() => {
-    if (cw20TokensBalancesResults.some(({ isSuccess }) => !isSuccess)) return
+    if (cw20TokensBalancesState.some(({ isSuccess }) => !isSuccess)) return
 
     return zipObj(
       cw20TokensBalanceRequired,
-      cw20TokensBalancesResults.map(({ data }) => {
+      cw20TokensBalancesState.map(({ data }) => {
         if (!data) throw new Error()
         return data
       })
     )
-  }, [cw20TokensBalanceRequired, cw20TokensBalancesResults])
+  }, [cw20TokensBalanceRequired, cw20TokensBalancesState])
 
   const context = useMemo(() => {
     if (!(terraswapAvailableList && ibcWhitelist && cw20Whitelist)) return
@@ -127,9 +127,9 @@ const SingleSwapContext: FC = ({ children }) => {
   ])
 
   const state = combineState(
-    ibcWhitelistResult,
-    cw20WhitelistResult,
-    ...cw20TokensBalancesResults
+    ibcWhitelistState,
+    cw20WhitelistState,
+    ...cw20TokensBalancesState
   )
 
   const render = () => {

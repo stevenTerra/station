@@ -22,8 +22,8 @@ const TaxRewards = () => {
   /* data */
   const [type, setType] = useState<Aggregate>(Aggregate.CUMULATIVE)
   const { data, ...result } = useTaxRewards(type)
-  const { data: prices, ...priceResult } = useMemoizedPrices("uusd")
-  const state = combineState(result, priceResult)
+  const { data: prices, ...priceState } = useMemoizedPrices("uusd")
+  const state = combineState(result, priceState)
 
   /* render */
   const renderFilter = () => {

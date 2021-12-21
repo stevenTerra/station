@@ -18,15 +18,10 @@ interface Props {
 
 const ProposalDeposits = ({ id, card }: Props) => {
   const { t } = useTranslation()
-  const { data: proposal, ...proposalResult } = useProposal(id)
-  const { data: deposits, ...depositsResult } = useDeposits(id)
-  const { data: depositParams, ...depositParamsResult } = useDepositParams()
-
-  const state = combineState(
-    proposalResult,
-    depositsResult,
-    depositParamsResult
-  )
+  const { data: proposal, ...proposalState } = useProposal(id)
+  const { data: deposits, ...depositsState } = useDeposits(id)
+  const { data: depositParams, ...depositParamsState } = useDepositParams()
+  const state = combineState(proposalState, depositsState, depositParamsState)
 
   const render = () => {
     if (!(proposal && deposits && depositParams)) return null

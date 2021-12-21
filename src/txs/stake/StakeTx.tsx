@@ -19,9 +19,9 @@ const StakeTx = () => {
   const initialTab = location.state as string
 
   const bankBalance = useBankBalance()
-  const { data: validators, ...validatorsResult } = useValidators()
-  const { data: delegations, ...delegationsResult } = useDelegations()
-  const state = combineState(validatorsResult, delegationsResult)
+  const { data: validators, ...validatorsState } = useValidators()
+  const { data: delegations, ...delegationsState } = useDelegations()
+  const state = combineState(validatorsState, delegationsState)
 
   const getDisabled = (tab: StakeAction) => {
     if (!delegations) return true

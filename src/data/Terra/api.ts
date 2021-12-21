@@ -30,6 +30,14 @@ export const useTerraAPI = <T>(path: string) => {
   )
 }
 
+/* fee */
+export type GasPrices = Record<Denom, Amount>
+
+export const useGasPrices = () => {
+  return useTerraAPI<GasPrices>("/gas-prices")
+}
+
+/* charts */
 export const useTxVolume = (denom: Denom, type: Aggregate) => {
   return useTerraAPI<ChartDataItem[]>(`chart/tx-volume/${denom}/${type}`)
 }

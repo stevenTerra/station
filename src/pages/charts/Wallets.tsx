@@ -23,8 +23,8 @@ const Wallets = () => {
   const [type, setType] = useState<Aggregate>(Aggregate.CUMULATIVE)
   const { data, ...result } = useWallets(walletsType, type)
   const totalResult = useWallets(AggregateWallets.TOTAL, type) // for value
-  const { data: total } = totalResult
-  const state = combineState(result, totalResult)
+  const { data: total, ...totalState } = totalResult
+  const state = combineState(result, totalState)
 
   /* render */
   const renderFilter = () => {

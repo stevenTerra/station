@@ -16,9 +16,9 @@ const Rewards = () => {
   const currency = useCurrency()
   const calcValue = useMemoizedCalcValue(currency)
 
-  const { data: rewards, ...rewardsResult } = useRewards()
-  const { data: exchangeRates, ...exchangeRatesResult } = useExchangeRates()
-  const state = combineState(rewardsResult, exchangeRatesResult)
+  const { data: rewards, ...rewardsState } = useRewards()
+  const { data: exchangeRates, ...exchangeRatesState } = useExchangeRates()
+  const state = combineState(rewardsState, exchangeRatesState)
 
   /* render */
   const title = t("Staking rewards")

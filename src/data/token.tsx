@@ -29,11 +29,11 @@ export const useTokenItem = (token: Token): TokenItem | undefined => {
 
   /* IBC */
   // 1. Whitelist
-  const { data: ibcWhitelist = {}, ...ibcWhitelistResult } = useIBCWhitelist()
+  const { data: ibcWhitelist = {}, ...ibcWhitelistState } = useIBCWhitelist()
   const listedIBCTokenItem = ibcWhitelist[token.replace("ibc/", "")]
 
   // 2. Query denom trace
-  const shouldQueryIBC = ibcWhitelistResult.isSuccess && !listedIBCTokenItem
+  const shouldQueryIBC = ibcWhitelistState.isSuccess && !listedIBCTokenItem
   const { data: base_denom } = useIBCBaseDenom(token, shouldQueryIBC)
 
   if (AccAddress.validate(token)) {

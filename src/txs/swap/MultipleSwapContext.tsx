@@ -32,12 +32,12 @@ const MultipleSwapContext: FC = ({ children }) => {
     .filter(isDenomTerraNative)
 
   /* treasury */
-  const { data: taxRate, ...taxRateResult } = useTaxRate()
-  const taxCapsResults = useTaxCaps(denoms)
-  const taxCaps = taxCapsResults.every(({ isSuccess }) => isSuccess)
+  const { data: taxRate, ...taxRateState } = useTaxRate()
+  const taxCapsState = useTaxCaps(denoms)
+  const taxCaps = taxCapsState.every(({ isSuccess }) => isSuccess)
     ? zipObj(
         denoms,
-        taxCapsResults.map(({ data }) => {
+        taxCapsState.map(({ data }) => {
           if (!data) throw new Error()
           return data
         })
@@ -51,7 +51,7 @@ const MultipleSwapContext: FC = ({ children }) => {
     })
   }, [bankBalance, denoms])
 
-  const state = combineState(taxRateResult, ...taxCapsResults)
+  const state = combineState(taxRateState, ...taxCapsState)
 
   const render = () => {
     if (length < 2)

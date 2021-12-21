@@ -105,9 +105,9 @@ const Component = ({ whitelist, keyword }: Props) => {
 }
 
 const ManageCustomTokens = () => {
-  const { data: ibc, ...ibcWhitelistResult } = useIBCWhitelist()
-  const { data: cw20, ...cw20WhitelistResult } = useCW20Whitelist()
-  const state = combineState(ibcWhitelistResult, cw20WhitelistResult)
+  const { data: ibc, ...ibcWhitelistState } = useIBCWhitelist()
+  const { data: cw20, ...cw20WhitelistState } = useCW20Whitelist()
+  const state = combineState(ibcWhitelistState, cw20WhitelistState)
 
   const render = () => {
     if (!(ibc && cw20)) return null

@@ -12,9 +12,9 @@ import DashboardTag from "./components/DashboardTag"
 const StakingRatio = () => {
   const { t } = useTranslation()
 
-  const { data: stakingPool, ...stakingPoolResult } = useStakingPool()
-  const { data: supply, ...supplyResult } = useSupply()
-  const state = combineState(stakingPoolResult, supplyResult)
+  const { data: stakingPool, ...stakingPoolState } = useStakingPool()
+  const { data: supply, ...supplyState } = useSupply()
+  const state = combineState(stakingPoolState, supplyState)
 
   const render = () => {
     if (!(stakingPool && supply)) return null
