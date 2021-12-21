@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { useTranslation } from "react-i18next"
 import { Link } from "react-router-dom"
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet"
@@ -16,10 +17,15 @@ const Connected = () => {
   const address = useAddress()
   const { wallet } = useAuth()
 
+  /* hack to close popover */
+  const [key, setKey] = useState(0)
+  const closePopover = () => setKey((key) => key + 1)
+
   if (!address) return null
 
   return (
     <Popover
+      key={key}
       content={
         <div className={styles.component}>
           <Grid gap={12} className={styles.inner}>
@@ -39,7 +45,7 @@ const Connected = () => {
           </Grid>
 
           {wallet ? (
-            <Link to="/auth" className={styles.footer}>
+            <Link to="/auth" className={styles.footer} onClick={closePopover}>
               {t("Manage wallet")}
             </Link>
           ) : (
