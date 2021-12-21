@@ -1,9 +1,9 @@
-import { FC, useState } from "react"
+import { useState } from "react"
 import { groupBy } from "ramda"
 import classNames from "classnames/bind"
 import useInterval from "utils/hooks/useInterval"
 import { useCW721Whitelist } from "data/Terra/TerraAssets"
-import { Flex, Grid } from "components/layout"
+import { Flex } from "components/layout"
 import styles from "./NFTPlaceholder.module.scss"
 
 const cx = classNames.bind(styles)
@@ -60,7 +60,7 @@ const List = ({ list }: { list: CW721ContractItem[][] }) => {
   )
 }
 
-const NFTPlaceholder: FC = ({ children }) => {
+const NFTPlaceholder = () => {
   const { data } = useCW721Whitelist()
 
   if (!data) return null
@@ -70,12 +70,7 @@ const NFTPlaceholder: FC = ({ children }) => {
     Object.values(data).filter(({ icon }) => icon)
   )
 
-  return (
-    <Grid gap={8} className={styles.component}>
-      <List list={Object.values(byProtocol)} />
-      {children}
-    </Grid>
-  )
+  return <List list={Object.values(byProtocol)} />
 }
 
 export default NFTPlaceholder
