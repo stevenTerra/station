@@ -3,6 +3,7 @@ import { groupBy } from "ramda"
 import classNames from "classnames/bind"
 import useInterval from "utils/hooks/useInterval"
 import { useCW721Whitelist } from "data/Terra/TerraAssets"
+import { Flex, Grid } from "components/layout"
 import styles from "./NFTPlaceholder.module.scss"
 
 const cx = classNames.bind(styles)
@@ -42,7 +43,7 @@ const List = ({ list }: { list: CW721ContractItem[][] }) => {
   )
 
   return (
-    <div className={styles.list}>
+    <Flex>
       {list.map(([{ icon, name }], index) => {
         if (!icon) return null
         const zIndex = index - start
@@ -55,7 +56,7 @@ const List = ({ list }: { list: CW721ContractItem[][] }) => {
           />
         )
       })}
-    </div>
+    </Flex>
   )
 }
 
@@ -70,10 +71,10 @@ const NFTPlaceholder: FC = ({ children }) => {
   )
 
   return (
-    <article className="center">
+    <Grid gap={8} className={styles.component}>
       <List list={Object.values(byProtocol)} />
       {children}
-    </article>
+    </Grid>
   )
 }
 

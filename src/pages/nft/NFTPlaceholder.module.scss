@@ -1,9 +1,7 @@
 @import "mixins";
 
-.list {
-  @include flex;
-  flex-wrap: wrap;
-  margin: 40px;
+.component {
+  margin: 20px;
 }
 
 .item {
