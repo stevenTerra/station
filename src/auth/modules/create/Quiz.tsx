@@ -2,17 +2,14 @@ import { useMemo, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { useForm } from "react-hook-form"
 import update from "immutability-helper"
-import classNames from "classnames/bind"
 import numeral from "numeral"
-import CheckIcon from "@mui/icons-material/Check"
 import DangerousOutlinedIcon from "@mui/icons-material/DangerousOutlined"
 import shuffle from "utils/shuffle"
-import { Modal } from "components/feedback"
 import { Form, FormItem, Submit } from "components/form"
+import AuthButton from "../../components/AuthButton"
 import { useCreateWallet } from "./CreateWalletWizard"
 import styles from "./Quiz.module.scss"
-
-const cx = classNames.bind(styles)
+import ConfirmModal from "../manage/ConfirmModal"
 
 export interface QuizItem {
   index: number
@@ -37,21 +34,12 @@ const Quiz = () => {
   return (
     <Form onSubmit={handleSubmit(submit)}>
       {incorrect && (
-        <Modal
-          isOpen
+        <ConfirmModal
           onRequestClose={() => setIncorrect(false)}
           icon={<DangerousOutlinedIcon fontSize="inherit" className="danger" />}
-          closeIcon={false}
-          footer={(close) => (
-            <Submit type="button" onClick={close}>
-              {t("Confirm")}
-            </Submit>
-          )}
         >
-          <p className="center">
-            {t("Write down the mnemonic and choose the correct word")}
-          </p>
-        </Modal>
+          {t("Write down the mnemonic and choose the correct word")}
+        </ConfirmModal>
       )}
 
       {quiz.map(({ index }, i) => (
@@ -67,18 +55,15 @@ const Quiz = () => {
                 setAnswers(next)
               }
 
-              const checked = answers[i] === word
-
               return (
-                <button
-                  type="button"
-                  className={cx(styles.item, { active: checked })}
+                <AuthButton
+                  className={styles.item}
                   onClick={handleClick}
+                  active={answers[i] === word}
                   key={word}
                 >
-                  {checked && <CheckIcon className={styles.check} />}
                   {word}
-                </button>
+                </AuthButton>
               )
             })}
           </section>
@@ -86,7 +71,7 @@ const Quiz = () => {
       ))}
 
       <Submit disabled={answers.some((answer) => !answer)} />
-      <button onClick={reset}>
+      <button className={styles.reset} onClick={reset}>
         {t("I haven't written down the mnemonic")}
       </button>
     </Form>

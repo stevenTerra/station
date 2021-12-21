@@ -1,6 +1,10 @@
+import { ReactNode } from "react"
 import { useTranslation } from "react-i18next"
 import { Link } from "react-router-dom"
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos"
+import QrCodeIcon from "@mui/icons-material/QrCode"
+import PasswordIcon from "@mui/icons-material/Password"
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline"
+import LogoutIcon from "@mui/icons-material/Logout"
 import { Col, Page } from "components/layout"
 import useAuth from "../../hooks/useAuth"
 import ConnectedWallet from "./ConnectedWallet"
@@ -11,17 +15,39 @@ const ManageWallets = () => {
   const { wallet, available } = useAuth()
 
   const list = [
-    { to: "./export", children: t("Export wallet") },
-    { to: "./password", children: t("Change password") },
-    { to: "./delete", children: t("Delete wallet") },
-    { to: "./disconnect", children: t("Disconnect") },
+    {
+      to: "./export",
+      children: t("Export wallet"),
+      icon: <QrCodeIcon />,
+    },
+    {
+      to: "./password",
+      children: t("Change password"),
+      icon: <PasswordIcon />,
+    },
+    {
+      to: "./delete",
+      children: t("Delete wallet"),
+      icon: <DeleteOutlineIcon />,
+    },
+    {
+      to: "./disconnect",
+      children: t("Disconnect"),
+      icon: <LogoutIcon />,
+    },
   ]
 
-  const renderItem = ({ to, children }: { to: string; children: string }) => {
+  interface Item {
+    to: string
+    children: string
+    icon: ReactNode
+  }
+
+  const renderItem = ({ to, children, icon }: Item) => {
     return (
       <Link to={to} className={styles.link} key={to}>
         {children}
-        <ArrowForwardIosIcon fontSize="inherit" />
+        {icon}
       </Link>
     )
   }
@@ -29,15 +55,13 @@ const ManageWallets = () => {
   return (
     <Page title={t("Manage wallet")}>
       <Col>
-        {wallet && (
-          <ConnectedWallet index>
-            <div className={styles.list}>{list.map(renderItem)}</div>
-          </ConnectedWallet>
-        )}
+        <ConnectedWallet>
+          {wallet && <div className={styles.list}>{list.map(renderItem)}</div>}
 
-        {!!available.length && (
-          <div className={styles.list}>{available.map(renderItem)}</div>
-        )}
+          {!!available.length && (
+            <div className={styles.list}>{available.map(renderItem)}</div>
+          )}
+        </ConnectedWallet>
       </Col>
     </Page>
   )

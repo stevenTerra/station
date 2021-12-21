@@ -1,11 +1,5 @@
 @import "mixins";
 
-.details {
-  background: var(--bg-muted);
-  border-radius: var(--border-radius);
-  padding: var(--card-padding-small);
-}
-
 .gas {
   @include flex(flex-start);
   gap: 8px;

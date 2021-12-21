@@ -2,12 +2,14 @@ import { useState } from "react"
 import { useTranslation } from "react-i18next"
 import { useNavigate } from "react-router-dom"
 import { useForm } from "react-hook-form"
+import DoneAllIcon from "@mui/icons-material/DoneAll"
 import { Card, Page } from "components/layout"
 import { Form, FormItem, FormWarning, Input, Submit } from "components/form"
 import { deleteWallet } from "../../scripts/keystore"
 import useAuth from "../../hooks/useAuth"
 import ConnectedWallet from "./ConnectedWallet"
 import ConfirmModal from "./ConfirmModal"
+import GoBack from "./GoBack"
 
 interface Values {
   password: string
@@ -33,14 +35,16 @@ const DeleteWallet = () => {
   }
 
   return (
-    <Page title={t("Delete wallet")}>
+    <Page title={t("Delete wallet")} extra={<GoBack />}>
       <ConnectedWallet>
         <Card>
           {done && (
             <ConfirmModal
-              title={t("Wallet deleted successfully")}
+              icon={<DoneAllIcon className="success" fontSize="inherit" />}
               onRequestClose={() => navigate("/", { replace: true })}
-            />
+            >
+              {t("Wallet deleted successfully")}
+            </ConfirmModal>
           )}
 
           <Form onSubmit={handleSubmit(submit)}>

@@ -10,6 +10,7 @@ import { Input, RadioButton, Submit } from "components/form"
 import { Modal } from "components/feedback"
 import useAuth from "../../hooks/useAuth"
 import ConnectedWallet from "./ConnectedWallet"
+import GoBack from "./GoBack"
 
 enum Mode {
   QR = "QR code",
@@ -69,7 +70,7 @@ const ExportWallet = () => {
   }
 
   return (
-    <Page title={t("Export wallet")}>
+    <Page title={t("Export wallet")} extra={<GoBack />}>
       {encoded && (
         <Modal title={mode} isOpen onRequestClose={reset}>
           <Grid gap={20}>

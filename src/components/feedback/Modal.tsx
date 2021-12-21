@@ -1,9 +1,12 @@
 import { FC, ReactNode, useState } from "react"
 import ReactModal from "react-modal"
+import classNames from "classnames/bind"
 import CloseIcon from "@mui/icons-material/Close"
 import createContext from "utils/createContext"
 import { getMaxHeightStyle } from "utils/style"
 import styles from "./Modal.module.scss"
+
+const cx = classNames.bind(styles)
 
 ReactModal.setAppElement("#station")
 
@@ -12,17 +15,18 @@ interface ModalProps {
   icon?: ReactNode
 
   /* content */
-  title?: string
+  title?: ReactNode
   footer?: (close: ReactModal.Props["onRequestClose"]) => ReactNode
 
   /* style */
+  confirm?: boolean
   maxHeight?: boolean | number
 }
 
-interface Props extends ModalProps, ReactModal.Props {}
+export interface Props extends ModalProps, ReactModal.Props {}
 
 const Modal: FC<Props> = ({ title, children, footer, ...props }) => {
-  const { icon, closeIcon, onRequestClose, maxHeight } = props
+  const { icon, closeIcon, onRequestClose, confirm, maxHeight } = props
 
   return (
     <ReactModal
@@ -34,10 +38,10 @@ const Modal: FC<Props> = ({ title, children, footer, ...props }) => {
         {closeIcon ?? <CloseIcon fontSize="inherit" />}
       </button>
 
-      {title && (
+      {(title || icon) && (
         <header className={styles.header}>
           <section className={styles.icon}>{icon}</section>
-          <h1 className={styles.title}>{title}</h1>
+          <h1 className={cx(styles.title, { confirm })}>{title}</h1>
         </header>
       )}
 

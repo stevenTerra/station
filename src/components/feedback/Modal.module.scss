@@ -56,6 +56,10 @@
   font-size: 20px;
 }
 
+.confirm {
+  font-size: inherit;
+}
+
 .main {
   overflow: hidden; // Sub components declare their own max-height and overflow-y
 }

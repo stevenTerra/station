@@ -33,6 +33,7 @@ import { Pre } from "components/general"
 import { Flex, Grid } from "components/layout"
 import { FormError, Submit, Select, Input, FormItem } from "components/form"
 import { Modal } from "components/feedback"
+import { Details } from "components/display"
 import { Read } from "components/token"
 import ConnectWallet from "app/sections/ConnectWallet"
 import { useAuth } from "auth"
@@ -303,7 +304,7 @@ function Tx<TxValues>(props: Props<TxValues>) {
   }
 
   const renderFee = (descriptions?: Contents) => (
-    <section className={styles.details}>
+    <Details>
       <dl>
         {descriptions?.map(({ title, content }) => (
           <Fragment key={title}>
@@ -372,7 +373,7 @@ function Tx<TxValues>(props: Props<TxValues>) {
           </>
         )}
       </dl>
-    </section>
+    </Details>
   )
 
   const submitButton = (

@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next"
 import { useQuery } from "react-query"
 import { useForm } from "react-hook-form"
-import classNames from "classnames/bind"
+import { readAmount, readDenom } from "@terra.kitchen/utils"
 import { MnemonicKey, AccAddress } from "@terra-money/terra.js"
 import { Coins, Delegation, UnbondingDelegation } from "@terra-money/terra.js"
 import { sortCoins } from "utils/coin"
@@ -10,12 +10,10 @@ import { useCurrency } from "data/settings/Currency"
 import { useThemeAnimation } from "data/settings/Theme"
 import { Flex, Grid } from "components/layout"
 import { Form, Submit } from "components/form"
-import { Read } from "components/token"
 import { Tag } from "components/display"
+import AuthButton from "../../components/AuthButton"
 import { useCreateWallet } from "./CreateWalletWizard"
 import styles from "./SelectAddress.module.scss"
-
-const cx = classNames.bind(styles)
 
 const SelectAddress = () => {
   const { t } = useTranslation()
@@ -91,18 +89,35 @@ const SelectAddress = () => {
 
     return (
       <Grid gap={4}>
-        <Flex gap={4} start>
-          <Tag color="info">{bip}</Tag>
-          {!!delegations.length && <Tag color="info">{t("Delegated")}</Tag>}
-          {!!unbondings.length && <Tag color="info">{t("Undelegations")}</Tag>}
-        </Flex>
+        <Grid gap={12}>
+          <Flex gap={8} start>
+            <Tag color="info" small>
+              {bip}
+            </Tag>
 
-        <h1>{address}</h1>
+            {!!delegations.length && (
+              <Tag color="info" small>
+                {t("Delegated")}
+              </Tag>
+            )}
 
-        <Flex gap={4} start>
-          {coins.slice(0, 3).map((coin) => (
-            <Read {...coin} key={coin.denom} />
-          ))}
+            {!!unbondings.length && (
+              <Tag color="info" small>
+                {t("Undelegated")}
+              </Tag>
+            )}
+          </Flex>
+
+          <h1>{address}</h1>
+        </Grid>
+
+        <Flex gap={4} start className={styles.coins}>
+          {coins
+            .slice(0, 3)
+            .map((coin) =>
+              [readAmount(coin.amount), readDenom(coin.denom)].join(" ")
+            )
+            .join(", ")}
 
           {length - 3 > 0 && (
             <span className="muted">
@@ -118,18 +133,15 @@ const SelectAddress = () => {
     <Grid gap={20}>
       <Form onSubmit={handleSubmit(submit)}>
         {results.map((item) => {
-          const active = item.bip === bip
-          const muted = bip && !active
-
           return (
-            <button
-              type="button"
-              className={cx(styles.button, { active, muted })}
+            <AuthButton
+              className={styles.button}
               onClick={() => setValue("bip", item.bip)}
+              active={item.bip === bip}
               key={item.bip}
             >
               {renderDetails(item)}
-            </button>
+            </AuthButton>
           )
         })}
 

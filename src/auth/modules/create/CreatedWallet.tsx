@@ -1,7 +1,9 @@
 import { useTranslation } from "react-i18next"
 import { useNavigate } from "react-router-dom"
 import DoneAllIcon from "@mui/icons-material/DoneAll"
-import { Button } from "components/general"
+import { Grid } from "components/layout"
+import { Submit } from "components/form"
+import { Details } from "components/display"
 import useAuth from "../../hooks/useAuth"
 import { useCreateWallet } from "./CreateWalletWizard"
 
@@ -9,10 +11,10 @@ const CreatedWallet = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const { connect } = useAuth()
-  const { createdWallet: createdUser } = useCreateWallet()
+  const { createdWallet } = useCreateWallet()
 
-  if (!createdUser) return null
-  const { name, address } = createdUser
+  if (!createdWallet) return null
+  const { name, address } = createdWallet
 
   const submit = () => {
     connect(name)
@@ -21,24 +23,25 @@ const CreatedWallet = () => {
 
   return (
     <article>
-      <header>
-        <DoneAllIcon fontSize="large" />
-        <h1>{t("Wallet generated successfully")}</h1>
-      </header>
+      <Grid gap={28}>
+        <header className="center">
+          <DoneAllIcon className="success" style={{ fontSize: 56 }} />
+          <h1>{t("Wallet generated successfully")}</h1>
+        </header>
 
-      <section>
-        <h2>{t("Name")}</h2>
-        <p>{name}</p>
-      </section>
+        <Details>
+          <dl>
+            <dt>{t("Name")}</dt>
+            <dd>{name}</dd>
+            <dt>{t("Address")}</dt>
+            <dd>{address}</dd>
+          </dl>
+        </Details>
 
-      <section>
-        <h2>{t("Address")}</h2>
-        <p>{address}</p>
-      </section>
-
-      <Button onClick={submit} color="primary" block>
-        {t("Connect")}
-      </Button>
+        <Submit type="button" onClick={submit}>
+          {t("Connect")}
+        </Submit>
+      </Grid>
     </article>
   )
 }

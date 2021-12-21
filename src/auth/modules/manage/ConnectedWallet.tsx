@@ -1,22 +1,9 @@
 import { FC } from "react"
-import { Auto, Card, Col } from "components/layout"
+import { Auto } from "components/layout"
 import SwitchWallet from "../select/SwitchWallet"
-import GoBack from "./GoBack"
 
-const ConnectedWallet: FC<{ index?: boolean }> = ({ index, children }) => {
-  return (
-    <Auto
-      columns={[
-        children,
-        <Col>
-          <Card>
-            <SwitchWallet />
-          </Card>
-          {!index && <GoBack />}
-        </Col>,
-      ]}
-    />
-  )
+const ConnectedWallet: FC = ({ children }) => {
+  return <Auto columns={[children, <SwitchWallet />]} />
 }
 
 export default ConnectedWallet

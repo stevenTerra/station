@@ -3,12 +3,13 @@ import { useTranslation } from "react-i18next"
 import { useNavigate } from "react-router-dom"
 import { useForm } from "react-hook-form"
 import { Card, Page } from "components/layout"
-import { Form, FormArrow, FormItem, Input, Submit } from "components/form"
+import { Form, FormItem, Input, Submit } from "components/form"
 import ConnectedWallet from "./ConnectedWallet"
 import { changePassword } from "../../scripts/keystore"
 import validate from "../../scripts/validate"
 import useAuth from "../../hooks/useAuth"
 import ConfirmModal from "./ConfirmModal"
+import GoBack from "./GoBack"
 
 interface Values {
   current: string
@@ -36,7 +37,7 @@ const ChangePassword = () => {
   }
 
   return (
-    <Page title={t("Change password")}>
+    <Page title={t("Change password")} extra={<GoBack />}>
       <ConnectedWallet>
         <Card>
           {done && (
@@ -57,8 +58,6 @@ const ChangePassword = () => {
                 autoFocus
               />
             </FormItem>
-
-            <FormArrow />
 
             <FormItem
               label={t("New password")}

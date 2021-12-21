@@ -1,23 +1,19 @@
 .hint {
   display: grid;
   grid-template: repeat(2, 1fr) / repeat(3, 1fr);
-  gap: 10px;
+  gap: 12px;
 }
 
 .item {
-  border: 1px solid var(--button-default-bg);
-  border-radius: 4px;
-  padding: 8px;
+  padding: 12px;
 }
 
-.active {
-  background: var(--button-default-bg);
-  color: var(--button-default-text);
-  position: relative;
-}
+.reset {
+  color: var(--text-muted);
+  font-size: var(--font-size-small);
+  font-weight: var(--normal);
 
-.check {
-  position: absolute;
-  left: 8px;
-  color: var(--success);
+  &:hover {
+    color: var(--text);
+  }
 }

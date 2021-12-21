@@ -1,15 +1,16 @@
+import { Link } from "react-router-dom"
 import { useTranslation } from "react-i18next"
-import ArrowBackIcon from "@mui/icons-material/ArrowBack"
-import { LinkButton } from "components/general"
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew"
+import styles from "./GoBack.module.scss"
 
 const GoBack = () => {
   const { t } = useTranslation()
-  const icon = <ArrowBackIcon fontSize="inherit" />
 
   return (
-    <LinkButton to=".." icon={icon} size="small" block>
-      {t("Go back")}
-    </LinkButton>
+    <Link to=".." className={styles.link}>
+      <ArrowBackIosNewIcon fontSize="inherit" />
+      {t("Manage account")}
+    </Link>
   )
 }
 
