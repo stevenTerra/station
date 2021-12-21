@@ -51,7 +51,6 @@ const NFTAssetGroup = (props: CW721ContractItem) => {
       mainClassName={styles.main}
       size="small"
       bordered
-      bg
     >
       {render()}
     </Card>

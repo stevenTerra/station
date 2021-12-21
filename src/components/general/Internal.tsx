@@ -16,7 +16,7 @@ interface InternalButtonProps
   extends Props,
     HTMLAttributes<HTMLButtonElement> {}
 
-export const InternalButton = ({ chevron, ...attrs }: InternalButtonProps) => {
+export const InternalButton = (attrs: InternalButtonProps) => {
   return <button {...attrs} {...render(attrs)} type="button" />
 }
 
