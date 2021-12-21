@@ -190,6 +190,7 @@ const WithdrawRewardsForm = ({ rewards, validators, IBCWhitelist }: Props) => {
                       {(item) => (
                         <TokenCard
                           {...item}
+                          name=""
                           value={calcValue({ amount, denom })}
                           amount={amount}
                         />
