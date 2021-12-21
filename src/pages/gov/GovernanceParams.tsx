@@ -47,7 +47,8 @@ const GovernanceParams = () => {
 export default GovernanceParams
 
 /* helpers */
-const daysFromNanoseconds = (ns: number) => {
-  const { days } = intervalToDuration({ start: 0, end: ns / 1e6 })
+const daysFromNanoseconds = (second: number) => {
+  const end = second * 1000
+  const { days } = intervalToDuration({ start: 0, end })
   return days
 }
