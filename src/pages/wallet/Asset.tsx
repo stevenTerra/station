@@ -1,7 +1,6 @@
 import { useRecoilValue } from "recoil"
 import ERROR from "config/ERROR"
 import { currencyState } from "data/settings/Currency"
-import { Flex } from "components/layout"
 import { WithFetching } from "components/feedback"
 import { Read, TokenIcon } from "components/token"
 import AssetActions from "./AssetActions"
@@ -18,7 +17,7 @@ const Asset = (props: Props) => {
 
   return (
     <article className={styles.asset} key={token}>
-      <Flex gap={10} className={styles.details}>
+      <section className={styles.details}>
         <TokenIcon token={token} icon={icon} size={22} />
 
         <div>
@@ -46,7 +45,7 @@ const Asset = (props: Props) => {
             </p>
           )}
         </div>
-      </Flex>
+      </section>
 
       <AssetActions {...props} />
     </article>
