@@ -25,7 +25,7 @@ const Page: FC<Props> = ({ title, extra, children, small, sub, ...props }) => {
           {progress}
 
           <article className={cx(styles.page, { sub, small })}>
-            <Container>
+            <Container className={styles.grid}>
               {title && (
                 <header className={styles.header}>
                   <h1 className={styles.title}>{title}</h1>

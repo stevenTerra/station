@@ -1,18 +1,27 @@
 @import "mixins";
 
 .page {
-  display: grid;
   overflow: hidden;
   // padding here to position progress bar
 
   @include desktop {
-    gap: 18px;
     padding: 32px var(--main-padding-horizontal);
   }
 
   @include mobile {
-    gap: 16px;
     padding: 28px 0;
+  }
+}
+
+.grid {
+  display: grid;
+
+  @include desktop {
+    gap: 18px;
+  }
+
+  @include mobile {
+    gap: 16px;
   }
 }
 
