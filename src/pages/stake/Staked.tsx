@@ -1,4 +1,6 @@
-import { useDelegations } from "data/queries/staking"
+import { combineState } from "data/query"
+import { useDelegations, useUnbondings } from "data/queries/staking"
+import { useRewards } from "data/queries/distribution"
 import { Col, Row } from "components/layout"
 import { Fetching } from "components/feedback"
 import DelegationsPromote from "app/containers/DelegationsPromote"
@@ -7,11 +9,18 @@ import Unbondings from "./Unbondings"
 import Rewards from "./Rewards"
 
 const Staked = () => {
-  const { data: delegations, ...state } = useDelegations()
+  const { data: delegations, ...delegationsResult } = useDelegations()
+  const { data: unbondings, ...unbondingsResult } = useUnbondings()
+  const { data: rewards, ...rewardsResult } = useRewards()
+  const state = combineState(delegationsResult, unbondingsResult, rewardsResult)
 
   const render = () => {
-    if (!delegations) return null
-    if (!delegations.length) return <DelegationsPromote horizontal />
+    if (!(delegations && unbondings && rewards)) return null
+
+    const staked =
+      delegations.length || unbondings.length || rewards.total.toArray().length
+
+    if (!staked) return <DelegationsPromote horizontal />
 
     return (
       <Row>
