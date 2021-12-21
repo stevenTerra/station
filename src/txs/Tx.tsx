@@ -404,6 +404,8 @@ function Tx<TxValues>(props: Props<TxValues>) {
             </FormItem>
           )}
 
+          {failed && <FormError>{failed}</FormError>}
+
           <Submit
             disabled={!estimatedGas || !!disabled}
             submitting={submitting}
