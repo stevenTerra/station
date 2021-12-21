@@ -3,7 +3,6 @@ import i18n from "i18next"
 import LanguageDetector from "i18next-browser-languagedetector"
 import { Dictionary } from "ramda"
 import { debug } from "utils/env"
-import { getLocalSetting, SettingKey } from "utils/localStorage"
 
 import es from "locales/es.json"
 import fr from "locales/fr.json"
