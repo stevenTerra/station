@@ -4,11 +4,11 @@ import axios, { AxiosError } from "axios"
 import BigNumber from "bignumber.js"
 import { OracleParams, ValAddress } from "@terra-money/terra.js"
 import { TerraValidator } from "types/validator"
+import { API } from "config/constants"
 import { useOracleParams } from "data/queries/oracle"
 import { queryKey, RefetchOptions } from "../query"
-import { useAddress } from "data/wallet"
 
-const config = { baseURL: "https://api.terra.dev" }
+const config = { baseURL: API }
 
 export enum Aggregate {
   PERIODIC = "periodic",
@@ -25,11 +25,11 @@ export enum AggregateWallets {
   ACTIVE = "active",
 }
 
-export const useTerraAPI = <T>(path: string, params?: any) => {
+export const useTerraAPI = <T>(path: string) => {
   return useQuery<T, AxiosError>(
     [queryKey.TerraAPI, path],
     async () => {
-      const { data } = await axios.get(path, { ...config, params })
+      const { data } = await axios.get(path, config)
       return data
     },
     { ...RefetchOptions.INFINITY }
@@ -58,12 +58,6 @@ export const useTaxRewards = (type: Aggregate) => {
 
 export const useWallets = (walletsType: AggregateWallets, type: Aggregate) => {
   return useTerraAPI<ChartDataItem[]>(`chart/wallets/${walletsType}/${type}`)
-}
-
-/* history */
-export const useAccountHistory = (offset?: number) => {
-  const address = useAddress()
-  return useTerraAPI<AccountHistory>(`tx-history/${address}`, { offset })
 }
 
 /* validators */

@@ -8,6 +8,7 @@ export const DEFAULT_GAS_ADJUSTMENT = 1.75
 export const BRIDGE = "https://walletconnect.terra.dev"
 
 /* api */
+export const API = "https://api.terra.dev"
 export const ASSETS = "https://assets.terra.money"
 export const OBSERVER = "wss://observer.terra.dev"
 
