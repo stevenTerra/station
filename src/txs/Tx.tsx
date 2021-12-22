@@ -277,8 +277,9 @@ function Tx<TxValues>(props: Props<TxValues>) {
   )
 
   useEffect(() => {
+    if (availableGasDenoms.includes(initialGasDenom)) return
     setGasDenom(availableGasDenoms[0])
-  }, [availableGasDenoms])
+  }, [availableGasDenoms, initialGasDenom])
 
   /* element */
   const resetMax = () => setIsMax(false)
