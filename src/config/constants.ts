@@ -1,9 +1,6 @@
 /* query */
 export const LAZY_LIMIT = 999
 
-/* tx */
-export const DEFAULT_GAS_ADJUSTMENT = 1.75
-
 /* connection */
 export const BRIDGE = "https://walletconnect.terra.dev"
 
