@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next"
 import { LinkButton } from "components/general"
 import { Col, Page } from "components/layout"
 import Staked from "./Staked"
-import Validators from "./Validators"
+import Validators from "./ValidatorsTable"
 
 const Stake = () => {
   const { t } = useTranslation()
