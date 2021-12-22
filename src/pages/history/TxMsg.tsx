@@ -3,6 +3,7 @@ import { sentenceCase } from "sentence-case"
 import { Flex } from "components/layout"
 import { Tag } from "components/display"
 import TxMessage from "app/containers/TxMessage"
+import styles from "./TxMsg.module.scss"
 
 const TxMsg = ({ success, msg }: { success: boolean; msg: TxMessage }) => {
   const { msgType, canonicalMsg } = msg
@@ -18,7 +19,9 @@ const TxMsg = ({ success, msg }: { success: boolean; msg: TxMessage }) => {
 
       <section>
         {canonicalMsg.map((text) => (
-          <TxMessage key={text}>{text}</TxMessage>
+          <TxMessage className={styles.message} key={text}>
+            {text}
+          </TxMessage>
         ))}
       </section>
     </Flex>

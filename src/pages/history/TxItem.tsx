@@ -1,14 +1,25 @@
+import { Fragment } from "react"
 import { useTranslation } from "react-i18next"
+import { readAmount, readDenom } from "@terra.kitchen/utils"
 import { FinderLink } from "components/general"
-import { Card, Flex } from "components/layout"
-import { ToNow } from "components/display"
-import { Read } from "components/token"
+import { Card } from "components/layout"
+import { Dl, ToNow } from "components/display"
 import TxMsg from "./TxMsg"
-// import styles from "./Tx.module.scss"
+import styles from "./TxItem.module.scss"
 
 const TxItem = ({ txhash, timestamp, ...props }: AccountHistoryItem) => {
   const { success, msgs, fee, memo, raw_log } = props
   const { t } = useTranslation()
+
+  const renderCoin = ({ amount, denom }: CoinData) => {
+    return [readAmount(amount), readDenom(denom)].join(" ")
+  }
+
+  const data = [
+    { title: t("Fee"), content: fee.map(renderCoin).join(", ") },
+    { title: t("Memo"), memo },
+    { title: t("Log"), content: !success && raw_log },
+  ]
 
   return (
     <Card
@@ -25,28 +36,19 @@ const TxItem = ({ txhash, timestamp, ...props }: AccountHistoryItem) => {
         <TxMsg msg={msg} success={success} key={index} />
       ))}
 
-      <Flex gap={20} start>
-        {t("Fee")}
-        <Flex gap={4} start>
-          {fee.map((coin) => (
-            <Read {...coin} key={coin.denom} />
-          ))}
-        </Flex>
-      </Flex>
-
-      {memo && (
-        <Flex gap={20} start>
-          {t("Memo")}
-          <p>{memo}</p>
-        </Flex>
-      )}
-
-      {!success && (
-        <Flex gap={20} start>
-          {t("Log")}
-          <p>{raw_log}</p>
-        </Flex>
-      )}
+      <footer className={styles.footer}>
+        <Dl>
+          {data.map(({ title, content }) => {
+            if (!content) return null
+            return (
+              <Fragment key={title}>
+                <dt>{title}</dt>
+                <dd>{content}</dd>
+              </Fragment>
+            )
+          })}
+        </Dl>
+      </footer>
     </Card>
   )
 }

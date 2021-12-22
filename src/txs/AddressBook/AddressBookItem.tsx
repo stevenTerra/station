@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next"
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline"
 import { truncate } from "@terra.kitchen/utils"
 import { useAddressBook } from "data/settings/AddressBook"
+import { Dl } from "components/display"
 import styles from "./AddressBookItem.module.scss"
 
 interface Props extends AddressBook {
@@ -16,14 +17,14 @@ const AddressBookItem = ({ onClick, ...item }: Props) => {
   return (
     <article className={styles.item}>
       <button className={styles.button} onClick={onClick}>
-        <dl className={styles.dl}>
+        <Dl>
           <dt>{t("Name")}</dt>
           <dd>{name}</dd>
           <dt>{t("Address")}</dt>
           <dd>{truncate(recipient)}</dd>
           <dt>{t("Memo")}</dt>
           <dd>{memo}</dd>
-        </dl>
+        </Dl>
       </button>
 
       <button

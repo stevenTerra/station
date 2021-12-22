@@ -24,22 +24,6 @@
   padding: var(--padding);
 }
 
-.dl {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 4px 20px;
-  width: 100%;
-
-  dt,
-  dd {
-    text-align: left;
-  }
-
-  dd {
-    font-weight: var(--normal);
-  }
-}
-
 .delete {
   @include flex;
   flex: none;

@@ -30,12 +30,17 @@ const Tokens = ({ children: coins }: { children: string }) => {
   )
 }
 
-const TxMessage = ({ children: sentence }: { children?: string }) => {
+interface Props {
+  children?: string
+  className?: string
+}
+
+const TxMessage = ({ children: sentence, className }: Props) => {
   const address = useAddress()
   if (!sentence) return null
 
   return (
-    <>
+    <p className={className}>
       {sentence
         .split(" ")
         .filter((word, index) => index || word !== address)
@@ -63,7 +68,7 @@ const TxMessage = ({ children: sentence }: { children?: string }) => {
             <span key={index}> {parsed}</span>
           )
         })}
-    </>
+    </p>
   )
 }
 

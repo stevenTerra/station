@@ -18,8 +18,8 @@ const History = () => {
   const fetchAccountHistory = useCallback(
     async ({ pageParam = 0 }) => {
       const { data } = await axios.get<AccountHistory>(
-        `tx-history/${address}`,
-        { baseURL: API, params: { offset: pageParam } }
+        `tx-history/station/${address}`,
+        { baseURL: API, params: { offset: pageParam || undefined } }
       )
 
       return data
