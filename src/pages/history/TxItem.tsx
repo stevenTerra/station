@@ -12,7 +12,11 @@ const TxItem = ({ txhash, timestamp, ...props }: AccountHistoryItem) => {
 
   return (
     <Card
-      title={<FinderLink short>{txhash}</FinderLink>}
+      title={
+        <FinderLink tx short>
+          {txhash}
+        </FinderLink>
+      }
       extra={<ToNow>{new Date(timestamp)}</ToNow>}
       size="small"
       bordered
