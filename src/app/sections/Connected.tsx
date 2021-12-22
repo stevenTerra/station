@@ -29,7 +29,7 @@ const Connected = () => {
       key={key}
       content={
         <div className={styles.component}>
-          <Grid gap={12} className={styles.inner}>
+          <Grid gap={16} className={styles.inner}>
             <section>
               <Tooltip content={t("View on Terra Finder")}>
                 <FinderLink className={styles.link} short>
