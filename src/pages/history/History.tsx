@@ -65,6 +65,7 @@ const History = () => {
           <Button
             onClick={() => fetchNextPage()}
             disabled={!hasNextPage || isFetchingNextPage}
+            loading={isFetchingNextPage}
             block
           >
             {isFetchingNextPage

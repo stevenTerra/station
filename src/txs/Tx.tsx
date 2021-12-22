@@ -134,7 +134,7 @@ function Tx<TxValues>(props: Props<TxValues>) {
         feeDenoms: [initialGasDenom],
       })
 
-      return unsignedTx.auth_info.fee.gas_limit * gasAdjustment
+      return Math.ceil(unsignedTx.auth_info.fee.gas_limit * gasAdjustment)
     },
     {
       ...RefetchOptions.INFINITY,

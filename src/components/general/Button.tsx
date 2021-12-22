@@ -1,6 +1,7 @@
 import { ButtonHTMLAttributes, ForwardedRef, ReactNode } from "react"
 import { forwardRef } from "react"
 import classNames from "classnames/bind"
+import { LoadingCircular } from "../feedback"
 import styles from "./Button.module.scss"
 
 const cx = classNames.bind(styles)
@@ -11,19 +12,20 @@ export interface ButtonConfig {
   color?: "default" | "primary" | "danger"
   outline?: boolean
   block?: boolean
+  loading?: boolean
   disabled?: boolean
 }
 
 type Props = ButtonConfig & ButtonHTMLAttributes<HTMLButtonElement>
 
 const Button = forwardRef(
-  (props: Props, ref?: ForwardedRef<HTMLButtonElement>) => {
-    const { icon, size, color, outline, block, children, ...attrs } = props
+  ({ children, ...props }: Props, ref?: ForwardedRef<HTMLButtonElement>) => {
+    const { icon, size, color, outline, block, loading, ...attrs } = props
     const className = classNames(getClassName(props), props.className)
 
     return (
       <button type="button" {...attrs} className={className} ref={ref}>
-        {icon}
+        {loading ? <LoadingCircular size={16} /> : icon}
         {children}
       </button>
     )
