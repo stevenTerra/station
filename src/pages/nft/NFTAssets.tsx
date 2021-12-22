@@ -25,7 +25,7 @@ const NFTAssets = () => {
         if (!render) return null
 
         return (
-          <InternalButton onClick={open} disabled={!address} chevron>
+          <InternalButton onClick={open} chevron>
             {t("Add tokens")}
           </InternalButton>
         )

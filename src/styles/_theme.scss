@@ -168,31 +168,30 @@
     var(--button-primary-bg-l)
   );
   --button-primary-text: hsl(248 55% 8%);
-  --button-default-bg-h: 207;
-  --button-default-bg-s: 95%;
-  --button-default-bg-l: 42%;
+  --button-default-bg-h: 22;
+  --button-default-bg-s: 86%;
+  --button-default-bg-l: 56%;
   --button-default-bg: hsl(
     var(--button-default-bg-h),
     var(--button-default-bg-s),
     var(--button-default-bg-l)
   );
-  --button-default-text: hsl(0 0% 100% / 0.85);
+  --button-default-text: var(--button-primary-text);
 
-  --menu-bg: hsl(247 55% 15%);
-  --menu-border: hsl(0 0% 100% / 0.1);
-  --menu-text: hsl(240 10% 92%);
+  --menu-bg: var(--card-bg);
+  --menu-text: var(--text);
 
-  --link: hsl(47 93% 67%);
-  --text: hsl(240 9% 96%);
-  --text-muted: hsl(247 9% 66%);
-  --chart: hsl(47 93% 67%);
+  --link: var(--button-primary-bg);
+  --text: hsl(240 9% 66%);
+  --text-muted: hsl(247 9% 40%);
+  --chart: var(--button-primary-bg);
 
   --bg: hsl(249 54% 3%);
   --bg-muted: hsl(248 55% 8%);
-  --card-bg: hsl(247 55% 15%);
+  --card-bg: hsl(247 55% 6%);
   --card-border: hsl(0 0% 100% / 0.1);
-  --input-bg: hsl(0 0% 0% / 0);
-  --input-border: hsl(0 0% 100% / 0.3);
+  --input-bg: var(--card-bg);
+  --input-border: hsl(0 0% 100% / 0.1);
 }
 
 .whale {
