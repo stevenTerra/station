@@ -5,8 +5,8 @@ import { always } from "ramda"
 import themes, { Theme } from "styles/themes/themes"
 import { DefaultTheme, SettingKey } from "utils/localStorage"
 import { getLocalSetting, setLocalSetting } from "utils/localStorage"
+import { useAddress } from "data/wallet"
 import { calcDelegationsTotal, useDelegations } from "../queries/staking"
-import { useAddress } from "../wallet"
 
 export const themeNameState = atom({
   key: "themeName",
