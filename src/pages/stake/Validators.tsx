@@ -73,8 +73,8 @@ const Validators = () => {
   }, [TerraValidators, oracleParams, validators])
 
   const renderCount = () => {
-    if (!activeValidators) return null
-    const count = activeValidators.length
+    if (!validators) return null
+    const count = validators.filter(({ status }) => getIsBonded(status)).length
     return t("{{count}} active validators", { count })
   }
 
@@ -208,5 +208,8 @@ const Validators = () => {
 export default Validators
 
 /* helpers */
+const getIsBonded = (status: BondStatus) =>
+  bondStatusFromJSON(BondStatus[status]) === BondStatus.BOND_STATUS_BONDED
+
 const getIsUnbonded = (status: BondStatus) =>
   bondStatusFromJSON(BondStatus[status]) === BondStatus.BOND_STATUS_UNBONDED
