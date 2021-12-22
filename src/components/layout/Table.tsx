@@ -25,6 +25,7 @@ interface Column<T> {
 interface Props<T> {
   columns: Column<T>[]
   dataSource: T[]
+  filter?: (record: T) => boolean
   sorter?: (a: T, b: T) => number
   rowKey?: (record: T) => string
 
@@ -32,7 +33,7 @@ interface Props<T> {
   style?: CSSProperties
 }
 
-function Table<T>({ columns, dataSource, rowKey, ...props }: Props<T>) {
+function Table<T>({ columns, dataSource, filter, rowKey, ...props }: Props<T>) {
   const { size = "default", style } = props
 
   const getClassName = ({ align }: Column<T>) => cx(align)
@@ -106,6 +107,7 @@ function Table<T>({ columns, dataSource, rowKey, ...props }: Props<T>) {
 
         <tbody>
           {dataSource
+            .filter((data) => filter?.(data) ?? true)
             .sort((a, b) => props.sorter?.(a, b) || sorter?.(a, b) || 0)
             .map((data, index) => (
               <tr key={rowKey?.(data) ?? index}>

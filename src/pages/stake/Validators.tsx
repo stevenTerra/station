@@ -15,6 +15,7 @@ import { getCalcUptime, getCalcVotingPowerRate } from "data/Terra/TerraAPI"
 import { calcSelfDelegation, useTerraValidators } from "data/Terra/TerraAPI"
 import { Page, Card, Table, Flex, Grid } from "components/layout"
 import { Tooltip } from "components/display"
+import WithSearchInput from "pages/custom/WithSearchInput"
 import ProfileIcon from "./components/ProfileIcon"
 import { ValidatorJailed } from "./components/ValidatorTag"
 import styles from "./Validators.module.scss"
@@ -78,12 +79,18 @@ const Validators = () => {
     return t("{{count}} active validators", { count })
   }
 
-  const render = () => {
+  const render = (keyword: string) => {
     if (!activeValidators) return null
 
     return (
       <Table
         dataSource={activeValidators}
+        filter={({ description: { moniker }, operator_address }) => {
+          if (!keyword) return true
+          return [moniker.toLowerCase(), operator_address].some((text) =>
+            text.includes(keyword.toLowerCase())
+          )
+        }}
         sorter={(a, b) =>
           Number(a.jailed) - Number(b.jailed) ||
           Number(!!b.voting_power_rate) - Number(!!a.voting_power_rate)
@@ -200,7 +207,9 @@ const Validators = () => {
 
   return (
     <Page title={t("Validators")} extra={renderCount()} sub>
-      <Card {...state}>{render()}</Card>
+      <Card {...state}>
+        <WithSearchInput>{render}</WithSearchInput>
+      </Card>
     </Page>
   )
 }
