@@ -1,23 +1,12 @@
-import { useHistory } from "data/Terra/fcd"
-import { Col, Page } from "components/layout"
-import Tx from "./Tx"
+import { useAddress } from "data/wallet"
+import { Page } from "components/layout"
+import { Empty } from "components/feedback"
+import TxList from "./TxList"
 
 const History = () => {
-  const { data } = useHistory()
+  const address = useAddress()
 
-  const render = () => {
-    if (!data) return null
-    const { txs } = data
-    return (
-      <Col>
-        {txs.map((tx) => (
-          <Tx {...tx} key={tx.txhash} />
-        ))}
-      </Col>
-    )
-  }
-
-  return <Page title="History">{render()}</Page>
+  return <Page title="History">{address ? <TxList /> : <Empty />}</Page>
 }
 
 export default History

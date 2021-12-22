@@ -151,9 +151,7 @@ const TxIndicator = ({ txhash }: { txhash: string }) => {
             return (
               <li key={index}>
                 {canonicalMsg.map((msg, index) => (
-                  <p key={index}>
-                    <TxMessage>{msg}</TxMessage>
-                  </p>
+                  <TxMessage key={index}>{msg}</TxMessage>
                 ))}
               </li>
             )
