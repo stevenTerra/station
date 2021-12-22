@@ -321,7 +321,8 @@ const SwapForm = () => {
                   {...register("input", {
                     valueAsNumber: true,
                     validate: validate.input(
-                      toInput(max.amount, offerDecimals)
+                      toInput(max.amount, offerDecimals),
+                      offerDecimals
                     ),
                   })}
                   inputMode="decimal"
