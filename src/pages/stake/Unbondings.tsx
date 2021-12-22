@@ -61,7 +61,7 @@ const Unbondings = () => {
               title: t("Validator"),
               dataIndex: "validator_address",
               render: (address: AccAddress) => (
-                <ValidatorLink address={address} />
+                <ValidatorLink address={address} internal />
               ),
             },
             {
