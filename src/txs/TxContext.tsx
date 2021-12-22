@@ -1,6 +1,6 @@
 import { FC } from "react"
 import createContext from "utils/createContext"
-import { GasPrices, useGasPrices } from "data/Terra/api"
+import { GasPrices, useGasPrices } from "data/Terra/TerraAPI"
 import { useTxKey } from "./Tx"
 
 export const [useTx, TxProvider] =

@@ -6,6 +6,7 @@ import { OracleParams, ValAddress } from "@terra-money/terra.js"
 import { TerraValidator } from "types/validator"
 import { useOracleParams } from "data/queries/oracle"
 import { queryKey, RefetchOptions } from "../query"
+import { useAddress } from "data/wallet"
 
 const config = { baseURL: "https://api.terra.dev" }
 
@@ -24,11 +25,11 @@ export enum AggregateWallets {
   ACTIVE = "active",
 }
 
-export const useTerraAPI = <T>(path: string) => {
+export const useTerraAPI = <T>(path: string, params?: any) => {
   return useQuery<T, AxiosError>(
     [queryKey.TerraAPI, path],
     async () => {
-      const { data } = await axios.get(path, config)
+      const { data } = await axios.get(path, { ...config, params })
       return data
     },
     { ...RefetchOptions.INFINITY }
@@ -57,6 +58,12 @@ export const useTaxRewards = (type: Aggregate) => {
 
 export const useWallets = (walletsType: AggregateWallets, type: Aggregate) => {
   return useTerraAPI<ChartDataItem[]>(`chart/wallets/${walletsType}/${type}`)
+}
+
+/* history */
+export const useAccountHistory = (offset?: number) => {
+  const address = useAddress()
+  return useTerraAPI<AccountHistory>(`tx-history/${address}`, { offset })
 }
 
 /* validators */

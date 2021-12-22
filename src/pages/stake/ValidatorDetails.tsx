@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next"
-import { useTerraValidator } from "data/Terra/api"
+import { useTerraValidator } from "data/Terra/TerraAPI"
 import { Col, Page, Auto } from "components/layout"
 import useAddressParams from "./useAddressParams"
 import ValidatorCompact from "./ValidatorCompact"
