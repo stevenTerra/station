@@ -60,12 +60,6 @@ export const useNav = () => {
       icon: <WalletIcon {...ICON_SIZE} />,
     },
     {
-      path: "/nft",
-      element: <NFT />,
-      title: t("NFT"),
-      icon: <NFTIcon {...ICON_SIZE} />,
-    },
-    {
       path: "/history",
       element: <History />,
       title: t("History"),
@@ -88,6 +82,12 @@ export const useNav = () => {
       element: <Governance />,
       title: t("Governance"),
       icon: <GovernanceIcon {...ICON_SIZE} />,
+    },
+    {
+      path: "/nft",
+      element: <NFT />,
+      title: t("NFT"),
+      icon: <NFTIcon {...ICON_SIZE} />,
     },
     {
       path: "/contract",
