@@ -65,7 +65,7 @@ const SwapForm = () => {
   const [showAll, setShowAll] = useState(false)
 
   const getOptions = (key: "offerAsset" | "askAsset") => {
-    const { native, ibc, cw20 } = options
+    const { coins, tokens } = options
 
     const getOptionList = (list: TokenItemWithBalance[]) =>
       list.map((item) => {
@@ -84,9 +84,8 @@ const SwapForm = () => {
       })
 
     return [
-      { title: t("Coins"), children: getOptionList(native) },
-      { title: t("IBC tokens"), children: getOptionList(ibc) },
-      { title: t("Tokens"), children: getOptionList(cw20) },
+      { title: t("Coins"), children: getOptionList(coins) },
+      { title: t("Tokens"), children: getOptionList(tokens) },
     ]
   }
 

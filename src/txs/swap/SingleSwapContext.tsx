@@ -19,9 +19,8 @@ interface SingleSwap {
   findTokenItem: (token: Token) => TokenItemWithBalance
   findDecimals: (token: Token) => number
   options: {
-    native: TokenItemWithBalance[]
-    ibc: TokenItemWithBalance[]
-    cw20: TokenItemWithBalance[]
+    coins: TokenItemWithBalance[]
+    tokens: TokenItemWithBalance[]
   }
 }
 
@@ -83,7 +82,7 @@ const SingleSwapContext: FC = ({ children }) => {
     if (!(terraswapAvailableList && ibcWhitelist && cw20Whitelist)) return
     if (!cw20TokensBalances) return
 
-    const native = sortDenoms(activeDenoms, currency).map((denom) => {
+    const coins = sortDenoms(activeDenoms, currency).map((denom) => {
       const balance = getAmount(bankBalance, denom)
       return { ...readNativeDenom(denom), balance }
     })
@@ -99,14 +98,11 @@ const SingleSwapContext: FC = ({ children }) => {
       return { ...cw20Whitelist[token], balance }
     })
 
-    const options = { native, ibc, cw20 }
+    const options = { coins, tokens: [...ibc, ...cw20] }
 
     const findTokenItem = (token: Token) => {
-      const key = AccAddress.validate(token)
-        ? "cw20"
-        : isDenomIBC(token)
-        ? "ibc"
-        : "native"
+      const key =
+        AccAddress.validate(token) || isDenomIBC(token) ? "tokens" : "coins"
 
       const option = options[key].find((item) => item.token === token)
       if (!option) throw new Error()
