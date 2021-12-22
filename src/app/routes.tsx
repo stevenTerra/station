@@ -4,6 +4,7 @@ import { useRoutes } from "react-router-dom"
 import { ReactComponent as WalletIcon } from "styles/images/menu/Wallet.svg"
 import { ReactComponent as NFTIcon } from "styles/images/menu/NFT.svg"
 import { ReactComponent as HistoryIcon } from "styles/images/menu/History.svg"
+import { ReactComponent as SwapIcon } from "styles/images/menu/Swap.svg"
 import { ReactComponent as StakeIcon } from "styles/images/menu/Stake.svg"
 import { ReactComponent as GovernanceIcon } from "styles/images/menu/Governance.svg"
 import { ReactComponent as ContractIcon } from "styles/images/menu/Contract.svg"
@@ -71,6 +72,12 @@ export const useNav = () => {
       icon: <HistoryIcon {...ICON_SIZE} />,
     },
     {
+      path: "/swap",
+      element: <SwapTx />,
+      title: t("Swap"),
+      icon: <SwapIcon {...ICON_SIZE} />,
+    },
+    {
       path: "/stake",
       element: <Stake />,
       title: t("Stake"),
@@ -101,7 +108,6 @@ export const useNav = () => {
     /* txs */
     { path: "/send", element: <SendTx /> },
     { path: "/nft/transfer", element: <TransferCW721Tx /> },
-    { path: "/swap", element: <SwapTx /> },
     { path: "/swap/multiple", element: <SwapMultipleTx /> },
     { path: "/stake/:address", element: <StakeTx /> },
     { path: "/rewards", element: <WithdrawRewardsTx /> },
