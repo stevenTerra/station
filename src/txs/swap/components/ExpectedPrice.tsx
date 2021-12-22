@@ -138,6 +138,8 @@ const ExpectedPrice = ({ mode, input, ...props }: Props) => {
     )
   }
 
+  if (!Number.isFinite(price)) return null
+
   return (
     <dl>
       {mode && renderByMode(mode)}
