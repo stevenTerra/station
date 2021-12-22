@@ -11,7 +11,7 @@ import { ValidatorLink } from "components/general"
 import { ModalButton } from "components/feedback"
 import { Table } from "components/layout"
 import { Read } from "components/token"
-import { ToNow } from "components/display"
+import { ToNow, TooltipIcon } from "components/display"
 import StakedCard from "./components/StakedCard"
 
 const Unbondings = () => {
@@ -38,7 +38,16 @@ const Unbondings = () => {
         renderButton={(open) => (
           <StakedCard
             {...state}
-            title={title}
+            title={
+              <TooltipIcon
+                content={t(
+                  "Maximum 7 undelegations can be in progress at the same time"
+                )}
+                placement="bottom"
+              >
+                {title}
+              </TooltipIcon>
+            }
             amount={total}
             value={value}
             onClick={open}

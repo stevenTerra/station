@@ -11,6 +11,7 @@ import { queryKey } from "data/query"
 import { useAddress } from "data/wallet"
 import { useBankBalance } from "data/queries/bank"
 import { getFindMoniker } from "data/queries/staking"
+import { Grid } from "components/layout"
 import { Form, FormItem, FormWarning, Input, Select } from "components/form"
 import { getPlaceholder, toInput } from "../utils"
 import validate from "../validate"
@@ -157,11 +158,18 @@ const StakeForm = ({ tab, destination, validators, delegations }: Props) => {
                 </FormWarning>
               ),
               [StakeAction.UNBOND]: (
-                <FormWarning>
-                  {t(
-                    "No reward is distributed during 21 days undelegation period"
-                  )}
-                </FormWarning>
+                <Grid gap={4}>
+                  <FormWarning>
+                    {t(
+                      "Maximum 7 undelegations can be in progress at the same time"
+                    )}
+                  </FormWarning>
+                  <FormWarning>
+                    {t(
+                      "No reward is distributed during 21 days undelegation period"
+                    )}
+                  </FormWarning>
+                </Grid>
               ),
             }[tab]
           }
