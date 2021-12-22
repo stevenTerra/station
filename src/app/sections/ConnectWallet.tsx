@@ -31,6 +31,20 @@ const ConnectWallet = ({ renderButton }: Props) => {
     </Button>
   )
 
+  const list = [
+    ...availableConnections.map(({ type, identifier, name, icon }) => ({
+      src: icon,
+      children: type === ConnectType.EXTENSION ? t("Extension") : name,
+      onClick: () => connect(type, identifier),
+    })),
+    ...availableInstallTypes
+      .filter((type) => type === ConnectType.EXTENSION)
+      .map((type) => ({
+        children: t("Install extension"),
+        onClick: () => install(type),
+      })),
+  ]
+
   return (
     <ModalButton
       title={t("Connect wallet")}
@@ -38,22 +52,7 @@ const ConnectWallet = ({ renderButton }: Props) => {
     >
       <Grid gap={20}>
         <SwitchWallet />
-        <List
-          list={[
-            ...available,
-            ...availableConnections.map(({ type, identifier, name, icon }) => ({
-              src: icon,
-              children: type === ConnectType.EXTENSION ? t("Extension") : name,
-              onClick: () => connect(type, identifier),
-            })),
-            ...availableInstallTypes
-              .filter((type) => type === ConnectType.EXTENSION)
-              .map((type) => ({
-                children: t("Install extension"),
-                onClick: () => install(type),
-              })),
-          ]}
-        />
+        <List list={available.length ? available : list} />
       </Grid>
     </ModalButton>
   )
